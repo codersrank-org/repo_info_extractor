@@ -45,5 +45,6 @@ for branch in repo.branches:
 
 r = create_repo_entity(repo, args.directory, commit_list)
 
-print r.json_ready()
-print json.dumps(r.json_ready(), indent=4)
+print os.path.basename((args.directory.rstrip(os.sep)))
+# print r.json_ready()['repoName']
+# print json.dumps(r.json_ready(), indent=4)
