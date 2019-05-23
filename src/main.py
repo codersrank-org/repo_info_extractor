@@ -38,11 +38,23 @@ def create_repo_entity(repo, repo_dir, commits):
     # TODO: what if there is no origin?
     return Repository(os.path.basename(repo_dir), remotes, cr.get_value('remote "origin"', 'url'), len(repo.branches), len(repo.tags), commits)
 
+def flag_duplicated_commits(commit_list):
+    for hash in commit_list:
+        if commit_list[hash].is_merge:
+            count = 0
+            for parent in commit_list[hash].parents:
+                if commit_list.has_key(parent):
+                    count += 1
+            if count > 1:
+                commit_list[hash].is_duplicated = True
+
+
 commit_list = {}
 repo = git.Repo(args.directory)
 
 for branch in repo.branches:
     create_commits_entity_from_branch(repo, branch.name, commit_list)
+flag_duplicated_commits(commit_list)
 
 r = create_repo_entity(repo, args.directory, commit_list)
 

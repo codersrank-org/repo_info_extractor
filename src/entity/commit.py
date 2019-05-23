@@ -48,6 +48,7 @@ class Commit:
         self.is_merge = len(self.parents) >= 2
         self.branch = branch
         self.changed_files = []
+        self.is_duplicated = False
         detect_language
         for f in stats:
             self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f)))
@@ -63,7 +64,8 @@ class Commit:
   	        "hash": self.hash,
   	        "isMerge": self.is_merge,
   	        "parents": self.parents,
-            "changedFiles": changed_files
+            "changedFiles": changed_files,
+            "isDuplicated": self.is_duplicated
         }
 
         return data
