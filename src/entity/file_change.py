@@ -40,8 +40,7 @@ class FileChange:
     
     def json_ready(self):
         return {
-                'fileName': self.file_name,
-                'fileName2': obfuscate_filename(self.file_name),
+                'fileName': obfuscate_filename(self.file_name),
                 'language': self.language,
                 'insertions': self.insertions,
                 'deletions': self.deletions
