@@ -23,7 +23,7 @@ def create_commits_entity_from_branch(repo, branch, commit_list):
             if commit_list.has_key(commit.hexsha):
                 break
             commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, commit.stats.files, branch)
-            print 'Get commit ' + commit.hexsha + ' from branch ' + branch
+            print('Get commit ' + commit.hexsha + ' from branch ' + branch)
         skip += 50
         commits = list(repo.iter_commits(branch, max_count=50, skip=skip))
     
@@ -33,8 +33,9 @@ def create_repo_entity(repo, repo_dir, commits):
     remotes = {}
     for remote in repo.remotes:
         for url in repo.remote(remote.name).urls:
-            remotes['remote.name'] = url
+            remotes[remote.name] = url
     cr = repo.config_reader()
+    # TODO: what if there is no origin?
     return Repository(os.path.basename(repo_dir), remotes, cr.get_value('remote "origin"', 'url'), len(repo.branches), len(repo.tags), commits)
 
 commit_list = {}
@@ -45,6 +46,6 @@ for branch in repo.branches:
 
 r = create_repo_entity(repo, args.directory, commit_list)
 
-print os.path.basename((args.directory.rstrip(os.sep)))
+# print os.path.basename((args.directory.rstrip(os.sep)))
 # print r.json_ready()['repoName']
-# print json.dumps(r.json_ready(), indent=4)
+print json.dumps(r.json_ready(), indent=4)
