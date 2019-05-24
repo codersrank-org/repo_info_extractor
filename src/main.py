@@ -1,15 +1,16 @@
 import argparse
 import git
 import os
-import json
 from entity.commit import Commit
 from entity.repository import Repository
+from export_result import ExportResult
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('directory', help='Path to the repository. Example usage: run.sh path/to/directory')
+parser.add_argument('--output', default='./repo_data.json', dest='output', help='Path to the JSON file that will contain the result. By default exports to the STDOUT.')
 
 args = parser.parse_args()
-print 'Repo dir:' + args.directory
+print('Repo dir:' + args.directory)
 
 def create_commits_entity_from_branch(repo, branch, commit_list):
     """
@@ -60,4 +61,5 @@ r = create_repo_entity(repo, args.directory, commit_list)
 
 # print os.path.basename((args.directory.rstrip(os.sep)))
 # print r.json_ready()['repoName']
-print json.dumps(r.json_ready(), indent=4)
+er = ExportResult(r)
+er.export_to_json(args.output)
