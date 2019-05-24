@@ -16,14 +16,18 @@ def convert_remote_url(remote_url):
 class Repository:
     def __init__(self, repo_name, repo, commits):
         remotes = {}
+        self.original_remotes = {}
         for remote in repo.remotes:
             for url in repo.remote(remote.name).urls:
                 remotes[remote.name] = convert_remote_url(url)
-        cr = repo.config_reader()
-        # TODO: what if there is no origin?
+                self.original_remotes[remote.name] = url
+        
         self.repo_name = repo_name
         self.remotes = remotes
-        self.primary_remote_url = convert_remote_url(cr.get_value('remote "origin"', 'url'))
+        if self.remotes.has_key('origin1'):
+            self.primary_remote_url = convert_remote_url(self.remotes['origin1'])
+        else:
+            self.primary_remote_url = ''
         self.number_of_branches = len(repo.branches)
         self.number_of_tags = len(repo.tags)
         self.commits = []
@@ -33,9 +37,10 @@ class Repository:
         self.obfuscate()
     
     def obfuscate(self):
-        md5_hash = md5.new()
-        md5_hash.update(self.primary_remote_url.encode('utf-8'))
-        self.primary_remote_url = md5_hash.hexdigest()
+        if self.primary_remote_url != '':
+            md5_hash = md5.new()
+            md5_hash.update(self.primary_remote_url.encode('utf-8'))
+            self.primary_remote_url = md5_hash.hexdigest()
         for remote in self.remotes:
             md5_hash = md5.new()
             md5_hash.update(self.remotes[remote].encode('utf-8'))
