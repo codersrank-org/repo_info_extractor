@@ -18,7 +18,7 @@ class AnalyzeRepo:
         skip = 0
         while len(commits) > 0:
             for commit in commits:
-                if self.commit_list.has_key(commit.hexsha):
+                if commit.hexsha in self.commit_list:
                     break
                 self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, commit.stats.files, branch)
                 print('Analyze commit ' + commit.hexsha + ' from branch ' + branch)
@@ -37,7 +37,7 @@ class AnalyzeRepo:
             if self.commit_list[hash].is_merge:
                 count = 0
                 for parent in self.commit_list[hash].parents:
-                    if self.commit_list.has_key(parent):
+                    if parent in self.commit_list:
                         count += 1
                 if count > 1:
                     self.commit_list[hash].is_duplicated = True

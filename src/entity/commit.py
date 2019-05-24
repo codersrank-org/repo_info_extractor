@@ -1,8 +1,8 @@
 import os
-import md5
+import hashlib as md5
 import datetime as dt
 
-from file_change import FileChange
+from .file_change import FileChange
 
 def detect_language(file_path):
     parts = file_path.split(os.sep)
@@ -60,10 +60,10 @@ class Commit:
         self.obfuscate()
 
     def obfuscate(self):
-        md5_hash = md5.new()
+        md5_hash = md5.md5()
         md5_hash.update(self.author_name.encode('utf-8'))
         self.author_name = md5_hash.hexdigest()
-        md5_hash = md5.new()
+        md5_hash = md5.md5()
         md5_hash.update(self.author_email.encode('utf-8'))
         self.author_email = md5_hash.hexdigest()
 

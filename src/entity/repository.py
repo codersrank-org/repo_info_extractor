@@ -1,5 +1,5 @@
 import json
-import md5
+import hashlib as md5
 
 def convert_remote_url(remote_url):
     '''
@@ -26,7 +26,7 @@ class Repository:
         
         self.repo_name = repo_name
         self.remotes = remotes
-        if self.remotes.has_key('origin'):
+        if 'origin' in self.remotes:
             self.primary_remote_url = convert_remote_url(self.remotes['origin'])
         else:
             self.primary_remote_url = ''
@@ -44,11 +44,11 @@ class Repository:
     
     def obfuscate(self):
         if self.primary_remote_url != '':
-            md5_hash = md5.new()
+            md5_hash = md5.md5()
             md5_hash.update(self.primary_remote_url.encode('utf-8'))
             self.primary_remote_url = md5_hash.hexdigest()
         for remote in self.remotes:
-            md5_hash = md5.new()
+            md5_hash = md5.md5()
             md5_hash.update(self.remotes[remote].encode('utf-8'))
             self.remotes[remote] = md5_hash.hexdigest()
     
