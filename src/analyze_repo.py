@@ -21,7 +21,7 @@ class AnalyzeRepo:
                 if commit.hexsha in self.commit_list:
                     break
                 self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, commit.stats.files, branch)
-                print('Analyze commit ' + commit.hexsha + ' from branch ' + branch)
+                print('Analyze commit ' + commit.hexsha[:8] + ' from branch ' + branch + ', date: ' + commit.committed_datetime.strftime('%Y-%m-%d %H:%M:%S'))
             skip += n
             commits = list(self.repo.iter_commits(branch, max_count=n, skip=skip))
 
