@@ -1,6 +1,8 @@
-import datetime as dt
-from file_change import FileChange
 import os
+import md5
+import datetime as dt
+
+from file_change import FileChange
 
 def detect_language(file_path):
     parts = file_path.split(os.sep)
@@ -53,6 +55,16 @@ class Commit:
         for f in stats:
             self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f)))
 
+        self.obfuscate()
+
+    def obfuscate(self):
+        md5_hash = md5.new()
+        md5_hash.update(self.author_name.encode('utf-8'))
+        self.author_name = md5_hash.hexdigest()
+        md5_hash = md5.new()
+        md5_hash.update(self.author_email.encode('utf-8'))
+        self.author_email = md5_hash.hexdigest()
+
     def json_ready(self):
         changed_files = []
         for f in self.changed_files:
@@ -61,7 +73,7 @@ class Commit:
             "authorName": self.author_name,
             "authorEmail": self.author_email,
   	        "createdAt": self.created_at,
-  	        "hash": self.hash,
+  	        "commitHash": self.hash,
   	        "isMerge": self.is_merge,
   	        "parents": self.parents,
             "changedFiles": changed_files,
