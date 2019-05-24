@@ -52,7 +52,7 @@ class Commit:
         detect_language
         for f in stats:
             self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f)))
-    
+
     def json_ready(self):
         changed_files = []
         for f in self.changed_files:
