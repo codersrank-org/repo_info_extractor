@@ -21,7 +21,7 @@ class AnalyzeRepo:
                 if self.commit_list.has_key(commit.hexsha):
                     break
                 self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, commit.stats.files, branch)
-                print('Get commit ' + commit.hexsha + ' from branch ' + branch)
+                print('Analyze commit ' + commit.hexsha + ' from branch ' + branch)
             skip += n
             commits = list(self.repo.iter_commits(branch, max_count=n, skip=skip))
 

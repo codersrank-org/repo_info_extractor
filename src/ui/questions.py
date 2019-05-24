@@ -19,3 +19,21 @@ class Questions:
         ]
 
         return prompt(questions)
+
+    def ask_user_identity(self, repo):
+        choices = []
+        for key in repo.contributors:
+            choices.append({
+                'name': repo.contributors[key]['name'] + '-> ' + repo.contributors[key]['email'],
+            })
+
+        questions = [
+            {
+                'type': 'checkbox',
+                'name': 'user_identity',
+                'message': 'The following contributors were found in the repository. Select which ones you are. (With SPACE you can select more than one)',
+                'choices': choices
+            }
+        ]
+
+        return prompt(questions)

@@ -17,6 +17,8 @@ class Repository:
     def __init__(self, repo_name, repo, commits):
         remotes = {}
         self.original_remotes = {}
+        self.contributors = {}
+        self.local_usernames = []
         for remote in repo.remotes:
             for url in repo.remote(remote.name).urls:
                 remotes[remote.name] = convert_remote_url(url)
@@ -24,14 +26,18 @@ class Repository:
         
         self.repo_name = repo_name
         self.remotes = remotes
-        if self.remotes.has_key('origin1'):
-            self.primary_remote_url = convert_remote_url(self.remotes['origin1'])
+        if self.remotes.has_key('origin'):
+            self.primary_remote_url = convert_remote_url(self.remotes['origin'])
         else:
             self.primary_remote_url = ''
         self.number_of_branches = len(repo.branches)
         self.number_of_tags = len(repo.tags)
         self.commits = []
         for hash in commits:
+            self.contributors[commits[hash].original_author_name + commits[hash].original_author_email] = {
+                'name': commits[hash].original_author_name,
+                'email': commits[hash].original_author_email
+            }
             self.commits.append(commits[hash])
 
         self.obfuscate()
@@ -52,6 +58,7 @@ class Repository:
             commites.append(commit.json_ready())
         return {
             'repoName': self.repo_name,
+            'localUsernames': self.local_usernames,
             'remotes': self.remotes,
             'primaryRemoteUrl': self.primary_remote_url,
             'numberOfBranches': self.number_of_branches,
