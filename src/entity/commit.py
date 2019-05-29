@@ -19,18 +19,48 @@ def detect_language(file_path):
         return 'C'
     if extension == 'cpp' or extension == 'cxx':
         return 'C++'
-    if extension == 'go':
-        return 'go'
-    if extension == 'json':
-        return 'JSON'
-    if extension == 'html' or extension == 'htm':
-        return 'HTML'
+    if extension == 'cs':
+        return 'C#'
+    if extension == 'clj':
+        return 'Clojure'
+    if extension == 'coffee':
+        return 'CoffeeScript'
     if extension == 'css':
         return 'CSS'
+    if extension == 'go':
+        return 'go'
+    if extension == 'hs' or extension == 'lhs':
+        return 'Haskell'
+    if extension == 'html' or extension == 'htm':
+        return 'HTML'
+    if extension == 'json':
+        return 'JSON'
     if extension == 'java':
         return 'Java'
     if extension == 'js':
         return 'JavaScript'
+    if extension == 'lua':
+        return 'Lua'
+    if extension == 'm':
+        return 'MATLAB'
+    if extension == 'mm':
+        return 'Objective-C'
+    if extension == 'pl':
+        return 'Perl'
+    if extension == 'php':
+        return 'PHP'
+    if extension == 'py':
+        return 'Python'
+    if extension == 'r':
+        return 'R'
+    if extension == 'rb':
+        return 'Ruby'
+    if extension == 'scala':
+        return 'Scala'
+    if extension == 'sh':
+        return 'Shell'
+    if extension == 'swift':
+        return 'Swift'
     if extension == 'vue':
         return 'Vue'
     if extension == 'proto':
