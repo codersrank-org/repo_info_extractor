@@ -1,7 +1,6 @@
 import argparse
 import git
 import os
-import inquirer
 from export_result import ExportResult
 from analyze_repo import AnalyzeRepo
 from ui.questions import Questions
@@ -18,7 +17,7 @@ q = Questions()
 for branch in repo.branches:
     ar.create_commits_entity_from_branch(branch.name)
 ar.flag_duplicated_commits()
-
+ar.get_commit_stats()
 r = ar.create_repo_entity(args.directory)
 
 # Ask the user if we cannot find remote URL

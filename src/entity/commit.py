@@ -39,7 +39,7 @@ def detect_language(file_path):
     return ''
 
 class Commit:
-    def __init__(self, author_name, author_email, created_at, hash, parents, stats, branch):
+    def __init__(self, author_name, author_email, created_at, hash, parents, branch):
         self.original_author_name = author_name
         self.original_author_email = author_email
         self.author_name = author_name
@@ -54,10 +54,14 @@ class Commit:
         self.changed_files = []
         self.is_duplicated = False
         detect_language
-        for f in stats:
-            self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f)))
+        # for f in stats:
+            # self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f)))
 
         self.obfuscate()
+
+    def set_commit_stats(self, stats):
+        for f in stats:
+            self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f)))
 
     def obfuscate(self):
         md5_hash = md5.md5()

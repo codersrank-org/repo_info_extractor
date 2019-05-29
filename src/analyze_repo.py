@@ -7,6 +7,7 @@ class AnalyzeRepo:
     def __init__(self, repo):
         self.repo = repo
         self.commit_list = {}
+        self.commit_stats = {}
 
     
     def create_commits_entity_from_branch(self, branch):
@@ -20,13 +21,21 @@ class AnalyzeRepo:
             for commit in commits:
                 if commit.hexsha in self.commit_list:
                     break
-                self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, commit.stats.files, branch)
-                print('Analyze commit ' + commit.hexsha[:8] + ' from branch ' + branch + ', date: ' + commit.committed_datetime.strftime('%Y-%m-%d %H:%M:%S'))
+                # self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, commit.stats.files, branch)
+                self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
+                self.commit_stats[commit.hexsha] = commit
+                # print('Analyze commit ' + commit.hexsha[:8] + ' from branch ' + branch + ', date: ' + commit.committed_datetime.strftime('%Y-%m-%d %H:%M:%S'))
             skip += n
             commits = list(self.repo.iter_commits(branch, max_count=n, skip=skip))
 
     def create_repo_entity(self, repo_dir):
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
+
+    def get_commit_stats(self):
+        for hash in self.commit_list:
+            if not self.commit_list[hash].is_duplicated:
+                print('Analyze commit ' + hash[:8] + ' from branch ' + self.commit_list[hash].branch + ', date: ' + self.commit_list[hash].created_at)
+                self.commit_list[hash].set_commit_stats(self.commit_stats[hash].stats.files)
 
     def flag_duplicated_commits(self):
         '''
