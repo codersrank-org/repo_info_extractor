@@ -54,8 +54,6 @@ class Commit:
         self.changed_files = []
         self.is_duplicated = False
         detect_language
-        # for f in stats:
-            # self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f)))
 
         self.obfuscate()
 
