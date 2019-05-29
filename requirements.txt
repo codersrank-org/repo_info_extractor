@@ -7,7 +7,6 @@ ed25519==1.4
 enum34==1.1.6
 gitdb2==2.0.5
 GitPython==2.1.11
-inquirer==2.6.1
 isort==4.3.20
 lazy-object-proxy==1.4.1
 mccabe==0.6.1
@@ -24,4 +23,3 @@ Token==1.8.6
 urllib3==1.25.3
 wcwidth==0.1.7
 whaaaaat==0.5.2
-wrapt==1.11.1
