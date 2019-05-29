@@ -13,7 +13,8 @@ args = parser.parse_args()
 repo = git.Repo(args.directory)
 ar = AnalyzeRepo(repo)
 q = Questions()
-
+i = 0
+print('Initialization...')
 for branch in repo.branches:
     ar.create_commits_entity_from_branch(branch.name)
 ar.flag_duplicated_commits()

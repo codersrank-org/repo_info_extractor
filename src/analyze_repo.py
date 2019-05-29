@@ -4,9 +4,13 @@ import multiprocessing as mp
 from entity.commit import Commit
 from entity.repository import Repository
 from entity.file_change import FileChange
+from ui.progress import progress
 
 # Needs to be remote because passing as a parameter would be very slow
 commit_stats = {}
+prog = 0
+total = 0
+results = []
 
 class AnalyzeRepo:
     def __init__(self, repo):
@@ -35,24 +39,26 @@ class AnalyzeRepo:
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
     
     def get_commit_stats(self):
-        results = []
-
+        global results
         pool = mp.Pool(mp.cpu_count())
         for hash in self.commit_list:
             if not self.commit_list[hash].is_duplicated:
-                results.append(pool.apply_async(call_set_commit_stats, args=(self.commit_list[hash],)))
+                pool.apply_async(call_set_commit_stats, args=(self.commit_list[hash],), callback=callback_func)
 
         pool.close()
         pool.join()
         for result in results:
-            ret = result.get()
-            self.commit_list[ret['hash']].set_commit_stats(ret['stats'])
+            # ret = result.get()
+            self.commit_list[result['hash']].set_commit_stats(result['stats'])
 
     def flag_duplicated_commits(self):
         '''
         If the branch is not deleted the merge commits duplicates the changes. 
         This method detects the these merge commits.
         '''
+        global total
+        
+        total = len(self.commit_list)
 
         for hash in self.commit_list:
             if self.commit_list[hash].is_merge:
@@ -62,9 +68,23 @@ class AnalyzeRepo:
                         count += 1
                 if count > 1:
                     self.commit_list[hash].is_duplicated = True
+                    total -= 1
+
 
 def call_set_commit_stats(commit):
     global commit_stats
+    global prog
+    global total
 
     # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
-    return {'hash': commit.hash, 'stats': commit_stats[commit.hash].stats.files}
+    ret = {'hash': commit.hash, 'stats': commit_stats[commit.hash].stats.files}
+    
+    return ret
+
+def callback_func(data):
+    global results
+    global prog
+
+    results.append(data)
+    prog += 1
+    progress(prog, total, 'Analyzing commits')
