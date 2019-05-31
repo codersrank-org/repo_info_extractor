@@ -1,4 +1,5 @@
 import json
+import os
 from zipfile import ZipFile
 
 class ExportResult:
@@ -14,4 +15,5 @@ class ExportResult:
         with ZipFile(file_name + '.zip','w', compression=8) as zip: 
             zip.write(file_name)
             zip.close()
+        os.remove(file_name)
         print('Result has has been generated in: ' + file_name + '.zip')
