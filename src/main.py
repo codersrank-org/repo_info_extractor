@@ -5,15 +5,15 @@ from export_result import ExportResult
 from analyze_repo import AnalyzeRepo
 from ui.questions import Questions
 
-parser = argparse.ArgumentParser(description='Process some integers.')
+parser = argparse.ArgumentParser()
 parser.add_argument('directory', help='Path to the repository. Example usage: run.sh path/to/directory')
-parser.add_argument('--output', default='./repo_data.json', dest='output', help='Path to the JSON file that will contain the result. By default exports to the STDOUT.')
+parser.add_argument('--output', default='./repo_data.json', dest='output', help='Path to the JSON file that will contain the result')
 args = parser.parse_args()
 
 repo = git.Repo(args.directory)
 ar = AnalyzeRepo(repo)
 q = Questions()
-i = 0
+
 print('Initialization...')
 for branch in repo.branches:
     ar.create_commits_entity_from_branch(branch.name)

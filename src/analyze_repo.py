@@ -54,7 +54,7 @@ class AnalyzeRepo:
     def flag_duplicated_commits(self):
         '''
         If the branch is not deleted the merge commits duplicates the changes. 
-        This method detects the these merge commits.
+        This method detects these merge commits.
         '''
         global total
         
@@ -73,8 +73,6 @@ class AnalyzeRepo:
 
 def call_set_commit_stats(commit):
     global commit_stats
-    global prog
-    global total
 
     # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
     ret = {'hash': commit.hash, 'stats': commit_stats[commit.hash].stats.files}

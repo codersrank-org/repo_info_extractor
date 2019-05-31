@@ -24,7 +24,7 @@ class Questions:
         choices = []
         for key in repo.contributors:
             choices.append({
-                'name': repo.contributors[key]['name'] + '-> ' + repo.contributors[key]['email'],
+                'name': repo.contributors[key]['name'] + ' -> ' + repo.contributors[key]['email'],
             })
 
         questions = [
