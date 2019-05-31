@@ -28,7 +28,7 @@ def detect_language(file_path):
     if extension == 'css':
         return 'CSS'
     if extension == 'go':
-        return 'go'
+        return 'Go'
     if extension == 'hs' or extension == 'lhs':
         return 'Haskell'
     if extension == 'html' or extension == 'htm':
