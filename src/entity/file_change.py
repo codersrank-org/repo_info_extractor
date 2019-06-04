@@ -32,16 +32,18 @@ def obfuscate_filename(file_name):
         return os.sep.join(obfuscated_parts)
 
 class FileChange:
-    def __init__(self, file_name, deletions, insertions, language):
+    def __init__(self, file_name, deletions, insertions, language, skip_obfuscation):
         self.file_name = file_name
         self.deletions = deletions
         self.insertions = insertions
         self.language = language
+        self.skip_obfuscation = skip_obfuscation
 
         self.obfuscate()
     
     def obfuscate(self):
-        self.file_name = obfuscate_filename(self.file_name)
+        if not self.skip_obfuscation:
+            self.file_name = obfuscate_filename(self.file_name)
     
     def json_ready(self):
         return {

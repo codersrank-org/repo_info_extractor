@@ -13,9 +13,10 @@ total = 0
 results = []
 
 class AnalyzeRepo:
-    def __init__(self, repo):
+    def __init__(self, repo, skip_obfuscation):
         self.repo = repo
         self.commit_list = {}
+        self.skip_obfuscation = skip_obfuscation
     
     def create_commits_entity_from_branch(self, branch):
         '''
@@ -30,7 +31,7 @@ class AnalyzeRepo:
             for commit in commits:
                 if commit.hexsha in self.commit_list:
                     break
-                self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
+                self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch, self.skip_obfuscation)
                 commit_stats[commit.hexsha] = commit
             skip += n
             commits = list(self.repo.iter_commits(branch, max_count=n, skip=skip))
