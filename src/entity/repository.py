@@ -53,9 +53,9 @@ class Repository:
             self.remotes[remote] = md5_hash.hexdigest()
     
     def json_ready(self):
-        commites = []
+        commits = []
         for commit in self.commits:
-            commites.append(commit.json_ready())
+            commits.append(commit.json_ready())
         return {
             'repoName': self.repo_name,
             'localUsernames': self.local_usernames,
@@ -63,5 +63,5 @@ class Repository:
             'primaryRemoteUrl': self.primary_remote_url,
             'numberOfBranches': self.number_of_branches,
             'numberOfTags': self.number_of_tags,
-            'commites': commites
+            'commits': commits
         }
