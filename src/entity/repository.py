@@ -34,9 +34,15 @@ class Repository:
         self.number_of_tags = len(repo.tags)
         self.commits = []
         for hash in commits:
-            self.contributors[commits[hash].original_author_name + commits[hash].original_author_email] = {
-                'name': commits[hash].original_author_name,
-                'email': commits[hash].original_author_email
+            name = ""
+            email = ""
+            if commits[hash].original_author_name is not None:
+                name = commits[hash].original_author_name 
+            if commits[hash].original_author_email is not None:
+                email = commits[hash].original_author_email
+            self.contributors[name + email] = {
+                'name': name,
+                'email': email
             }
             self.commits.append(commits[hash])
 

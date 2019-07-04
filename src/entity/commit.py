@@ -94,12 +94,14 @@ class Commit:
 
     def obfuscate(self):
         if not self.skip_obfuscation:
-            md5_hash = md5.md5()
-            md5_hash.update(self.author_name.encode('utf-8'))
-            self.author_name = md5_hash.hexdigest()
-            md5_hash = md5.md5()
-            md5_hash.update(self.author_email.encode('utf-8'))
-            self.author_email = md5_hash.hexdigest()
+            if self.author_name is not None:
+                md5_hash = md5.md5()
+                md5_hash.update(self.author_name.encode('utf-8'))
+                self.author_name = md5_hash.hexdigest()
+            if self.author_email is not None:
+                md5_hash = md5.md5()
+                md5_hash.update(self.author_email.encode('utf-8'))
+                self.author_email = md5_hash.hexdigest()
 
     def json_ready(self):
         changed_files = []
