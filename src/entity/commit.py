@@ -61,6 +61,10 @@ def detect_language(file_path):
         return 'Shell'
     if extension == 'swift':
         return 'Swift'
+    if extension == 'ts':
+        return 'TypeScript'
+    if extension == 'tsx':
+        return 'TypeScript'
     if extension == 'vue':
         return 'Vue'
     if extension == 'proto':
