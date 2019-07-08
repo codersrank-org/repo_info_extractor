@@ -55,6 +55,8 @@ def detect_language(file_path):
         return 'R'
     if extension == 'rb':
         return 'Ruby'
+    if extension == 'rs':
+        return 'Rust'
     if extension == 'scala':
         return 'Scala'
     if extension == 'sh':
