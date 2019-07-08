@@ -39,6 +39,8 @@ def detect_language(file_path):
         return 'Java'
     if extension == 'js':
         return 'JavaScript'
+    if extension == 'liquid':
+        return 'Liquid'
     if extension == 'lua':
         return 'Lua'
     if extension == 'm':
