@@ -39,6 +39,8 @@ def detect_language(file_path):
         return 'Java'
     if extension == 'js':
         return 'JavaScript'
+    if extension == 'liquid':
+        return 'Liquid'
     if extension == 'lua':
         return 'Lua'
     if extension == 'm':
@@ -55,6 +57,8 @@ def detect_language(file_path):
         return 'R'
     if extension == 'rb':
         return 'Ruby'
+    if extension == 'rs':
+        return 'Rust'
     if extension == 'scala':
         return 'Scala'
     if extension == 'sh':
