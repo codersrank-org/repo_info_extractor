@@ -12,7 +12,20 @@ Other information such as remote URL, file names, emails, names are hashed. So w
 Moreover, the output is saved to your machine and you can check what data is extracted and you can decided whether you want to share it with us or not. 
 
 # How to use it
-## Linux/Unix
+## OSX
+First install pip if you don't have it
+```
+$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python get-pip.py
+```
+```
+$ git clone https://github.com/codersrankOrg/repo_info_extractor.git
+$ cd repo_info_extractor
+$ ./install.sh
+$ ./run.sh path/to/repository
+$ ls -al ./repo_data.json
+```
+## Linux
 ```
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
