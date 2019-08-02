@@ -29,7 +29,7 @@ class ExportResult:
                 reponame = os.path.splitext(file_name)[0]
                 reponame = reponame.replace(".","")
                 reponame = reponame.replace("/","")
-                url = 'https://profile.codersrank.io/repo?token='+response['token']+'&reponame='+reponame
+                url = 'http://127.0.0.1:8083/repo?token='+response['token']+'&reponame='+reponame
                 # print("Open this url to upload the private repo:")
                 # print(url)
                 webbrowser.open(url)
