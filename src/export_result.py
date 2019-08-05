@@ -22,7 +22,7 @@ class ExportResult:
         print('Result has has been saved in: ' + file_name + '.zip')    
         q = Questions()
 
-        result = q.query_yes_no('Do you want to upload the result to your profile automatically? [Y/n]')
+        result = q.query_yes_no('Do you want to upload the result to your profile automatically?')
         if result:
             response = uploadRepo( file_name + '.zip')
             if response is not None:
