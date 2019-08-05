@@ -43,6 +43,5 @@ dir
 ```
 
 # Roadmap
-1. v0.2.0: Add auto upload output file option. Now the output is saved as a ZIP file and you have to upload manually, which is not very user friendly.
 1. v0.3.0: Improve language recognition. The current dummy solution only checks the file extensions. 
 1. v0.4.0: Recognize external libraries. The current script only considers the programming languages. 
