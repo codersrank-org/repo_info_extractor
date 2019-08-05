@@ -3,7 +3,7 @@ import json
 from ui.progress import progress
 
 def uploadRepo(filename):
-	url = "http://127.0.0.1:9900/candidate/privaterepo/Upload"
+	url = "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload"
 	fin = open(filename, 'rb')
 	files = {'file': fin}
 	try:

@@ -22,16 +22,14 @@ class ExportResult:
         print('Result has has been saved in: ' + file_name + '.zip')    
         q = Questions()
 
-        result = q.query_yes_no('Would you like to upload it?')
+        result = q.query_yes_no('Do you want to upload the result to your profile automatically?')
         if result:
             response = uploadRepo( file_name + '.zip')
             if response is not None:
-                reponame = os.path.splitext(file_name)[0]
-                reponame = reponame.replace(".","")
-                reponame = reponame.replace("/","")
-                url = 'https://profile.codersrank.io/user?token='+response['token']+'&reponame='+reponame
+                reponame = self.data.repo_name
+                url = 'https://profile.codersrank.io/repo?token='+response['token']+'&reponame='+reponame
                 # print("Open this url to upload the private repo:")
-                # print(url)
+                print('Go to this link in the browser => '+ url)
                 webbrowser.open(url)
 
         os.remove(file_name)
