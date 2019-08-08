@@ -62,7 +62,7 @@ class Questions:
 
         while True:
             sys.stdout.write(question + prompt)
-            choice = raw_input().lower()
+            choice = sys.stdin.readline().lower().strip()
             if default is not None and choice == '':
                 return valid[default]
             elif choice in valid:
