@@ -71,6 +71,8 @@ def detect_language(file_path):
         return 'Vue'
     if extension == 'proto':
         return 'Protocol Buffer'
+    if extension == 'ex' or extension == 'exs':
+        return 'Elixir'
     
     return ''
 
