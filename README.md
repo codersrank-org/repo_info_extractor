@@ -33,7 +33,8 @@ $ ./install.sh
 $ ./run.sh path/to/repository
 $ ls -al ./repo_data.json
 ```
-## Windows (in development)
+## Windows (in development) 
+Remember to **run CMD as administrator**:
 ```
 git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
