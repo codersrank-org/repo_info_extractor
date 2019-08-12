@@ -33,9 +33,9 @@ $ ./install.sh
 $ ./run.sh path/to/repository
 $ ls -al ./repo_data.json
 ```
-## Windows (in development)
+## Windows
+First, be sure you have Python installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages)
 ```
-*** First, be sure you have Python installed. You can download Python from https://www.python.org/downloads/. ***
 git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
 install.bat
