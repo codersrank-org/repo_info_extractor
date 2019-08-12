@@ -35,6 +35,7 @@ $ ls -al ./repo_data.json
 ```
 ## Windows (in development)
 ```
+*** First, be sure you have Python installed. You can download Python from https://www.python.org/downloads/. ***
 git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
 install.bat
