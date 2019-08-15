@@ -12,6 +12,7 @@ Other information such as remote URLs, file names, emails, names are hashed. So 
 Moreover, the output is saved to your machine and you can check what data is extracted and you can decide whether you want to share it with us or not.
 
 # How to use it
+First, be sure you have Python and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip)
 ## OSX
 First install pip if you don't have it
 ```
@@ -34,7 +35,6 @@ $ ./run.sh path/to/repository
 $ ls -al ./repo_data.json
 ```
 ## Windows
-First, be sure you have Python installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages)
 ```
 git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
