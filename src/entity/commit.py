@@ -1,8 +1,8 @@
 import os
 import hashlib as md5
 import datetime as dt
-
 from .file_change import FileChange
+
 
 def detect_language(file_path):
     parts = file_path.split(os.sep)
@@ -27,6 +27,8 @@ def detect_language(file_path):
         return 'CoffeeScript'
     if extension == 'css':
         return 'CSS'
+    if extension == 'ex' or extension == 'exs':
+        return 'Elixir'
     if extension == 'go':
         return 'Go'
     if extension == 'hs' or extension == 'lhs':
@@ -51,6 +53,8 @@ def detect_language(file_path):
         return 'Perl'
     if extension == 'php':
         return 'PHP'
+    if extension == 'proto':
+        return 'Protocol Buffer'
     if extension == 'py':
         return 'Python'
     if extension == 'r':
@@ -69,12 +73,9 @@ def detect_language(file_path):
         return 'TypeScript'
     if extension == 'vue':
         return 'Vue'
-    if extension == 'proto':
-        return 'Protocol Buffer'
-    if extension == 'ex' or extension == 'exs':
-        return 'Elixir'
-    
+
     return ''
+
 
 class Commit:
     def __init__(self, author_name, author_email, created_at, hash, parents, branch, skip_obfuscation):
@@ -118,10 +119,10 @@ class Commit:
         data = {
             "authorName": self.author_name,
             "authorEmail": self.author_email,
-  	        "createdAt": self.created_at,
-  	        "commitHash": self.hash,
-  	        "isMerge": self.is_merge,
-  	        "parents": self.parents,
+            "createdAt": self.created_at,
+            "commitHash": self.hash,
+            "isMerge": self.is_merge,
+            "parents": self.parents,
             "changedFiles": changed_files,
             "isDuplicated": self.is_duplicated
         }
