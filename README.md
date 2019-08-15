@@ -14,11 +14,6 @@ Moreover, the output is saved to your machine and you can check what data is ext
 # How to use it
 First, be sure you have Python and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip)
 ## OSX
-First install pip if you don't have it
-```
-$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-$ python get-pip.py
-```
 ```
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
