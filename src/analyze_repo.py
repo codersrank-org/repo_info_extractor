@@ -40,16 +40,18 @@ class AnalyzeRepo:
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
     
     def get_commit_stats(self):
-        global results
-        pool = mp.Pool(mp.cpu_count())
-        for hash in self.commit_list:
-            if not self.commit_list[hash].is_duplicated:
-                pool.apply_async(call_set_commit_stats, args=(self.commit_list[hash],), callback=callback_func)
+        with mp.Pool(mp.cpu_count()) as pool:
+            for hash, commit in self.commit_list.items():
+                if not commit.is_duplicated:
+                    r = pool.apply_async(call_set_commit_stats, args=[commit, commit_stats], callback=callback_func)
+                    r.wait(10)
+                    print(r.ready())
+                    print(r.successful())
+                    print(r.get())
+            print(results)
 
-        pool.close()
-        pool.join()
         for result in results:
-            # ret = result.get()
+            #ret = result.get()
             self.commit_list[result['hash']].set_commit_stats(result['stats'])
 
     def flag_duplicated_commits(self):
@@ -72,18 +74,29 @@ class AnalyzeRepo:
                     total -= 1
 
 
-def call_set_commit_stats(commit):
-    global commit_stats
-
+def call_set_commit_stats(commit, stats):
     # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
-    ret = {'hash': commit.hash, 'stats': commit_stats[commit.hash].stats.files}
+    try:
+        ret = {'hash': commit.hash, 'stats': stats[commit.hash].stats.files}
+        print("success")
+        sys.stdout.flush()
+        return ret
+    except:
+        print("Error at call_set_commit_stats.")
+        sys.stdout.flush()
+        return -1
     
-    return ret
+    
 
 def callback_func(data):
     global results
     global prog
-
-    results.append(data)
-    prog += 1
-    progress(prog, total, 'Analyzing commits')
+    try:
+        results.append(data)
+        prog += 1
+        progress(prog, total, 'Analyzing commits')
+        print("Ok for callback")
+        sys.stdout.flush()
+    except:
+        print("Error at callback")
+        sys.stdout.flush()
