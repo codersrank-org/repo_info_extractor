@@ -2,6 +2,7 @@ import os
 import multiprocessing as mp
 import sys
 import pickle
+import time
 
 from entity.commit import Commit
 from entity.repository import Repository
@@ -44,13 +45,18 @@ class AnalyzeRepo:
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
     
     def get_commit_stats(self):
+        start_time = time.time()
         pool = mp.Pool(mp.cpu_count())
         for h, commit in self.commit_list.items():
             if not commit.is_duplicated:
-                pool.apply_async(call_set_commit_stats, [h, commit_stats[h]], callback=callback_func)
+                pool.apply_async(call_set_commit_stats, [h, commit_stats], callback=callback_func)
                 
         pool.close()
         pool.join()
+        
+        end_time = time.time()
+        
+        print("Processing took {dur} seconds".format(dur=end_time - start_time))
                     
         for result in results:
             #ret = result.get()
@@ -75,9 +81,9 @@ class AnalyzeRepo:
                     total -= 1
 
 
-def call_set_commit_stats(h, commit):
+def call_set_commit_stats(h, cs):
     # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
-    ret = {'hash': h, 'stats': commit.stats.files}
+    ret = {'hash': h, 'stats': cs[h].stats.files}
     return ret
     
     
