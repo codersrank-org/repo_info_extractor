@@ -1,5 +1,7 @@
 import os
 import multiprocessing as mp
+import sys
+import pickle
 
 from entity.commit import Commit
 from entity.repository import Repository
@@ -32,6 +34,8 @@ class AnalyzeRepo:
                 if commit.hexsha in self.commit_list:
                     break
                 self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch, self.skip_obfuscation)
+                commit.tree = None
+                commit.parents = None
                 commit_stats[commit.hexsha] = commit
             skip += n
             commits = list(self.repo.iter_commits(branch, max_count=n, skip=skip))
@@ -40,16 +44,14 @@ class AnalyzeRepo:
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
     
     def get_commit_stats(self):
-        with mp.Pool(mp.cpu_count()) as pool:
-            for hash, commit in self.commit_list.items():
-                if not commit.is_duplicated:
-                    r = pool.apply_async(call_set_commit_stats, args=[commit, commit_stats], callback=callback_func)
-                    r.wait(10)
-                    print(r.ready())
-                    print(r.successful())
-                    print(r.get())
-            print(results)
-
+        pool = mp.Pool(mp.cpu_count())
+        for h, commit in self.commit_list.items():
+            if not commit.is_duplicated:
+                pool.apply_async(call_set_commit_stats, [h, commit_stats[h]], callback=callback_func)
+                
+        pool.close()
+        pool.join()
+                    
         for result in results:
             #ret = result.get()
             self.commit_list[result['hash']].set_commit_stats(result['stats'])
@@ -60,7 +62,6 @@ class AnalyzeRepo:
         This method detects these merge commits.
         '''
         global total
-        
         total = len(self.commit_list)
 
         for hash in self.commit_list:
@@ -74,29 +75,17 @@ class AnalyzeRepo:
                     total -= 1
 
 
-def call_set_commit_stats(commit, stats):
+def call_set_commit_stats(h, commit):
     # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
-    try:
-        ret = {'hash': commit.hash, 'stats': stats[commit.hash].stats.files}
-        print("success")
-        sys.stdout.flush()
-        return ret
-    except:
-        print("Error at call_set_commit_stats.")
-        sys.stdout.flush()
-        return -1
+    ret = {'hash': h, 'stats': commit.stats.files}
+    return ret
     
     
 
 def callback_func(data):
     global results
     global prog
-    try:
-        results.append(data)
-        prog += 1
-        progress(prog, total, 'Analyzing commits')
-        print("Ok for callback")
-        sys.stdout.flush()
-    except:
-        print("Error at callback")
-        sys.stdout.flush()
+
+    results.append(data)
+    prog += 1
+    progress(prog, total, 'Analyzing commits')
