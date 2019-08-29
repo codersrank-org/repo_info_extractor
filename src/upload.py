@@ -25,4 +25,4 @@ def showError(err):
     print(err)
     print('.')
     print('.')
-    print("Unable to upload the file, please try uploading it manually.")    
+    print("Unable to upload the file, please try uploading it manually.")
