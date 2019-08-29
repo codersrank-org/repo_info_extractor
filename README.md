@@ -19,7 +19,7 @@ $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
 $ ./install.sh
 $ ./run.sh path/to/repository
-$ ls -al ./repo_data.json
+$ ls -al ./repo_data.json.zip
 ```
 ## Linux
 ```
@@ -27,7 +27,7 @@ $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
 $ ./install.sh
 $ ./run.sh path/to/repository
-$ ls -al ./repo_data.json
+$ ls -al ./repo_data.json.zip
 ```
 ## Windows
 ```
