@@ -12,8 +12,26 @@ Other information such as remote URLs, file names, emails, names are hashed. So 
 Moreover, the output is saved to your machine and you can check what data is extracted and you can decide whether you want to share it with us or not.
 
 # How to use it
+## Using the provided docker image
+The script can also be used without python installed on the machine, given docker is present. For most users this would be the easier option.
+
+### OSX / Linux
+```
+git clone https://github.com/codersrankOrg/repo_info_extractor.git
+cd repo_info_extractor
+./docker.sh <path to the repository>
+```
+
+### Windows
+```
+git clone https://github.com/codersrankOrg/repo_info_extractor.git
+cd repo_info_extractor
+docker.bat <path to the repository>
+```
+
+## On the host machine
 First, be sure you have Python and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip)
-## OSX
+### OSX
 ```
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
@@ -21,7 +39,7 @@ $ ./install.sh
 $ ./run.sh path/to/repository
 $ ls -al ./repo_data.json.zip
 ```
-## Linux
+### Linux
 ```
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
@@ -29,7 +47,7 @@ $ ./install.sh
 $ ./run.sh path/to/repository
 $ ls -al ./repo_data.json.zip
 ```
-## Windows
+### Windows
 ```
 git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
@@ -40,4 +58,4 @@ dir
 
 # Roadmap
 1. v0.3.0: Improve language recognition. The current dummy solution only checks the file extensions. 
-1. v0.4.0: Recognize external libraries. The current script only considers the programming languages. 
+2. v0.4.0: Recognize external libraries. The current script only considers the programming languages. 
