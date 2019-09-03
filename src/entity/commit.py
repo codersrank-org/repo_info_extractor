@@ -25,6 +25,8 @@ def detect_language(file_path):
         return 'Clojure'
     if extension == 'coffee':
         return 'CoffeeScript'
+    if extension == 'cshtml':
+        return 'HTML+Razor'
     if extension == 'css':
         return 'CSS'
     if extension == 'ex' or extension == 'exs':
@@ -39,7 +41,7 @@ def detect_language(file_path):
         return 'JSON'
     if extension == 'java':
         return 'Java'
-    if extension == 'js':
+    if extension == 'js' or extension == 'jsx':
         return 'JavaScript'
     if extension == 'liquid':
         return 'Liquid'
@@ -65,6 +67,8 @@ def detect_language(file_path):
         return 'Rust'
     if extension == 'scala':
         return 'Scala'
+    if extension == 'scss':
+        return 'SCSS'
     if extension == 'sh':
         return 'Shell'
     if extension == 'swift':
