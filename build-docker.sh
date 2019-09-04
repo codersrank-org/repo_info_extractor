@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker build -t codersrank_extractor:latest .
+docker build -t codersrank/repo_info_extractor:latest .
