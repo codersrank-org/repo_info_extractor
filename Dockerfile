@@ -19,4 +19,4 @@ COPY --from=build $VIRTUAL_ENV $VIRTUAL_ENV
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git  
 
-ENTRYPOINT ["./run.sh", "/repo"]
+ENTRYPOINT ["./run.sh"]
