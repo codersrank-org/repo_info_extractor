@@ -60,6 +60,15 @@ python src\main.py path\to\repo
 dir
 ```
 
+# Dockerfile
+The provided Dockerfile builds an image that contains the Python script as well as its dependencies. To keep the final image size low, it leverages the 
+multi-stage build functionality. The first stage installs the dependencies as well as all the required build tools. The second stage, runtime,
+just copies over the installled dependencies so that they can be used by the script.
+
+In order to build a new image out of it, run `build-docker.sh` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
+`codersrank/repo_info_extractor:latest` image.
+
+
 # Roadmap
 1. v0.3.0: Improve language recognition. The current dummy solution only checks the file extensions. 
 2. v0.4.0: Recognize external libraries. The current script only considers the programming languages. 
