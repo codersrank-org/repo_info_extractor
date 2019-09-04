@@ -12,24 +12,28 @@ Other information such as remote URLs, file names, emails, names are hashed. So 
 Moreover, the output is saved to your machine and you can check what data is extracted and you can decide whether you want to share it with us or not.
 
 # How to use it
-## Using the provided docker image
-The script can also be used without python installed on the machine, given docker is present. For most users this would be the easier option.
 
-### OSX / Linux
+First of all, the script needs to be cloned.
+
 ```
 git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
-./docker.sh <path to the repository>
+```
+
+## Docker approach
+If using this approach, the host machine does not need to have any tools installed apart of Docker. Generating the repository information is as easy as:
+
+### OSX / Linux
+```
+./run-docker.sh <path to the repository>
 ```
 
 ### Windows
 ```
-git clone https://github.com/codersrankOrg/repo_info_extractor.git
-cd repo_info_extractor
-docker.bat <path to the repository>
+run-docker.bat <path to the repository>
 ```
 
-## On the host machine
+## Using Python on the host machine approach
 First, be sure you have Python and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip)
 ### OSX
 ```
