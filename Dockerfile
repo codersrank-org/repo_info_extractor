@@ -17,6 +17,7 @@ ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 COPY --from=build $VIRTUAL_ENV $VIRTUAL_ENV
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git  
+    && apt-get install -y --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["./run.sh"]
