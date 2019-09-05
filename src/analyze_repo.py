@@ -21,7 +21,7 @@ class AnalyzeRepo:
         self.repo = repo
         self.commit_list = {}
         self.skip_obfuscation = skip_obfuscation
-    
+
     def create_commits_entity_from_branch(self, branch):
         '''
         Extract the commits from a given branch
@@ -44,7 +44,7 @@ class AnalyzeRepo:
 
     def create_repo_entity(self, repo_dir):
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
-    
+
     def get_commit_stats(self):
         pool = mp.Pool(mp.cpu_count())
         for h, commit in self.commit_list.items():
@@ -53,7 +53,7 @@ class AnalyzeRepo:
 
         pool.close()
         pool.join()
-                    
+
         for result in results:
             self.commit_list[result['hash']].set_commit_stats(result['stats'])
 
@@ -80,8 +80,7 @@ def call_set_commit_stats(h, commit):
     # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
     ret = {'hash': h, 'stats': commit.stats.files}
     return ret
-    
-    
+
 
 def callback_func(data):
     global results
