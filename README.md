@@ -68,6 +68,20 @@ just copies over the installled dependencies so that they can be used by the scr
 In order to build a new image out of it, run `build-docker.sh` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
 `codersrank/repo_info_extractor:latest` image.
 
+# Troubleshooting
+
+```
+/usr/bin/env: ‘bash\r’: No such file or directory
+```
+
+If you see the following error on a Windows machine, this is due to git converting the line endings automatically. A repository level configuration has
+been added to stop this from happening, but the repo needs to be hard reset:
+
+```
+git reset --hard
+```
+
+If this for some reason does not work, just remove the repository and clone it again.
 
 # Roadmap
 1. v0.3.0: Improve language recognition. The current dummy solution only checks the file extensions. 
