@@ -80,8 +80,8 @@ def call_set_commit_stats(h, commit):
     # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
     ret = {'hash': h, 'stats': commit.stats.files}
     return ret
-    
 
+    
 def callback_func(data):
     global results
     global prog
