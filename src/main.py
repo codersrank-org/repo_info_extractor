@@ -28,14 +28,17 @@ def main():
         answer = q.ask_primary_remote_url(r)
 
     identities = q.ask_user_identity(r)
-    while len(identities['user_identity']) == 0:
-        print('Please select at least one.')
+    MAX_LIMIT = 50
+    while len(identities['user_identity']) == 0 or len(identities['user_identity']) > MAX_LIMIT:
+        if len(identities['user_identity']) == 0:
+            print('Please select at least one.')
+        if len(identities['user_identity']) > MAX_LIMIT:
+            print('You cannot select more than', MAX_LIMIT)
         identities = q.ask_user_identity(r)
     r.local_usernames = identities['user_identity']
     er = ExportResult(r)
     er.export_to_json(args.output)
 
-    
 
 if __name__ == "__main__":
     main()

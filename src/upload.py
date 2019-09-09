@@ -2,6 +2,7 @@ import requests
 import json
 from ui.progress import progress
 
+
 def uploadRepo(filename):
     url = "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload"
     fin = open(filename, 'rb')
@@ -19,11 +20,9 @@ def uploadRepo(filename):
     finally:
         fin.close()
 
+
 def showError(err):
     print(err)
     print('.')
     print('.')
-    print("Unable to upload the file, please try uploading it manually.")    
-
-
-
+    print("Unable to upload the file, please try uploading it manually.")

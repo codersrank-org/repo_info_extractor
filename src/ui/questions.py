@@ -1,6 +1,7 @@
 from whaaaaat import style_from_dict, Token, prompt, print_json, default_style, Separator
 import sys
 
+
 class Questions:
 
     def ask_primary_remote_url(self, repo):
@@ -59,9 +60,8 @@ class Questions:
             prompt = " [y/N] "
         else:
             raise ValueError("invalid default answer: '%s'" % default)
-
         while True:
-            sys.stdout.write(question + prompt)
+            print(question + prompt)
             choice = sys.stdin.readline().lower().strip()
             if default is not None and choice == '':
                 return valid[default]
@@ -69,4 +69,4 @@ class Questions:
                 return valid[choice]
             else:
                 sys.stdout.write("Please respond with 'yes' or 'no' "
-                                 "(or 'y' or 'n').\n")    
+                                 "(or 'y' or 'n').\n")

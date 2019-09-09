@@ -28,7 +28,6 @@ class ExportResult:
             if response is not None:
                 reponame = self.data.repo_name
                 url = 'https://profile.codersrank.io/repo?token='+response['token']+'&reponame='+reponame
-                # print("Open this url to upload the private repo:")
                 print('Go to this link in the browser => '+ url)
                 webbrowser.open(url)
 

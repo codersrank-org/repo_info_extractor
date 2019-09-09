@@ -15,12 +15,13 @@ prog = 0
 total = 0
 results = []
 
+
 class AnalyzeRepo:
     def __init__(self, repo, skip_obfuscation):
         self.repo = repo
         self.commit_list = {}
         self.skip_obfuscation = skip_obfuscation
-    
+
     def create_commits_entity_from_branch(self, branch):
         '''
         Extract the commits from a given branch
@@ -43,9 +44,8 @@ class AnalyzeRepo:
 
     def create_repo_entity(self, repo_dir):
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
-    
+
     def get_commit_stats(self):
-        start_time = time.time()
         pool = mp.Pool(mp.cpu_count())
         for h, commit in self.commit_list.items():
             if not commit.is_duplicated:
@@ -53,13 +53,8 @@ class AnalyzeRepo:
 
         pool.close()
         pool.join()
-        
-        end_time = time.time()
-        
-        print("Processing took {dur} seconds".format(dur=end_time - start_time))
-                    
+
         for result in results:
-            #ret = result.get()
             self.commit_list[result['hash']].set_commit_stats(result['stats'])
 
     def flag_duplicated_commits(self):
@@ -87,6 +82,7 @@ def call_set_commit_stats(h, commit):
     return ret
     
     
+
 
 def callback_func(data):
     global results
