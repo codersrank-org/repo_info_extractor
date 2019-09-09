@@ -43,6 +43,8 @@ def detect_language(file_path):
         return 'Java'
     if extension == 'js' or extension == 'jsx':
         return 'JavaScript'
+    if extension == 'ipynb':
+        return "Jupyter Notebook"
     if extension == 'liquid':
         return 'Liquid'
     if extension == 'lua':
