@@ -95,13 +95,15 @@ class Commit:
         self.is_merge = len(self.parents) >= 2
         self.branch = branch
         self.changed_files = []
+        self.libraries = []
         self.is_duplicated = False
         self.skip_obfuscation = skip_obfuscation
         detect_language
 
         self.obfuscate()
 
-    def set_commit_stats(self, stats):
+    def set_commit_stats(self, stats, libraries):
+        self.libraries = libraries
         for f in stats:
             self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f), self.skip_obfuscation))
 
@@ -128,6 +130,7 @@ class Commit:
             "isMerge": self.is_merge,
             "parents": self.parents,
             "changedFiles": changed_files,
+            "libraries": self.libraries,
             "isDuplicated": self.is_duplicated
         }
 
