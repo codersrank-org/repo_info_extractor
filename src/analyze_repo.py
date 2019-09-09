@@ -81,8 +81,6 @@ def call_set_commit_stats(h, commit):
     ret = {'hash': h, 'stats': commit.stats.files}
     return ret
     
-    
-
 
 def callback_func(data):
     global results
