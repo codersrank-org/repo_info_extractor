@@ -25,6 +25,7 @@ class AnalyzeLibraries:
 
     # Return a dict of commit -> language -> list of libraries
     def get_libraries(self):
+        res = {}
         processed_authors = []
         if not self.skip_obfuscation:
             for email, name in self.authors:
@@ -50,7 +51,6 @@ class AnalyzeLibraries:
         repo.git.checkout('master')
         repo.git.reset('--hard')
 
-        res = {}
         prog = 0
         total = len(commits)
 
@@ -79,8 +79,9 @@ class AnalyzeLibraries:
             progress(prog, total, 'Analyzing libraries')
     
         shutil.rmtree(tmp_repo_path)
-        # Dedup the list of libraries
-        return res
+        # Remove those commits without libraries
+        return {k: v for k, v in res.items() if v}
+
 
 # Return only commits authored by provided obfuscated_author_emails
 def _filter_commits_by_authors(commit_list, authors):

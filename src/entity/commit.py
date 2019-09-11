@@ -97,6 +97,7 @@ class Commit:
         self.changed_files = []
         self.is_duplicated = False
         self.skip_obfuscation = skip_obfuscation
+        self.libraries = None
         detect_language
 
         self.obfuscate()
@@ -130,5 +131,8 @@ class Commit:
             "changedFiles": changed_files,
             "isDuplicated": self.is_duplicated
         }
+        
+        if self.libraries:
+            data["libraries"] = self.libraries
 
         return data

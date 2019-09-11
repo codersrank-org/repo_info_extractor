@@ -53,6 +53,13 @@ def main():
     al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir, args.skip_obfuscation)
     libs = al.get_libraries()
     pprint(libs)
+
+    # combine repo stats with libs used
+    for i in range(len(r.commits)):
+        c = r.commits[i]
+        if c.hash in libs.keys():
+            r.commits[i].libraries = libs[c.hash]
+
     er = ExportResult(r)
     er.export_to_json(args.output)
 
