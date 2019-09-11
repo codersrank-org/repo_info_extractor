@@ -1,9 +1,15 @@
 import argparse
+import hashlib as md5
 import git
 import os
 from export_result import ExportResult
 from analyze_repo import AnalyzeRepo
+from analyze_libraries import AnalyzeLibraries
 from ui.questions import Questions
+
+if __name__ == '__main__':
+    import multiprocessing
+    multiprocessing.set_start_method('spawn', True)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -36,6 +42,16 @@ def main():
             print('You cannot select more than', MAX_LIMIT)
         identities = q.ask_user_identity(r)
     r.local_usernames = identities['user_identity']
+
+    # build authors from the selection
+    authors = []
+    for identity in identities['user_identity']:
+        name, email = identity.split(' -> ')
+        authors.append({name, email})
+
+    al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir, args.skip_obfuscation)
+    libs = al.get_libraries()
+    # print(libs)
     er = ExportResult(r)
     er.export_to_json(args.output)
 
