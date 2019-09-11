@@ -6,6 +6,7 @@ import tempfile
 import shutil
 import git
 import uuid
+from ui.progress import progress
 
 supported_library_languages = {
     'JavaScript': ['js', 'jsx'],
@@ -47,6 +48,9 @@ class AnalyzeLibraries:
         repo.git.checkout('master')
         repo.git.reset('--hard')
 
+        prog = 0
+        total = len(commits)
+
         for commit in commits:
             files = [os.path.join(self.basedir, x.file_name) for x in commit.changed_files]
             for lang, extensions in supported_library_languages.items():
@@ -59,6 +63,8 @@ class AnalyzeLibraries:
                     print('Checking out %s' % commit.hash)
                     # now we need to run regex for imports for every single of such file
                     print(lang_files)
+            prog += 1
+            progress(prog, total, 'Analyzing libraries')
     
         shutil.rmtree(tmp_repo_path)
         return []
