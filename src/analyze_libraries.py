@@ -2,6 +2,10 @@ from pprint import pprint
 import pathlib
 import os
 import hashlib as md5
+import tempfile
+import shutil
+import git
+import uuid
 
 supported_library_languages = {
     'JavaScript': ['js', 'jsx'],
@@ -32,7 +36,17 @@ class AnalyzeLibraries:
         else:
             processed_authors = self.authors
  
-        commits = filter_commits_by_authors(self.commit_list, processed_authors)
+        commits = _filter_commits_by_authors(self.commit_list, processed_authors)
+        # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
+        tmp_repo_path = _get_temp_repo_path()
+        shutil.copytree(self.basedir, tmp_repo_path)
+
+        # Initialise the next tmp directory as a repo and hard reset, just in case
+        repo = git.Repo(tmp_repo_path)
+        repo.git.clean('-f')
+        repo.git.checkout('master')
+        repo.git.reset('--hard')
+
         for commit in commits:
             files = [os.path.join(self.basedir, x.file_name) for x in commit.changed_files]
             for lang, extensions in supported_library_languages.items():
@@ -40,11 +54,18 @@ class AnalyzeLibraries:
                 lang_files = list(filter(lambda x: pathlib.Path(x).suffix[1:] in extensions, files))
                 if lang_files:
                     # if we go to this point, there were files modified in the language we support
+                    # check out the commit in our temporary branch
+                    repo.git.checkout(commit.hash)
+                    print('Checking out %s' % commit.hash)
                     # now we need to run regex for imports for every single of such file
                     print(lang_files)
     
+        shutil.rmtree(tmp_repo_path)
         return []
 
 # Return only commits authored by provided obfuscated_author_emails
-def filter_commits_by_authors(commit_list, authors):
+def _filter_commits_by_authors(commit_list, authors):
     return list(filter(lambda x: {x.author_name, x.author_email} in authors, commit_list))
+
+def _get_temp_repo_path():
+    return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
