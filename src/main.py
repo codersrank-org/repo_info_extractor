@@ -6,6 +6,7 @@ from export_result import ExportResult
 from analyze_repo import AnalyzeRepo
 from analyze_libraries import AnalyzeLibraries
 from ui.questions import Questions
+from pprint import pprint
 
 if __name__ == '__main__':
     import multiprocessing
@@ -51,7 +52,7 @@ def main():
 
     al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir, args.skip_obfuscation)
     libs = al.get_libraries()
-    # print(libs)
+    pprint(libs)
     er = ExportResult(r)
     er.export_to_json(args.output)
 
