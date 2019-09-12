@@ -16,7 +16,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('directory', help='Path to the repository. Example usage: run.sh path/to/directory')
     parser.add_argument('--output', default='./repo_data.json', dest='output', help='Path to the JSON file that will contain the result')
-    parser.add_argument('--skip_obfuscation', default=False, dest='skip_obfuscation', help='If true it won\'t obfuscate the sensitive data such as emails and file names. Mostly for testing purpuse')
+    parser.add_argument('--skip_obfuscation', default=True, dest='skip_obfuscation', help='If true it won\'t obfuscate the sensitive data such as emails and file names. Mostly for testing purpuse')
+    parser.add_argument('--parse_libraries', default=False, dest='parse_libraries', help='If true, used libraries will be parsed')
+
     args = parser.parse_args()
 
     repo = git.Repo(args.directory)
@@ -44,21 +46,23 @@ def main():
         identities = q.ask_user_identity(r)
     r.local_usernames = identities['user_identity']
 
-    # build authors from the selection
-    authors = []
-    for identity in identities['user_identity']:
-        name, email = identity.split(' -> ')
-        authors.append({name, email})
+    if args.parse_libraries:
+        # build authors from the selection
+        authors = []
+        for identity in identities['user_identity']:
+            name, email = identity.split(' -> ')
+            authors.append({name, email})
 
-    al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir, args.skip_obfuscation)
-    libs = al.get_libraries()
-    pprint(libs)
+        al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir, args.skip_obfuscation)
+        libs = al.get_libraries()
+        pprint(libs)
 
-    # combine repo stats with libs used
-    for i in range(len(r.commits)):
-        c = r.commits[i]
-        if c.hash in libs.keys():
-            r.commits[i].libraries = libs[c.hash]
+        # combine repo stats with libs used
+        a = libs.keys()
+        for i in range(len(r.commits)):
+            c = r.commits[i]
+            if c.hash in libs.keys():
+                r.commits[i].libraries = libs[c.hash]
 
     er = ExportResult(r)
     er.export_to_json(args.output)
