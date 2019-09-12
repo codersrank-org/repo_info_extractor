@@ -7,6 +7,7 @@ from analyze_repo import AnalyzeRepo
 from analyze_libraries import AnalyzeLibraries
 from ui.questions import Questions
 from pprint import pprint
+from obfuscator import obfuscate
 
 if __name__ == '__main__':
     import multiprocessing
@@ -22,7 +23,7 @@ def main():
     args = parser.parse_args()
 
     repo = git.Repo(args.directory)
-    ar = AnalyzeRepo(repo, args.skip_obfuscation)
+    ar = AnalyzeRepo(repo)
     q = Questions()
 
     print('Initialization...')
@@ -58,11 +59,13 @@ def main():
         pprint(libs)
 
         # combine repo stats with libs used
-        a = libs.keys()
         for i in range(len(r.commits)):
             c = r.commits[i]
             if c.hash in libs.keys():
                 r.commits[i].libraries = libs[c.hash]
+
+    if not args.skip_obfuscation:
+        r = obfuscate(r)
 
     er = ExportResult(r)
     er.export_to_json(args.output)

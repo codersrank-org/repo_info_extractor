@@ -82,7 +82,7 @@ def detect_language(file_path):
 
 
 class Commit:
-    def __init__(self, author_name, author_email, created_at, hash, parents, branch, skip_obfuscation):
+    def __init__(self, author_name, author_email, created_at, hash, parents, branch):
         self.original_author_name = author_name
         self.original_author_email = author_email
         self.author_name = author_name
@@ -96,26 +96,12 @@ class Commit:
         self.branch = branch
         self.changed_files = []
         self.is_duplicated = False
-        self.skip_obfuscation = skip_obfuscation
         self.libraries = None
         detect_language
 
-        self.obfuscate()
-
     def set_commit_stats(self, stats):
         for f in stats:
-            self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f), self.skip_obfuscation))
-
-    def obfuscate(self):
-        if not self.skip_obfuscation:
-            if self.author_name is not None:
-                md5_hash = md5.md5()
-                md5_hash.update(self.author_name.encode('utf-8'))
-                self.author_name = md5_hash.hexdigest()
-            if self.author_email is not None:
-                md5_hash = md5.md5()
-                md5_hash.update(self.author_email.encode('utf-8'))
-                self.author_email = md5_hash.hexdigest()
+            self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language(f)))
 
     def json_ready(self):
         changed_files = []
