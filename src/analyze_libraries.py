@@ -1,4 +1,3 @@
-from pprint import pprint
 import pathlib
 import os
 import hashlib as md5
@@ -63,28 +62,20 @@ class AnalyzeLibraries:
                     # if we go to this point, there were files modified in the language we support
                     # check out the commit in our temporary branch
                     repo.git.checkout(commit.hash)
-                    print('Checking out %s' % commit.hash)
                     # now we need to run regex for imports for every single of such file
-                    print(lang_files)
                     # Load the language plugin that is responsible for parsing those files for libraries used
-                    # Keep the local cache of loaded language parsers
                     parser = load_language(lang)
                     if lang not in libs_in_commit.keys():
                         libs_in_commit[lang] = []
 
                     libs_in_commit[lang].extend(parser.extract_libraries(lang_files))
-                    # pprint(parser_class)
-                    # print(parser)
 
-            # res[commit.hash] = list(dict.fromkeys(libs_in_commit))
             prog += 1
             progress(prog, total, 'Analyzing libraries')
-            res[commit.hash] = libs_in_commit
+            if libs_in_commit:
+                res[commit.hash] = libs_in_commit
     
         shutil.rmtree(tmp_repo_path)
-        # TODO! Remove those commits without libraries
-        # return {k: v for k, v in res.items() if v}
-        pprint(res)
         return res
 
 

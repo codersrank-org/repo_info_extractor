@@ -6,7 +6,6 @@ from export_result import ExportResult
 from analyze_repo import AnalyzeRepo
 from analyze_libraries import AnalyzeLibraries
 from ui.questions import Questions
-from pprint import pprint
 from obfuscator import obfuscate
 
 if __name__ == '__main__':
@@ -56,7 +55,6 @@ def main():
 
         al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir, args.skip_obfuscation)
         libs = al.get_libraries()
-        pprint(libs)
 
         # combine repo stats with libs used
         for i in range(len(r.commits)):
