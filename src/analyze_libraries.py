@@ -7,8 +7,7 @@ import shutil
 import git
 import uuid
 from ui.progress import progress
-import importlib
-
+from language.loader import load as load_language
 
 supported_library_languages = {
     'JavaScript': ['js', 'jsx'],
@@ -59,7 +58,7 @@ class AnalyzeLibraries:
             files = [os.path.join(tmp_repo_path, x.file_name) for x in commit.changed_files]
             for lang, extensions in supported_library_languages.items():
                 # we have extensions now, filter the list to only files with those extensions
-                lang_files = list(filter(lambda x: pathlib.Path(x).suffix[1:] in extensions, files))
+                lang_files = list(filter(lambda x: pathlib.Path(x).suffix[1:].lower() in extensions, files))
                 if lang_files:
                     # if we go to this point, there were files modified in the language we support
                     # check out the commit in our temporary branch
@@ -69,7 +68,7 @@ class AnalyzeLibraries:
                     print(lang_files)
                     # Load the language plugin that is responsible for parsing those files for libraries used
                     # Keep the local cache of loaded language parsers
-                    parser = _load_parser(lang)
+                    parser = load_language(lang)
                     if lang not in libs_in_commit.keys():
                         libs_in_commit[lang] = []
 
@@ -83,7 +82,7 @@ class AnalyzeLibraries:
             res[commit.hash] = libs_in_commit
     
         shutil.rmtree(tmp_repo_path)
-        # Remove those commits without libraries
+        # TODO! Remove those commits without libraries
         # return {k: v for k, v in res.items() if v}
         pprint(res)
         return res
@@ -95,12 +94,3 @@ def _filter_commits_by_authors(commit_list, authors):
 
 def _get_temp_repo_path():
     return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
-
-# This could in fact be moved to a loader inside the languages package, nice and neat
-def _load_parser(language):
-    try:
-        return importlib.import_module("language.%s" % language)
-    except ImportError:
-        print("Could not load a parser for %s" % language)
-        exit(1)
-
