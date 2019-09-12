@@ -36,7 +36,9 @@ def main():
     if r.primary_remote_url == '':
         answer = q.ask_primary_remote_url(r)
 
-    identities = q.ask_user_identity(r)
+    authors = [(c['name'], c['email']) for _, c in r.contributors.items()]
+
+    identities = q.ask_user_identity(authors)
     MAX_LIMIT = 50
     while len(identities['user_identity']) == 0 or len(identities['user_identity']) > MAX_LIMIT:
         if len(identities['user_identity']) == 0:
@@ -48,12 +50,7 @@ def main():
 
     if args.parse_libraries:
         # build authors from the selection
-        authors = []
-        for identity in identities['user_identity']:
-            name, email = identity.split(' -> ')
-            authors.append({name, email})
-
-        al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir, args.skip_obfuscation)
+        al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir)
         libs = al.get_libraries()
 
         # combine repo stats with libs used

@@ -15,30 +15,15 @@ supported_library_languages = {
 }
 
 class AnalyzeLibraries:
-    def __init__(self, commit_list, authors, basedir, skip_obfuscation):
+    def __init__(self, commit_list, authors, basedir):
         self.commit_list = commit_list
         self.authors = authors
         self.basedir = basedir
-        self.skip_obfuscation = skip_obfuscation
 
     # Return a dict of commit -> language -> list of libraries
     def get_libraries(self):
-        res = {}
-        processed_authors = []
-        if not self.skip_obfuscation:
-            for email, name in self.authors:
-                # This logic is in two places now...
-                # Do we need to check for empty email?
-                # This logic is duplicated, same as in commits.py. Move to obfuscator
-                name_md5_hash = md5.md5()
-                name_md5_hash.update(name.encode('utf-8'))
-                email_md5_hash = md5.md5()
-                email_md5_hash.update(email.encode('utf-8'))
-                processed_authors.append({name_md5_hash.hexdigest(), email_md5_hash.hexdigest()})
-        else:
-            processed_authors = self.authors
- 
-        commits = _filter_commits_by_authors(self.commit_list, processed_authors)
+        res = {} 
+        commits = _filter_commits_by_authors(self.commit_list, self.authors)
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
         shutil.copytree(self.basedir, tmp_repo_path)
@@ -81,7 +66,7 @@ class AnalyzeLibraries:
 
 # Return only commits authored by provided obfuscated_author_emails
 def _filter_commits_by_authors(commit_list, authors):
-    return list(filter(lambda x: {x.author_name, x.author_email} in authors, commit_list))
+    return list(filter(lambda x: (x.author_name, x.author_email) in authors, commit_list))
 
 def _get_temp_repo_path():
     return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))

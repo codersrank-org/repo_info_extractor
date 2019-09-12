@@ -22,11 +22,11 @@ class Questions:
 
         return prompt(questions)
 
-    def ask_user_identity(self, repo):
+    def ask_user_identity(self, authors):
         choices = []
-        for key in repo.contributors:
+        for name, email in authors:
             choices.append({
-                'name': repo.contributors[key]['name'] + ' -> ' + repo.contributors[key]['email'],
+                'name': name + ' -> ' + email,
             })
 
         questions = [
