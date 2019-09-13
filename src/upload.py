@@ -14,9 +14,9 @@ def uploadRepo(filename):
         r.raise_for_status()
         return json_data
     except requests.exceptions.RequestException as err:
-        showError(err)        
+        showError(err)
     except requests.exceptions.HTTPError as err:
-            showError(err)
+        showError(err)
     finally:
         fin.close()
 

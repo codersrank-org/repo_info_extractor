@@ -50,7 +50,8 @@ def _build_ext_lang_map():
                 _ext_lang[ext] = lang
 
     return _ext_lang
-    
+
+
 def detect_language(file_path):
     parts = file_path.split(os.sep)
     file_name = parts[-1]
@@ -66,6 +67,7 @@ def detect_language(file_path):
         return _ext_lang[ext]
 
     return ''
+
 
 # This ensures the ext to lang map is build upon the module import
 if not _ext_lang:

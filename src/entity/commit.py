@@ -4,6 +4,7 @@ import datetime as dt
 from .file_change import FileChange
 from language import detect_language
 
+
 class Commit:
     def __init__(self, author_name, author_email, created_at, hash, parents, branch):
         self.original_author_name = author_name
@@ -23,7 +24,8 @@ class Commit:
 
     def set_commit_stats(self, stats):
         for f in stats:
-            self.changed_files.append(FileChange(f, stats[f]['deletions'], stats[f]['insertions'], detect_language.detect_language(f)))
+            self.changed_files.append(FileChange(
+                f, stats[f]['deletions'], stats[f]['insertions'], detect_language.detect_language(f)))
 
     def json_ready(self):
         changed_files = []

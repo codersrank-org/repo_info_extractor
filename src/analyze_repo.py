@@ -28,18 +28,20 @@ class AnalyzeRepo:
         global commit_stats
 
         n = 100
-        commits = list(self.repo.iter_commits(branch, max_count=n)) 
+        commits = list(self.repo.iter_commits(branch, max_count=n))
         skip = 0
         while len(commits) > 0:
             for commit in commits:
                 if commit.hexsha in self.commit_list:
                     break
-                self.commit_list[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
+                self.commit_list[commit.hexsha] = Commit(
+                    commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
                 commit.tree = None
                 commit.parents = None
                 commit_stats[commit.hexsha] = commit
             skip += n
-            commits = list(self.repo.iter_commits(branch, max_count=n, skip=skip))
+            commits = list(self.repo.iter_commits(
+                branch, max_count=n, skip=skip))
 
     def create_repo_entity(self, repo_dir):
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
@@ -48,7 +50,8 @@ class AnalyzeRepo:
         pool = mp.Pool(mp.cpu_count())
         for h, commit in self.commit_list.items():
             if not commit.is_duplicated:
-                pool.apply_async(call_set_commit_stats, [h, commit_stats[h]], callback=callback_func)
+                pool.apply_async(call_set_commit_stats, [
+                                 h, commit_stats[h]], callback=callback_func)
 
         pool.close()
         pool.join()

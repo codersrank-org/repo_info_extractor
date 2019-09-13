@@ -3,9 +3,11 @@ import re
 """
 Extract a list of JS libraries used from a fully qualified paths of files
 """
+
+
 def extract_libraries(files):
     res = []
-    #regex for
+    # regex for
     # require('abc') as well as const lib = require('abc') and others
     regex1 = re.compile(r'require\(\'(.+)\'\);?\s')
     for f in files:
@@ -21,4 +23,3 @@ def extract_libraries(files):
             res.extend(matches)
         fr.close()
     return res
-    
