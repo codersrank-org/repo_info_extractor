@@ -12,11 +12,12 @@ def extract_libraries(files):
         try:
             fr = open(f, 'r')
         except FileNotFoundError:
+            print("[WARN] File %s not found" % f)
             continue
         contents = ' '.join(fr.readlines())
-        match = regex1.search(contents)
-        if match and match.group(1):
-            res.append(match.group(1))
+        matches = regex1.findall(contents)
+        if matches:
+            res.extend(matches)
         fr.close()
     return res
         
