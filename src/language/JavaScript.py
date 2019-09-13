@@ -9,7 +9,7 @@ def extract_libraries(files):
     res = []
     # regex for
     # require('abc') as well as const lib = require('abc') and others
-    regex1 = re.compile(r'require\(\'(.+)\'\);?\s')
+    regex1 = re.compile(r'require\(["\'](.+)["\']\);?\s')
     for f in files:
         try:
             fr = open(f, 'r')
