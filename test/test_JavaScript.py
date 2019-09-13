@@ -53,4 +53,13 @@ def test_extract_libraries():
         'lib42',
         'lib43',
         'lib44',
+        'lib45',
+        'lib46',
+        'lib47',
+        'lib48',
+        'lib49',
+        'lib50',
+        'lib51',
+        'lib52',
+        'lib53',
         ], "Should extract all libraries used"
