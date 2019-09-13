@@ -17,6 +17,7 @@ _supported_languages = {
     'JSON': ['json'],
     'Java': ['java'],
     'JavaScript': ['js', 'jsx'],
+    'Jupyter Notebook': ['ipynb'],
     'Liquid': ['liquid'],
     'Lua': ['lua'],
     'MATLAB': ['m'],
