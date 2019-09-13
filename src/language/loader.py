@@ -9,6 +9,5 @@ def load(language):
             # TODO! I really do not like this hardcoded
             _cache[language] = importlib.import_module(mod, 'language')
         except ImportError:
-            print("Could not load a parser for %s" % language)
-            exit(1)
+            _cache[language] = None
     return _cache[language]

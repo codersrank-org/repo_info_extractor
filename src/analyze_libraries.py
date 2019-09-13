@@ -7,12 +7,7 @@ import git
 import uuid
 from ui.progress import progress
 from language.loader import load as load_language
-
-supported_library_languages = {
-    'JavaScript': ['js', 'jsx'],
-    #'Python': ['py'],
-    #'Markdown': ['md'],
-}
+from language.detect_language import supported_languages
 
 class AnalyzeLibraries:
     def __init__(self, commit_list, authors, basedir):
@@ -40,7 +35,7 @@ class AnalyzeLibraries:
         for commit in commits:
             libs_in_commit = {}
             files = [os.path.join(tmp_repo_path, x.file_name) for x in commit.changed_files]
-            for lang, extensions in supported_library_languages.items():
+            for lang, extensions in supported_languages.items():
                 # we have extensions now, filter the list to only files with those extensions
                 lang_files = list(filter(lambda x: pathlib.Path(x).suffix[1:].lower() in extensions, files))
                 if lang_files:
@@ -50,10 +45,12 @@ class AnalyzeLibraries:
                     # now we need to run regex for imports for every single of such file
                     # Load the language plugin that is responsible for parsing those files for libraries used
                     parser = load_language(lang)
-                    if lang not in libs_in_commit.keys():
-                        libs_in_commit[lang] = []
+                    # Only parse libraries if we support the current language
+                    if parser:
+                        if lang not in libs_in_commit.keys():
+                            libs_in_commit[lang] = []
 
-                    libs_in_commit[lang].extend(parser.extract_libraries(lang_files))
+                        libs_in_commit[lang].extend(parser.extract_libraries(lang_files))
 
             prog += 1
             progress(prog, total, 'Analyzing libraries')

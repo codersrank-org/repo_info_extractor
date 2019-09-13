@@ -1,6 +1,6 @@
 import os
 
-_supported_languages = {
+supported_languages = {
     'JavaScript': ['js', 'jsx'],
     'Batchfile': ['bat'],
     'C': ['c'],
@@ -45,7 +45,7 @@ def _build_ext_lang_map():
     For optimisation purposes, build ext -> language map. Supposed to run once and cache
     """
     if not _ext_lang:
-        for lang, extensions in _supported_languages.items():
+        for lang, extensions in supported_languages.items():
             for ext in extensions:
                 _ext_lang[ext] = lang
 
