@@ -50,7 +50,12 @@ import { something } from "lib34";
 import * as whatever from "lib35";
 import whatever from "lib36";
 
+// Import the entire module
 import 'lib37'
 import "lib38"
 import 'lib39';
 import "lib40";
+import ('lib41')
+import ("lib42")
+import ('lib43');
+import ("lib44");

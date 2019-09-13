@@ -11,7 +11,7 @@ def extract_libraries(files):
     # require('abc') as well as const lib = require('abc') and others
     regex1 = re.compile(r'require\(["\'](.+)["\']\);?\s', re.IGNORECASE)
     # ES6 imports
-    regex2 = re.compile(r'import(?:.+ from)? [\'"](.+)[\'"];?\s', re.IGNORECASE)
+    regex2 = re.compile(r'import(?:.+ from)? \(?[\'"](.+)[\'"]\)?;?\s', re.IGNORECASE)
     for f in files:
         try:
             fr = open(f, 'r')
