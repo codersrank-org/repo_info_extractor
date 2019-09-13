@@ -49,3 +49,8 @@ import whatever from 'lib33';
 import { something } from "lib34";
 import * as whatever from "lib35";
 import whatever from "lib36";
+
+import 'lib37'
+import "lib38"
+import 'lib39';
+import "lib40";
