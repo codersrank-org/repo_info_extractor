@@ -5,6 +5,7 @@ import tempfile
 import shutil
 import git
 import uuid
+import zipfile
 from ui.progress import progress
 from language.loader import load as load_language
 from language.detect_language import supported_languages
@@ -22,13 +23,15 @@ class AnalyzeLibraries:
         commits = _filter_commits_by_authors(self.commit_list, self.authors)
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
-        shutil.copytree(self.basedir, tmp_repo_path)
+        tmp_archive_name = _get_temp_repo_path()
+        _copy_repo(self.basedir, tmp_repo_path)
+        #shutil.copytree(self.basedir, tmp_repo_path)
 
         # Initialise the next tmp directory as a repo and hard reset, just in case
         repo = git.Repo(tmp_repo_path)
         repo.git.clean('-fd')
-        repo.git.checkout('master')
         repo.git.reset('--hard')
+        repo.git.checkout('master')
 
         prog = 0
         total = len(commits)
@@ -72,3 +75,40 @@ def _filter_commits_by_authors(commit_list, authors):
 
 def _get_temp_repo_path():
     return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
+
+
+def _copy_repo(source, target, tmp_path):
+    zip_name = os.path.join(tmp_path, ".zip")
+    zip = zipfile.ZipInfo(zip_name, mode='rw', compression=1)
+    for root, dirs, files in os.walk(source):
+        for file in files:
+            print(os.path.join(source, file))
+            zip.write(os.path.join(source, file)) 
+    
+    zip.extractall(target)
+    zip.close()
+    shutil.rmtree(zip_name)
+
+
+def _copy_repo(source, target_path):
+    zip_name = target_path[:-1] + ".zip"
+    zip = zipfile.ZipFile(zip_name, mode='a', compression=zipfile.ZIP_STORED)
+    # for root, dirs, files in os.walk(source):
+    #     for file in files:
+    #         zip.write(os.path.join(root, file)) 
+    
+    for root, _, files in os.walk(source): 
+        for filename in files: 
+            if not os.path.islink(os.path.join(root, filename)):
+                zip.write(
+                    os.path.join(root, filename),
+                    os.path.relpath(os.path.join(root, filename), source)
+                )
+
+    zip.extractall(target_path)
+    zip.close()
+    os.remove(zip.filename)
+
+
+
+
