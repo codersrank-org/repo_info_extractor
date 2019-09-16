@@ -8,6 +8,8 @@ import uuid
 from ui.progress import progress
 from language.loader import load as load_language
 from language.detect_language import supported_languages
+from datetime import datetime
+
 
 
 class AnalyzeLibraries:
@@ -22,7 +24,13 @@ class AnalyzeLibraries:
         commits = _filter_commits_by_authors(self.commit_list, self.authors)
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
-        shutil.copytree(self.basedir, tmp_repo_path)
+        
+        now = datetime.now()
+        print("[%s] Copying the repository to a temporary location, this can take a while..." % now.strftime("%d/%m/%Y %H:%M:%S"))	
+
+        shutil.copytree(self.basedir, tmp_repo_path, symlinks=True)
+        now = datetime.now()
+        print("[%s] Finished copying the repository" % now.strftime("%d/%m/%Y %H:%M:%S"))	
 
         # Initialise the next tmp directory as a repo and hard reset, just in case
         repo = git.Repo(tmp_repo_path)
