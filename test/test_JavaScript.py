@@ -7,7 +7,6 @@ def test_extract_libraries():
     files = ['fixtures/JavaScript.js']
     fq_files = [os.path.join(dir_path, f) for f in files]
     libs = extract_libraries(fq_files)
-    print(libs)
     assert libs == [
         'lib1', 
         'lib2', 
