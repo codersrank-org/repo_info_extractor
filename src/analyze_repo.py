@@ -47,14 +47,12 @@ class AnalyzeRepo:
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list)
 
     def get_commit_stats(self):
-        pool = mp.Pool(mp.cpu_count())
-        for h, commit in self.commit_list.items():
-            if not commit.is_duplicated:
-                pool.apply_async(call_set_commit_stats, [
-                                 h, commit_stats[h]], callback=callback_func)
-
-        pool.close()
-        pool.join()
+        cpu_count = mp.cpu_count()
+        with mp.get_context("spawn").Pool(cpu_count) as pool:
+            for h, commit in self.commit_list.items():
+                if not commit.is_duplicated:
+                    pool.apply_async(call_set_commit_stats, [
+                                    h, commit_stats[h]], callback=callback_func)
 
         for result in results:
             self.commit_list[result['hash']].set_commit_stats(result['stats'])
