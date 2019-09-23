@@ -65,7 +65,7 @@ The provided Dockerfile builds an image that contains the Python script as well 
 multi-stage build functionality. The first stage installs the dependencies as well as all the required build tools. The second stage, runtime,
 just copies over the installled dependencies so that they can be used by the script.
 
-In order to build a new image out of it, run `build-docker.sh` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
+In order to build a new image out of it, run `make docker` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
 `codersrank/repo_info_extractor:latest` image.
 
 # Troubleshooting

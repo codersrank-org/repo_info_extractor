@@ -22,18 +22,22 @@ class Questions:
 
         return prompt(questions)
 
-    def ask_user_identity(self, repo):
+    def ask_user_identity(self, authors, err):
         choices = []
-        for key in repo.contributors:
+        for name, email in authors:
             choices.append({
-                'name': repo.contributors[key]['name'] + ' -> ' + repo.contributors[key]['email'],
+                'name': name + ' -> ' + email,
             })
+        
+        message = 'The following contributors were found in the repository. Select which ones you are. (With SPACE you can select more than one)'
+        if err:
+            message = "%s [ERROR] %s" % (message, err)
 
         questions = [
             {
                 'type': 'checkbox',
                 'name': 'user_identity',
-                'message': 'The following contributors were found in the repository. Select which ones you are. (With SPACE you can select more than one)',
+                'message': message,
                 'choices': choices
             }
         ]
