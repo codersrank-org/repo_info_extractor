@@ -4,7 +4,7 @@ _cache = {}
 
 
 def load(language):
-    if language not in _cache.items():
+    if language not in _cache.keys():
         try:
             mod = ".%s" % language
             # TODO! I really do not like this hardcoded
