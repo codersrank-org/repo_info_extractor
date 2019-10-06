@@ -1,11 +1,6 @@
 import argparse
 from init import initialize
 
-if __name__ == '__main__':
-    import multiprocessing
-    multiprocessing.set_start_method('spawn', True)
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -21,7 +16,8 @@ def main():
     initialize(args.directory, args.skip_obfuscation, args.output, args.parse_libraries)
 
 
-
-
 if __name__ == "__main__":
+    import multiprocessing
+    multiprocessing.set_start_method('spawn', True)
     main()
+

@@ -59,7 +59,7 @@ class AnalyzeRepo:
         with mp.get_context("spawn").Pool(cpu_count) as pool:
             for h, commit in self.commit_list.items():
                 if not commit.is_duplicated:
-                    pool.apply_async(call_set_commit_stats, [h, self.commit_stats[h]], callback=self.callback_func)
+                    pool.apply_async(self.call_set_commit_stats, [h, self.commit_stats[h]], callback=self.callback_func)
             pool.close()
             pool.join()
 
@@ -84,13 +84,13 @@ class AnalyzeRepo:
                     self.total -= 1
 
 
-def call_set_commit_stats(h, commit):
-    # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
-    ret = {'hash': h, 'stats': commit.stats.files}
-    return ret
+    def call_set_commit_stats(h, commit):
+        # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
+        ret = {'hash': h, 'stats': commit.stats.files}
+        return ret
 
 
-def callback_func(data):
-    self.results.append(data)
-    self.prog += 1
-    progress(self.prog, self.total, 'Analyzing commits')
+    def callback_func(self, data):
+        self.results.append(data)
+        self.prog += 1
+        progress(self.prog, self.total, 'Analyzing commits')
