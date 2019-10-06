@@ -1,2 +1,4 @@
 .vscode/
 *.pyc
+.DS_Store
+.idea/
