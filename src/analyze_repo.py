@@ -54,8 +54,6 @@ class AnalyzeRepo:
 
     def get_commit_stats(self):
         cpu_count = mp.cpu_count()
-        print('CPU count ==>', cpu_count)
-
         with mp.get_context("spawn").Pool(cpu_count) as pool:
             for h, commit in self.commit_list.items():
                 if not commit.is_duplicated:
@@ -63,7 +61,6 @@ class AnalyzeRepo:
             pool.close()
             pool.join()
 
-        print("SIZE OF THE RESULTS:", len(self.results))
         for result in self.results:
             self.commit_list[result['hash']].set_commit_stats(result['stats'])
 

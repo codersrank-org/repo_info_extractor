@@ -10,7 +10,7 @@ class ExportResult:
     def __init__(self, data):
         self.data = data
 
-    def export_to_json(self, file_name):
+    def export_to_json_interactive(self, file_name):
         self.dump(file_name)
 
         q = Questions()

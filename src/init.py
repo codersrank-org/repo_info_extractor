@@ -52,7 +52,7 @@ def initialize(directory, skip_obfuscation, output, parse_libraries):
         r = obfuscate(r)
 
     er = ExportResult(r)
-    er.export_to_json(output)
+    er.export_to_json_interactive(output)
 
 # user_commit - consider only these user commits for extracting the repo information
 # emails - merge these emails with these emails extracted from the repo

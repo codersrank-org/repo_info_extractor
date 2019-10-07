@@ -1,8 +1,6 @@
 .vscode/
 *.pyc
 repo_data.json.zip
-repo_data.json
 .DS_Store
 .idea/
-repo_data.json.zip
 repo_data.json
