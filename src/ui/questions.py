@@ -28,8 +28,9 @@ class Questions:
             choices.append({
                 'name': name + ' -> ' + email,
             })
-        
-        message = 'The following contributors were found in the repository. Select which ones you are. (With SPACE you can select more than one)'
+
+        message = 'The following contributors were found in the repository. \
+            Select which ones you are. (With SPACE you can select more than one)'
         if err:
             message = "%s [ERROR] %s" % (message, err)
 

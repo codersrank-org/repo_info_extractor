@@ -42,16 +42,20 @@ def main():
         answer = q.ask_primary_remote_url(r)
 
     authors = [(c['name'], c['email']) for _, c in r.contributors.items()]
-
-    identities_err = None
-    identities = q.ask_user_identity(authors, identities_err)
-    MAX_LIMIT = 50
-    while len(identities['user_identity']) == 0 or len(identities['user_identity']) > MAX_LIMIT:
-        if len(identities['user_identity']) == 0:
-            identities_err = 'Please select at least one author'
-        if len(identities['user_identity']) > MAX_LIMIT:
-            identities_err = 'You cannot select more than', MAX_LIMIT
+    identities = {}
+    identities['user_identity'] = []
+    # In case the repo is empty don't show the question
+    if len(authors) != 0:
+        identities_err = None
         identities = q.ask_user_identity(authors, identities_err)
+        MAX_LIMIT = 50
+        while len(identities['user_identity']) == 0 or len(identities['user_identity']) > MAX_LIMIT:
+            if len(identities['user_identity']) == 0:
+                identities_err = 'Please select at least one author'
+            if len(identities['user_identity']) > MAX_LIMIT:
+                identities_err = 'You cannot select more than', MAX_LIMIT
+            identities = q.ask_user_identity(authors, identities_err)
+
     r.local_usernames = identities['user_identity']
 
     if args.parse_libraries:
