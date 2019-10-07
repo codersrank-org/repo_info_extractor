@@ -31,7 +31,6 @@ class ExportResult:
 
     def export_to_json_headless(self, file_name):
         self.dump(file_name)
-        os.remove(file_name)
 
 
     def dump(self, file_name):
