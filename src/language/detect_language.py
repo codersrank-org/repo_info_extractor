@@ -18,6 +18,7 @@ supported_languages = {
     'Java': ['java'],
     'JavaScript': ['js', 'jsx'],
     'Jupyter Notebook': ['ipynb'],
+    'Kotlin': ['kt', 'kts'],
     'Liquid': ['liquid'],
     'Lua': ['lua'],
     'MATLAB': ['m'],
