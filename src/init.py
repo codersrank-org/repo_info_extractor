@@ -54,6 +54,9 @@ def initialize(directory, skip_obfuscation, output, parse_libraries):
     er = ExportResult(r)
     er.export_to_json(output)
 
+# user_commit - consider only these user commits for extracting the repo information
+# emails - merge these emails with these emails extracted from the repo
+# reponame - name of the repo
 def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, user_commits, reponame):
     repo = git.Repo(directory)
     ar = AnalyzeRepo(repo)
