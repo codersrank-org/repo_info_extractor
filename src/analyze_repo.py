@@ -10,7 +10,7 @@ from entity.file_change import FileChange
 from ui.progress import progress
 
 class AnalyzeRepo:
-    def __init__(self, repo):
+    def __init__(self, repo, skip_obfuscation):
         self.commit_stats = {}
         self.results = []
         self.prog = 0
@@ -18,6 +18,7 @@ class AnalyzeRepo:
         self.repo = repo
         self.commit_list = {}
         self.user_commits = {}
+        self.skip_obfuscation = skip_obfuscation
 
     def create_commits_entity_from_branch(self, branch):
         '''
