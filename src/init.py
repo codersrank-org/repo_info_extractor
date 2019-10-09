@@ -10,7 +10,7 @@ from obfuscator import obfuscate
 
 def initialize(directory, skip_obfuscation, output, parse_libraries):
     repo = git.Repo(directory)
-    ar = AnalyzeRepo(repo, skip_obfuscation)
+    ar = AnalyzeRepo(repo)
     q = Questions()
 
     print('Initialization...')
@@ -59,7 +59,7 @@ def initialize(directory, skip_obfuscation, output, parse_libraries):
 # reponame - name of the repo
 def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, user_commits, reponame):
     repo = git.Repo(directory)
-    ar = AnalyzeRepo(repo, skip_obfuscation)
+    ar = AnalyzeRepo(repo)
     q = Questions()
 
     print('Initialization...')

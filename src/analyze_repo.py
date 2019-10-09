@@ -10,7 +10,7 @@ from entity.file_change import FileChange
 from ui.progress import progress
 
 class AnalyzeRepo:
-    def __init__(self, repo, skip_obfuscation):
+    def __init__(self, repo):
         self.commit_stats = {}
         self.results = []
         self.prog = 0
@@ -18,7 +18,6 @@ class AnalyzeRepo:
         self.repo = repo
         self.commit_list = {}
         self.user_commits = {}
-        self.skip_obfuscation = skip_obfuscation
 
     def create_commits_entity_from_branch(self, branch):
         '''
@@ -45,7 +44,7 @@ class AnalyzeRepo:
         for commitid in usercommits:
             try:
                 commit = self.repo.commit(commitid)
-                self.user_commits[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, "master", self.skip_obfuscation)
+                self.user_commits[commit.hexsha] = Commit(commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, "master")
             except:
                 print("Cannot get commit sha: ", commitid)
 
