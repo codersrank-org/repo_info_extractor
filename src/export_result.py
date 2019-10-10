@@ -10,16 +10,9 @@ class ExportResult:
     def __init__(self, data):
         self.data = data
 
-    def export_to_json(self, file_name):
-        f = open(file_name, 'w+')
-        f.write(json.dumps(self.data.json_ready(), indent=4))
-        f.close()
-        # Zip the output
-        with ZipFile(file_name + '.zip', 'w', compression=8) as zip:
-            zip.write(file_name)
-            zip.close()
+    def export_to_json_interactive(self, file_name):
+        self.dump(file_name)
 
-        print('Result has has been saved in: ' + file_name + '.zip')
         q = Questions()
 
         result = q.query_yes_no(
@@ -34,3 +27,19 @@ class ExportResult:
                 webbrowser.open(url)
 
         os.remove(file_name)
+
+
+    def export_to_json_headless(self, file_name):
+        self.dump(file_name)
+
+
+    def dump(self, file_name):
+        f = open(file_name, 'w+')
+        f.write(json.dumps(self.data.json_ready(), indent=4))
+        f.close()
+        # Zip the output
+        with ZipFile(file_name + '.zip', 'w', compression=8) as zip:
+            zip.write(file_name)
+            zip.close()
+
+        print('Result has has been saved in: ' + file_name + '.zip')

@@ -16,7 +16,11 @@ def convert_remote_url(remote_url):
 
 
 class Repository:
-    def __init__(self, repo_name, repo, commits):
+
+    # user_commit - consider only these user commits for extracting the repo information
+    # emails - merge these emails with these emails extracted from the repo
+    # reponame - name of the repo
+    def __init__(self, repo_name, repo, commits, user_commits):
         remotes = {}
         self.original_remotes = {}
         self.contributors = {}
@@ -48,6 +52,23 @@ class Repository:
                 'email': email
             }
             self.commits.append(commits[hash])
+
+        if user_commits:
+            print("Extracting usernames from user_commits..")
+            usernames = set()
+            key_list = list( user_commits.keys() )
+
+            for hash in key_list:
+                email = ""
+                if hash in commits.keys():
+                    if commits[hash].original_author_email is not None:
+                        email = commits[hash].original_author_email
+                    usernames.add(email)
+                else:
+                    print("Commit hash not found ==>",hash)
+                    user_commits.pop(hash, None)
+
+            self.local_usernames = list(usernames)
 
         self.obfuscate()
 

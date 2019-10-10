@@ -1,3 +1,6 @@
 .vscode/
 *.pyc
 repo_data.json.zip
+.DS_Store
+.idea/
+repo_data.json
