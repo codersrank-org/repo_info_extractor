@@ -86,3 +86,9 @@ If this for some reason does not work, just remove the repository and clone it a
 # Roadmap
 1. v0.3.0: Improve language recognition. The current dummy solution only checks the file extensions. 
 2. v0.4.0: Recognize external libraries. The current script only considers the programming languages. 
+
+# How to contribute?
+## Set up working eenvironment
+We recommend to use Python virtual environments. We still support Python2 and Python3 too. So you should have an environment for both.
+
+After you have the environment 
