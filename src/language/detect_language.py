@@ -11,6 +11,7 @@ supported_languages = {
     'HTML+Razor': ['cshtml'],
     'CSS': ['css'],
     'Elixir': ['ex', 'exs'],
+    'ERB': ['erb'],
     'Go': ['go'],
     'Haskell': ['lhs', 'lhs'],
     'HTML': ['html', 'htm'],

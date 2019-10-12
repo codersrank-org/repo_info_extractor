@@ -22,6 +22,8 @@ def test_languages_recognised():
         "/tmp/some_file.coffee") == "CoffeeScript"
     assert detect_language.detect_language("/tmp/some_file.ex") == "Elixir"
     assert detect_language.detect_language("/tmp/some_file.exs") == "Elixir"
+    assert detect_language.detect_language("/tmp/some_file.erb") == "ERB"
+    assert detect_language.detect_language("/tmp/some_file.html.erb") == "ERB"
     assert detect_language.detect_language("/tmp/some_file.go") == "Go"
     assert detect_language.detect_language("/tmp/some_file.lhs") == "Haskell"
     assert detect_language.detect_language("/tmp/some_file.html") == "HTML"
