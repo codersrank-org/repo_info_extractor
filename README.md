@@ -89,6 +89,15 @@ If this for some reason does not work, just remove the repository and clone it a
 
 # How to contribute?
 ## Set up working eenvironment
-We recommend to use Python virtual environments. We still support Python2 and Python3 too. So you should have an environment for both.
+We recommend to use Python virtual environments. We support Python2 and Python3 too. So you must have an environment for both and test your code with Python2 and Python3. 
 
-After you have the environment 
+### Run UnitTests 
+First you have to install nose2.
+```
+pip install nose2
+```
+
+After that use the make file to run the tests
+```
+make test
+```
