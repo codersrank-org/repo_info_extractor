@@ -84,8 +84,9 @@ git reset --hard
 If this for some reason does not work, just remove the repository and clone it again.
 
 # Roadmap
-1. v0.3.0: Improve language recognition. The current dummy solution only checks the file extensions. 
-2. v0.4.0: Recognize external libraries. The current script only considers the programming languages. 
+1. v0.3.0: Recognize external libraries. The current script only considers the programming languages. 
+2. v0.4.0: Improve language recognition. The current dummy solution only checks the file extensions. 
+
 
 # How to contribute?
 ## Set up working eenvironment
