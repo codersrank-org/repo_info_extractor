@@ -22,17 +22,17 @@ class Questions:
 
         return prompt(questions)
 
-    def ask_user_identity(self, authors, err, email=''):
+    def ask_user_identity(self, authors, err, default_email=''):
         choices = []
         for name, email in authors:
-            checked = email == email
+            checked = email == default_email
             choices.append({
                 'name': name + ' -> ' + email,
                 'checked': checked
             })
             
-        message = """The following contributors were found in the repository. 
-                     Select which ones you are. (With SPACE you can select more than one)"""
+        message = 'The following contributors were found in the repository. \
+            Select which ones you are. (With SPACE you can select more than one)'
         if err:
             message = "%s [ERROR] %s" % (message, err)
 
@@ -54,16 +54,14 @@ class Questions:
                 'name': repo
             })
             
-        message = """\
-The following repos where found in the given path. 
-Select which ones you want to analyze (With SPACE you can select more than one)
-"""
+        print("We found the following repos in the chosen path")
+
         
         questions = [
             {
                 'type': 'checkbox',
                 'name': 'chosen_repos',
-                'message': message,
+                'message': 'Select which ones you want to analyze (With SPACE you can select more than one)',
                 'choices': choices
             }
         ]

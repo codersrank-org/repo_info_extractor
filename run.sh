@@ -63,7 +63,7 @@ local_projects() {
   #repostring=`printf "%s➕" "${concatenated_repos[@]}" | sed -e 's/➕$//g' `
   repostring=`printf "%s|,|" "${concatenated_repos[@]}" | sed -e 's/|,|$//g' `
 
-  bash -c "source ./.pyenv/bin/activate; python src/main.py $other_args \"$repostring\" " ;\
+  python src/main.py $other_args "$repostring" ;\
   wait ;\
   return
  
