@@ -10,12 +10,14 @@ class ExportResult:
     def __init__(self, data):
         self.data = data
 
-    def export_to_json_interactive(self, file_name):
+    def export_to_json_interactive(self, file_name, skip_upload=False):
         self.dump(file_name)
 
         q = Questions()
-
-        result = q.query_yes_no(
+        if skip_upload != False:
+            result = False
+        else:
+            result = q.query_yes_no(
             'Do you want to upload the result to your profile automatically?')
         if result:
             response = uploadRepo(file_name + '.zip')
