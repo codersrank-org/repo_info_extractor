@@ -13,15 +13,19 @@ from datetime import datetime
 
 
 class AnalyzeLibraries:
-    def __init__(self, commit_list, authors, basedir):
+    def __init__(self, commit_list, author_emails, basedir):
         self.commit_list = commit_list
-        self.authors = authors
+        self.author_emails = author_emails
         self.basedir = basedir
 
     # Return a dict of commit -> language -> list of libraries
     def get_libraries(self):
         res = {}
-        commits = _filter_commits_by_authors(self.commit_list, self.authors)
+        commits = _filter_commits_by_author_emails(self.commit_list, self.author_emails)
+        if not commits:
+            print("[%s] No commmits found for the authored by selected users" % datetime.now().strftime("%d/%m/%Y %H:%M:%S"))	
+            return res
+
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
         
@@ -66,6 +70,7 @@ class AnalyzeLibraries:
 
             prog += 1
             progress(prog, total, 'Analyzing libraries')
+
             if libs_in_commit:
                 res[commit.hash] = libs_in_commit
 
@@ -74,8 +79,9 @@ class AnalyzeLibraries:
 
 
 # Return only commits authored by provided obfuscated_author_emails
-def _filter_commits_by_authors(commit_list, authors):
-    return list(filter(lambda x: (x.author_name, x.author_email) in authors, commit_list))
+def _filter_commits_by_author_emails(commit_list, author_emails):
+    print("[%s] Filtering commits by emails ." % datetime.now().strftime("%d/%m/%Y %H:%M:%S"), author_emails)	
+    return list(filter(lambda x:  x.author_email in author_emails, commit_list))
 
 
 def _get_temp_repo_path():

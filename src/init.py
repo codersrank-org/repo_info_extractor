@@ -62,14 +62,18 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
         
         if parse_libraries:
             # build authors from the selection
-            al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir)
-            libs = al.get_libraries()
-            # combine repo stats with libs used
-            for i in range(len(r.commits)):
-                c = r.commits[i]
-                if c.hash in libs.keys():
-                    r.commits[i].libraries = libs[c.hash]
-        
+            # extract email from name -> email list
+            author_emails = [i.split(' -> ', 1)[1] for i in r.local_usernames]
+
+            if author_emails:
+                al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir)
+                libs = al.get_libraries()
+                # combine repo stats with libs used
+                for i in range(len(r.commits)):
+                    c = r.commits[i]
+                    if c.hash in libs.keys():
+                        r.commits[i].libraries = libs[c.hash]
+            
         if not skip_obfuscation:
             r = obfuscate(r)
         er = ExportResult(r)
@@ -103,15 +107,20 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
     r.repo_name = reponame
 
     if parse_libraries:
-        # build authors from the selection
-        al = AnalyzeLibraries(r.commits, authors, repo.working_tree_dir)
-        libs = al.get_libraries()
+        # build authors from the the email list provided 
+        author_emails = []
+        for email in r.local_usernames:
+            author_emails.append(email)
+        
+        if author_emails:
+            al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir)
+            libs = al.get_libraries()
 
-        # combine repo stats with libs used
-        for i in range(len(r.commits)):
-            c = r.commits[i]
-            if c.hash in libs.keys():
-                r.commits[i].libraries = libs[c.hash]
+            # combine repo stats with libs used
+            for i in range(len(r.commits)):
+                c = r.commits[i]
+                if c.hash in libs.keys():
+                    r.commits[i].libraries = libs[c.hash]
 
     if not skip_obfuscation:
         r = obfuscate(r)
