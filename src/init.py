@@ -108,6 +108,8 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
 
     if parse_libraries:
         # build authors from the the email list provided 
+        # we are provided only emails in the headless mode
+        # TODO! Support both name -> email and email formats
         author_emails = []
         for email in r.local_usernames:
             author_emails.append(email)
