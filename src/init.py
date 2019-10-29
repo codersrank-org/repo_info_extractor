@@ -81,8 +81,6 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
     except KeyboardInterrupt:
         print ("Cancelled by user")
         return
-    except Exception:
-        return
 
 # user_commit - consider only these user commits for extracting the repo information
 # emails - merge these emails with these emails extracted from the repo

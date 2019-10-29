@@ -17,7 +17,7 @@ def extract_libraries(files):
     regex4 = re.compile(r'\"(.*?)\"', re.IGNORECASE)
     for f in files:
         try:
-            fr = open(f, 'r')
+            fr = open(file=f, mode='r', errors='ignore')
         except FileNotFoundError:
             # It is not found because it's been deleted in this commit
             # TODO! Handle lines add/deleted rather than rely on such shoehorning
