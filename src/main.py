@@ -39,8 +39,6 @@ def main():
     except KeyboardInterrupt:
         print ("Cancelled by user")
         os._exit(0)
-    except Exception:
-        os._exit(0)
 
 if __name__ == "__main__":
     import multiprocessing
