@@ -36,6 +36,7 @@ class AnalyzeRepo:
                     self.commit_list[commit.hexsha] = Commit(
                         commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
                 except:
+                    print("Could not decode commit meta")
                     continue
                 commit.tree = None
                 commit.parents = None
