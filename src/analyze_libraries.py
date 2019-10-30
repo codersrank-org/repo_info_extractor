@@ -23,18 +23,16 @@ class AnalyzeLibraries:
         res = {}
         commits = _filter_commits_by_author_emails(self.commit_list, self.author_emails)
         if not commits:
-            print("[%s] No commmits found for the authored by selected users" % datetime.now().strftime("%d/%m/%Y %H:%M:%S"))	
+            _log_info("No commmits found for the authored by selected users")
             return res
 
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
         
-        now = datetime.now()
-        print("[%s] Copying the repository to a temporary location, this can take a while..." % now.strftime("%d/%m/%Y %H:%M:%S"))	
+        _log_info("Copying the repository to a temporary location, this can take a while...")
 
         shutil.copytree(self.basedir, tmp_repo_path, symlinks=True)
-        now = datetime.now()
-        print("[%s] Finished copying the repository" % now.strftime("%d/%m/%Y %H:%M:%S"))	
+        _log_info("Finished copying the repository")
 
         # Initialise the next tmp directory as a repo and hard reset, just in case
         repo = git.Repo(tmp_repo_path)
@@ -42,7 +40,7 @@ class AnalyzeLibraries:
         try:
             repo.git.checkout('master')
         except git.exc.GitCommandError as err:
-            print("Cannot checkout master on repository")
+            _log_info("Cannot checkout master on repository: %s" % err)
         repo.git.reset('--hard')
 
         prog = 0
@@ -83,9 +81,12 @@ class AnalyzeLibraries:
 
 # Return only commits authored by provided obfuscated_author_emails
 def _filter_commits_by_author_emails(commit_list, author_emails):
-    print("[%s] Filtering commits by emails ." % datetime.now().strftime("%d/%m/%Y %H:%M:%S"), author_emails)	
+    _log_info("Filtering commits by emails: %s" % author_emails)
     return list(filter(lambda x:  x.author_email in author_emails, commit_list))
 
 
 def _get_temp_repo_path():
     return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
+
+def _log_info(message):
+    print("[%s] %s ." % message)	
