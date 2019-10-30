@@ -39,7 +39,10 @@ class AnalyzeLibraries:
         # Initialise the next tmp directory as a repo and hard reset, just in case
         repo = git.Repo(tmp_repo_path)
         repo.git.clean('-fd')
-        repo.git.checkout('master')
+        try:
+            repo.git.checkout('master')
+        except git.exc.GitCommandError as err:
+            print("Cannot checkout master on repository")
         repo.git.reset('--hard')
 
         prog = 0
