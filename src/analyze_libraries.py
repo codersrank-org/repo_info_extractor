@@ -46,34 +46,38 @@ class AnalyzeLibraries:
         prog = 0
         total = len(commits)
 
-        for commit in commits:
-            libs_in_commit = {}
-            files = [os.path.join(tmp_repo_path, x.file_name)
-                     for x in commit.changed_files]
-            for lang, extensions in supported_languages.items():
-                # we have extensions now, filter the list to only files with those extensions
-                lang_files = list(filter(lambda x: pathlib.Path(
-                    x).suffix[1:].lower() in extensions, files))
-                if lang_files:
-                    # if we go to this point, there were files modified in the language we support
-                    # check out the commit in our temporary branch
-                    repo.git.checkout(commit.hash)
-                    # now we need to run regex for imports for every single of such file
-                    # Load the language plugin that is responsible for parsing those files for libraries used
-                    parser = load_language(lang)
-                    # Only parse libraries if we support the current language
-                    if parser:
-                        if lang not in libs_in_commit.keys():
-                            libs_in_commit[lang] = []
+        try:
+            for commit in commits:
+                libs_in_commit = {}
+                files = [os.path.join(tmp_repo_path, x.file_name)
+                        for x in commit.changed_files]
+                for lang, extensions in supported_languages.items():
+                    # we have extensions now, filter the list to only files with those extensions
+                    lang_files = list(filter(lambda x: pathlib.Path(
+                        x).suffix[1:].lower() in extensions, files))
+                    if lang_files:
+                        # if we go to this point, there were files modified in the language we support
+                        # check out the commit in our temporary branch
+                        repo.git.checkout(commit.hash)
+                        # now we need to run regex for imports for every single of such file
+                        # Load the language plugin that is responsible for parsing those files for libraries used
+                        parser = load_language(lang)
+                        # Only parse libraries if we support the current language
+                        if parser:
+                            if lang not in libs_in_commit.keys():
+                                libs_in_commit[lang] = []
 
-                        libs_in_commit[lang].extend(
-                            parser.extract_libraries(lang_files))
+                            libs_in_commit[lang].extend(
+                                parser.extract_libraries(lang_files))
 
-            prog += 1
-            progress(prog, total, 'Analyzing libraries')
+                prog += 1
+                progress(prog, total, 'Analyzing libraries')
 
-            if libs_in_commit:
-                res[commit.hash] = libs_in_commit
+                if libs_in_commit:
+                    res[commit.hash] = libs_in_commit
+        except Exception as err:
+            print("Count not analyse libraries: %s" % err)
+            traceback.print_exc()
 
         shutil.rmtree(tmp_repo_path)
         return res

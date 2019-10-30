@@ -38,6 +38,7 @@ class AnalyzeRepo:
                 except:
                     print("Could not decode commit meta")
                     continue
+
                 commit.tree = None
                 commit.parents = None
                 self.commit_stats[commit.hexsha] = commit
