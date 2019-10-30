@@ -31,8 +31,12 @@ class AnalyzeRepo:
             for commit in commits:
                 if commit.hexsha in self.commit_list:
                     break
-                self.commit_list[commit.hexsha] = Commit(
-                    commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
+                # Try to solve decoding special characters problems
+                try:
+                    self.commit_list[commit.hexsha] = Commit(
+                        commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
+                except:
+                    continue
                 commit.tree = None
                 commit.parents = None
                 self.commit_stats[commit.hexsha] = commit
