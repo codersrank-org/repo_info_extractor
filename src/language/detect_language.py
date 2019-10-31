@@ -10,6 +10,7 @@ supported_languages = {
     'Clojure': ['clj'],
     'CoffeeScript': ['coffee'],
     'Crystal': ['cr'],
+    'Dart': ['dart'],
     'Groovy': ['groovy', 'gvy', 'gy', 'gsh'],
     'HTML+Razor': ['cshtml'],
     'Elixir': ['ex', 'exs'],
