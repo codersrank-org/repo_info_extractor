@@ -57,7 +57,7 @@ class AnalyzeLibraries:
                     if lang_files:
                         # if we go to this point, there were files modified in the language we support
                         # check out the commit in our temporary branch
-                        repo.git.checkout(commit.hash)
+                        repo.git.checkout(commit.hash, force=True)
                         # now we need to run regex for imports for every single of such file
                         # Load the language plugin that is responsible for parsing those files for libraries used
                         parser = load_language(lang)
