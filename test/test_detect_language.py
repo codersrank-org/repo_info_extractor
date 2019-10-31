@@ -20,6 +20,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.clj") == "Clojure"
     assert detect_language.detect_language(
         "/tmp/some_file.coffee") == "CoffeeScript"
+    assert detect_language.detect_language("/tmp/some_file.dart") == "Dart"
     assert detect_language.detect_language("/tmp/some_file.groovy") == "Groovy"
     assert detect_language.detect_language("/tmp/some_file.gsh") == "Groovy"
     assert detect_language.detect_language("/tmp/some_file.gvy") == "Groovy"
