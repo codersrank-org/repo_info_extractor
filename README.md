@@ -65,7 +65,7 @@ The provided Dockerfile builds an image that contains the Python script as well 
 multi-stage build functionality. The first stage installs the dependencies as well as all the required build tools. The second stage, runtime,
 just copies over the installled dependencies so that they can be used by the script.
 
-In order to build a new image out of it, run `build-docker.sh` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
+In order to build a new image out of it, run `make docker` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
 `codersrank/repo_info_extractor:latest` image.
 
 # Troubleshooting
@@ -84,5 +84,21 @@ git reset --hard
 If this for some reason does not work, just remove the repository and clone it again.
 
 # Roadmap
-1. v0.3.0: Improve language recognition. The current dummy solution only checks the file extensions. 
-2. v0.4.0: Recognize external libraries. The current script only considers the programming languages. 
+1. v0.3.0: Recognize external libraries. The current script only considers the programming languages. 
+2. v0.4.0: Improve language recognition. The current dummy solution only checks the file extensions. 
+
+
+# How to contribute?
+## Set up working eenvironment
+We recommend to use Python virtual environments. We support Python2 and Python3 too. So you must have an environment for both and test your code with Python2 and Python3. 
+
+### Run UnitTests 
+First you have to install nose2.
+```
+pip install nose2
+```
+
+After that use the make file to run the tests
+```
+make test
+```

@@ -1,44 +1,47 @@
 import argparse
-import git
+from init import initialize
+from pprint import pprint
 import os
-from export_result import ExportResult
-from analyze_repo import AnalyzeRepo
 from ui.questions import Questions
+
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('directory', help='Path to the repository. Example usage: run.sh path/to/directory')
-    parser.add_argument('--output', default='./repo_data.json', dest='output', help='Path to the JSON file that will contain the result')
-    parser.add_argument('--skip_obfuscation', default=False, dest='skip_obfuscation', help='If true it won\'t obfuscate the sensitive data such as emails and file names. Mostly for testing purpuse')
-    args = parser.parse_args()
+    parser.add_argument(
+        'directory', help='Path to the repository. Example usage: run.sh path/to/directory')
+    parser.add_argument('--output', default='./repo_data.json', dest='output',
+                        help='Path to the JSON file that will contain the result')
+    parser.add_argument('--skip_obfuscation', default=False, dest='skip_obfuscation', action='store_true',
+                        help='If true it won\'t obfuscate the sensitive data such as emails and file names. Mostly for testing purpuse')
+    parser.add_argument('--parse_libraries',  default=True, action='store_true',
+                        dest='parse_libraries', help='If true, used libraries will be parsed')
+    parser.add_argument('--email', default='',
+                        dest='email', help='If set, commits from this email are preselected on authors list')
+    parser.add_argument('--skip_upload',  default=False, action='store_true',
+                        dest='skip_upload', help="If true, don't prompt for inmediate upload")
+    try:
+        args = parser.parse_args()
+        folders=args.directory.split('|,|')
+        if len(folders) > 1:
+            q = Questions()
+            repos = q.ask_which_repos(folders)
+            if 'chosen_repos' not in repos or len(repos['chosen_repos']) == 0:
+                print("No repos chosen, will exit")
+            for repo in repos['chosen_repos']:
+                repo_name = os.path.basename(repo).replace(' ','_')
+                output=('./%s.json' % (repo_name))
+                initialize(repo, args.skip_obfuscation, output, args.parse_libraries, args.email, args.skip_upload)
+                print('Finished analyzing %s ' % (repo_name))
 
-    repo = git.Repo(args.directory)
-    ar = AnalyzeRepo(repo, args.skip_obfuscation)
-    q = Questions()
+        else:
+            initialize(args.directory, args.skip_obfuscation, args.output, args.parse_libraries, args.email, args.skip_upload)
 
-    print('Initialization...')
-    for branch in repo.branches:
-        ar.create_commits_entity_from_branch(branch.name)
-    ar.flag_duplicated_commits()
-    ar.get_commit_stats()
-    r = ar.create_repo_entity(args.directory)
-
-    # Ask the user if we cannot find remote URL
-    if r.primary_remote_url == '':
-        answer = q.ask_primary_remote_url(r)
-
-    identities = q.ask_user_identity(r)
-    MAX_LIMIT = 50
-    while len(identities['user_identity']) == 0 or len(identities['user_identity']) > MAX_LIMIT:
-        if len(identities['user_identity']) == 0:
-            print('Please select at least one.')
-        if len(identities['user_identity']) > MAX_LIMIT:
-            print('You cannot select more than', MAX_LIMIT)
-        identities = q.ask_user_identity(r)
-    r.local_usernames = identities['user_identity']
-    er = ExportResult(r)
-    er.export_to_json(args.output)
-
+    except KeyboardInterrupt:
+        print ("Cancelled by user")
+        os._exit(0)
 
 if __name__ == "__main__":
+    import multiprocessing
+    multiprocessing.set_start_method('spawn', True)
     main()
+
