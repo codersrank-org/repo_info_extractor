@@ -76,7 +76,6 @@ class AnalyzeLibraries:
                     res[commit.hash] = libs_in_commit
 
         except (Exception, KeyboardInterrupt) as err:
-            _log_info("File exception happened.")
             # make sure to clean up the tmp folder before dying
             _cleanup(tmp_repo_path)
             raise err
