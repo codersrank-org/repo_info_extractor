@@ -52,8 +52,8 @@ class AnalyzeLibraries:
                         for x in commit.changed_files]
                 for lang, extensions in supported_languages.items():
                     # we have extensions now, filter the list to only files with those extensions
-                    lang_files = list(filter(lambda x: pathlib.Path(
-                        x).suffix[1:].lower() in extensions, files))
+                    lang_files = list(filter(lambda x: (pathlib.Path(
+                        x).suffix[1:].lower() in extensions) and os.path.isfile(x), files))
                     if lang_files:
                         # if we go to this point, there were files modified in the language we support
                         # check out the commit in our temporary branch
@@ -85,7 +85,10 @@ class AnalyzeLibraries:
 
 def _cleanup(tmp_repo_path):
     _log_info("Deleting", tmp_repo_path)
-    shutil.rmtree(tmp_repo_path)
+    try:
+        shutil.rmtree(tmp_repo_path)
+    except (PermissionError, NotADirectoryError) as e:
+        _log_info("Error when deleting {}".format(str(e)))
 
 # Return only commits authored by provided obfuscated_author_emails
 def _filter_commits_by_author_emails(commit_list, author_emails):

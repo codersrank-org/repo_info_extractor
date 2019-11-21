@@ -13,16 +13,12 @@ def extract_libraries(files):
     # ES6 imports
     regex2 = re.compile(r'import\s*(?:.+ from)?\s?\(?[\'"](.+)[\'"]\)?;?\s', re.IGNORECASE)
     for f in files:
-        try:
-            fr = open(file=f, mode='r', errors='ignore')
-        except FileNotFoundError:
-            # It is not found because it's been deleted in this commit
-            # TODO! Handle lines add/deleted rather than rely on such shoehorning
-            continue
-        contents = ' '.join(fr.readlines())
-        matches = regex1.findall(contents)
-        matches.extend(regex2.findall(contents))
+        with open(file=f, mode='r', errors='ignore') as fr:
+
+            contents = ' '.join(fr.readlines())
+            matches = regex1.findall(contents)
+            matches.extend(regex2.findall(contents))
+
         if matches:
             res.extend(matches)
-        fr.close()
     return res
