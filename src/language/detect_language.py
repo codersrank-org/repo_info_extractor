@@ -1,13 +1,15 @@
 import os
 
 supported_languages = {
-    'JavaScript': ['js', 'jsx'],
+    '1C Enterprise': ['bsl', 'os'],
+    'Assembly': ['asm'],
     'Batchfile': ['bat'],
     'C': ['c'],
     'C++': ['cpp', 'cxx'],
     'C#': ['cs'],
     'CSS': ['css'],
     'Clojure': ['clj'],
+    'COBOL': ['cbl', 'cob', 'cpy'],
     'CoffeeScript': ['coffee'],
     'Crystal': ['cr'],
     'Dart': ['dart'],
@@ -15,6 +17,8 @@ supported_languages = {
     'HTML+Razor': ['cshtml'],
     'Elixir': ['ex', 'exs'],
     'ERB': ['erb'],
+    'F#': ['fs', 'fsi', 'fsx', 'fsscript'],
+    'Fortran': ['f90', 'f95', 'f03', 'f08', 'for'],
     'Go': ['go'],
     'Haskell': ['lhs', 'lhs'],
     'HTML': ['html', 'htm'],
@@ -37,6 +41,7 @@ supported_languages = {
     'Scala': ['scala'],
     'SCSS': ['scss'],
     'Shell': ['sh'],
+    'Smalltalk': ['st'],
     'Swift': ['swift'],
     'TypeScript': ['ts', 'tsx'],
     'Vue': ['vue'],
