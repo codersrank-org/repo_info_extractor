@@ -16,20 +16,16 @@ def extract_libraries(files):
     # Find libraries in a multi line import
     regex4 = re.compile(r'\"(.*?)\"', re.IGNORECASE)
     for f in files:
-        try:
-            fr = open(file=f, mode='r', errors='ignore')
-        except FileNotFoundError:
-            # It is not found because it's been deleted in this commit
-            # TODO! Handle lines add/deleted rather than rely on such shoehorning
-            continue
-        contents = ' '.join(fr.readlines())
-        matches = regex1.findall(contents)
-        matches.extend(regex2.findall(contents))
+        with open(file=f, mode='r', errors='ignore') as fr:
 
-        multiline_matches = (regex3.findall(contents))
-        for multiline_match in multiline_matches:
-            matches.extend(regex4.findall(multiline_match))
-        fr.close()
+            contents = ' '.join(fr.readlines())
+            matches = regex1.findall(contents)
+            matches.extend(regex2.findall(contents))
+
+            multiline_matches = (regex3.findall(contents))
+            for multiline_match in multiline_matches:
+                matches.extend(regex4.findall(multiline_match))
+
         if matches:
             res.extend(matches)
     return res
