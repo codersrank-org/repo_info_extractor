@@ -11,7 +11,7 @@ class Commit:
         self.original_author_email = author_email
         self.author_name = author_name
         self.author_email = author_email
-        self.created_at = created_at.strftime("%Y-%m-%d %H:%M:%S")
+        self.created_at = created_at.strftime("%Y-%m-%d %H:%M:%S %z")
         self.hash = hash
         self.parents = []
         for parent in parents:
