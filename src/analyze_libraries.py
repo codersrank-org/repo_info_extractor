@@ -9,6 +9,10 @@ from ui.progress import progress
 from language.loader import load as load_language
 from language.detect_language import supported_languages
 from datetime import datetime
+import logging
+import time
+
+module_logger = logging.getLogger("main.analyze_libraries")
 
 
 class AnalyzeLibraries:
@@ -27,7 +31,7 @@ class AnalyzeLibraries:
 
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
-        
+
         _log_info("Copying the repository to a temporary location, this can take a while...")
 
         shutil.copytree(self.basedir, tmp_repo_path, symlinks=True)
@@ -47,6 +51,8 @@ class AnalyzeLibraries:
 
         try:
             for commit in commits:
+                start = time.time()
+                module_logger.info("Current commit hash is {}.".format(commit.hash))
                 libs_in_commit = {}
                 files = [os.path.join(tmp_repo_path, x.file_name)
                          for x in commit.changed_files]
@@ -59,7 +65,16 @@ class AnalyzeLibraries:
                         # check out the commit in our temporary branch
                         repo.git.checkout(commit.hash, force=True)
                         # we need to filter again for files, that got deleted during the checkout
-                        lang_files_filtered = list(filter(lambda x: os.path.isfile(x), lang_files))
+                        # we also filter out tiles, which are larger than 2 MB to speed up the process
+                        lang_files_filtered = list(filter(lambda x:
+                                                          os.path.isfile(x), lang_files))
+
+                        total_size = sum(os.stat(f).st_size for f in lang_files_filtered)
+                        module_logger.info("The number of files in lang_files_filtered"
+                                           " is {0}, the total size is {1:.2f} MB".
+                                           format(
+                                                len(lang_files_filtered), total_size / (1024 ** 2)
+                                            ))
                         # now we need to run regex for imports for every single of such file
                         # Load the language plugin that is responsible for parsing those files for libraries used
                         parser = load_language(lang)
@@ -72,6 +87,8 @@ class AnalyzeLibraries:
                                 parser.extract_libraries(lang_files_filtered))
 
                 prog += 1
+                end = time.time()
+                module_logger.info("Time spent processing commit {0} was {1:.4f} seconds.".format(commit.hash, end-start))
                 progress(prog, total, 'Analyzing libraries')
 
                 if libs_in_commit:
@@ -85,6 +102,7 @@ class AnalyzeLibraries:
         _cleanup(tmp_repo_path)
         return res
 
+
 def _cleanup(tmp_repo_path):
     _log_info("Deleting", tmp_repo_path)
     try:
@@ -92,14 +110,16 @@ def _cleanup(tmp_repo_path):
     except (PermissionError, NotADirectoryError) as e:
         _log_info("Error when deleting {}".format(str(e)))
 
+
 # Return only commits authored by provided obfuscated_author_emails
 def _filter_commits_by_author_emails(commit_list, author_emails):
     _log_info("Filtering commits by emails: ", author_emails)
-    return list(filter(lambda x:  x.author_email in author_emails, commit_list))
+    return list(filter(lambda x: x.author_email in author_emails, commit_list))
 
 
 def _get_temp_repo_path():
-    return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
+    return os.path.join("D:/CodersRank/repo_info_extractor_test_data", str(uuid.uuid4()))
+
 
 def _log_info(message, *argv):
     timed_message = "[%s] %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), message)

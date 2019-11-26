@@ -3,6 +3,9 @@ from init import initialize
 from pprint import pprint
 import os
 from ui.questions import Questions
+import logging
+
+
 
 
 def main():
@@ -37,11 +40,22 @@ def main():
             initialize(args.directory, args.skip_obfuscation, args.output, args.parse_libraries, args.email, args.skip_upload)
 
     except KeyboardInterrupt:
-        print ("Cancelled by user")
+        print("Cancelled by user")
         os._exit(0)
 
+
 if __name__ == "__main__":
+    logger = logging.getLogger("main")
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler('repo2.log')
+    fh.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    logger.info("Initialized main logger.")
+
     import multiprocessing
     multiprocessing.set_start_method('spawn', True)
+    logger.info("Starting main...")
     main()
 
