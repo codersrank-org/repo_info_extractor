@@ -56,12 +56,9 @@ class AnalyzeLibraries:
                 libs_in_commit = {}
                 files = [os.path.join(tmp_repo_path, x.file_name)
                          for x in commit.changed_files]
-                # Estimate the summed size of the changed files in the commit. If too much, skip the commit altogether.
-                est_size = _estimate_changed_file_size(files)
-                if est_size > 5:
-                    module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
-                    continue
 
+                # Check if there are changed files in any language we recognize. If not, skip checkout. If we find
+                # a language, we only checkout once, not for every language
                 if _should_we_check_out(files):
                     co_start = time.time()
                     repo.git.checkout(commit.hash, force=True)
@@ -69,6 +66,12 @@ class AnalyzeLibraries:
                     module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
                 else:
                     module_logger.debug("No supported files changed, skipping checkout.")
+                    continue
+
+                # Estimate the summed size of the changed files in the commit. If too much, skip the commit altogether.
+                est_size = _estimate_changed_file_size(files)
+                if est_size > 5:
+                    module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
                     continue
 
                 module_logger.debug("Changed file list is {} MBs. Analyzing commit.".format(est_size))

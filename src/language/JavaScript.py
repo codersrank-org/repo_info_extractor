@@ -29,9 +29,11 @@ def extract_libraries(files):
             contents = ' '.join(lines)
             matches = regex1.findall(contents)
             matches.extend(regex2.findall(contents))
+
             end2 = time.time()
             js_logger.debug("Time spent on open for {0} is {1:.6f} seconds.".format(f, end1 - start1))
             js_logger.debug("Time spent processing {0} is {1:.6f} seconds.".format(f, end2 - start2))
         if matches:
+            js_logger.debug("Library found in {}. The first 20 chars of matches is {}".format(f, matches[0][0:20]))
             res.extend(matches)
     return res
