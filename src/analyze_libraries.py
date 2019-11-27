@@ -66,12 +66,16 @@ class AnalyzeLibraries:
                     module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
                 else:
                     module_logger.debug("No supported files changed, skipping checkout.")
+                    prog += 1
+                    progress(prog, total, 'Analyzing libraries')
                     continue
 
                 # Estimate the summed size of the changed files in the commit. If too much, skip the commit altogether.
                 est_size = _estimate_changed_file_size(files)
                 if est_size > 5:
                     module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
+                    prog += 1
+                    progress(prog, total, 'Analyzing libraries')
                     continue
 
                 module_logger.debug("Changed file list is {} MBs. Analyzing commit.".format(est_size))
