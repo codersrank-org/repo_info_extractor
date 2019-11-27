@@ -57,13 +57,24 @@ class AnalyzeLibraries:
                 files = [os.path.join(tmp_repo_path, x.file_name)
                          for x in commit.changed_files]
                 for lang, extensions in supported_languages.items():
+                    lang_files = list(filter(lambda x: (pathlib.Path(
+                        x).suffix[1:].lower() in extensions), files))
+                    if lang_files:
+                        co_start = time.time()
+                        repo.git.checkout(commit.hash, force=True)
+                        co_end = time.time()
+                        module_logger.info("Checkint out took {0:.6f} seconds.".format(co_end-co_start))
+                        break
+
+                for lang, extensions in supported_languages.items():
                     # we have extensions now, filter the list to only files with those extensions
                     lang_files = list(filter(lambda x: (pathlib.Path(
                         x).suffix[1:].lower() in extensions), files))
                     if lang_files:
+                        module_logger.info("Current language is {}, and extensions are{}".format(lang, extensions))
                         # if we go to this point, there were files modified in the language we support
                         # check out the commit in our temporary branch
-                        repo.git.checkout(commit.hash, force=True)
+                        # repo.git.checkout(commit.hash, force=True)
                         # we need to filter again for files, that got deleted during the checkout
                         # we also filter out tiles, which are larger than 2 MB to speed up the process
                         lang_files_filtered = list(filter(lambda x:
