@@ -57,6 +57,17 @@ class AnalyzeLibraries:
                 files = [os.path.join(tmp_repo_path, x.file_name)
                          for x in commit.changed_files]
 
+                # Estimate the summed size of the changed files in the commit. If too much, skip the commit altogether.
+                se_start = time.time()
+                est_size = _estimate_changed_file_size(files)
+                se_end = time.time()
+                module_logger.debug("Size estimation took {} seconds.".format(se_end - se_start))
+                if est_size > 5:
+                    module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
+                    prog += 1
+                    progress(prog, total, 'Analyzing libraries')
+                    continue
+
                 # Check if there are changed files in any language we recognize. If not, skip checkout. If we find
                 # a language, we only checkout once, not for every language
                 if _should_we_check_out(files):
@@ -66,17 +77,6 @@ class AnalyzeLibraries:
                     module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
                 else:
                     module_logger.debug("No supported files changed, skipping checkout.")
-                    prog += 1
-                    progress(prog, total, 'Analyzing libraries')
-                    continue
-
-                # Estimate the summed size of the changed files in the commit. If too much, skip the commit altogether.
-                se_start = time.time()
-                est_size = _estimate_changed_file_size(files)
-                se_end = time.time()
-                module_logger.debug("Size estimation took {} seconds.".format(se_end - se_start))
-                if est_size > 5:
-                    module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
                     prog += 1
                     progress(prog, total, 'Analyzing libraries')
                     continue
