@@ -71,7 +71,10 @@ class AnalyzeLibraries:
                     continue
 
                 # Estimate the summed size of the changed files in the commit. If too much, skip the commit altogether.
+                se_start = time.time()
                 est_size = _estimate_changed_file_size(files)
+                se_end = time.time()
+                module_logger.debug("Size estimation took {} seconds.".format(se_end - se_start))
                 if est_size > 5:
                     module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
                     prog += 1
