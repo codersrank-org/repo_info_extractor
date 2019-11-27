@@ -52,7 +52,7 @@ class AnalyzeLibraries:
         try:
             for commit in commits:
                 start = time.time()
-                module_logger.info("Current commit hash is {}.".format(commit.hash))
+                module_logger.debug("Current commit hash is {}.".format(commit.hash))
                 libs_in_commit = {}
                 files = [os.path.join(tmp_repo_path, x.file_name)
                          for x in commit.changed_files]
@@ -60,6 +60,15 @@ class AnalyzeLibraries:
                 est_size = _estimate_changed_file_size(files)
                 if est_size > 5:
                     module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
+                    continue
+
+                if _should_we_check_out(files):
+                    co_start = time.time()
+                    repo.git.checkout(commit.hash, force=True)
+                    co_end = time.time()
+                    module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
+                else:
+                    module_logger.debug("No supported files changed, skipping checkout.")
                     continue
 
                 module_logger.debug("Changed file list is {} MBs. Analyzing commit.".format(est_size))
@@ -71,10 +80,10 @@ class AnalyzeLibraries:
                         module_logger.debug("Current language is {}, and extensions are{}".format(lang, extensions))
                         # if we go to this point, there were files modified in the language we support
                         # check out the commit in our temporary branch
-                        co_start = time.time()
-                        repo.git.checkout(commit.hash, force=True)
-                        co_end = time.time()
-                        module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
+                        # co_start = time.time()
+                        # repo.git.checkout(commit.hash, force=True)
+                        # co_end = time.time()
+                        # module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
                         # we need to filter again for files, that got deleted during the checkout
                         # we also filter out tiles, which are larger than 2 MB to speed up the process
                         lang_files_filtered = list(filter(lambda x:
@@ -116,6 +125,14 @@ class AnalyzeLibraries:
 
         _cleanup(tmp_repo_path)
         return res
+
+def _should_we_check_out(file_list):
+    for lang, extensions in supported_languages.items():
+        lang_files = list(filter(lambda x: (pathlib.Path(
+            x).suffix[1:].lower() in extensions), file_list))
+        if lang_files:
+            return True
+        return False
 
 
 def _estimate_changed_file_size(file_list):
