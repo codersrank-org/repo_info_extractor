@@ -56,36 +56,38 @@ class AnalyzeLibraries:
                 libs_in_commit = {}
                 files = [os.path.join(tmp_repo_path, x.file_name)
                          for x in commit.changed_files]
-                for lang, extensions in supported_languages.items():
-                    lang_files = list(filter(lambda x: (pathlib.Path(
-                        x).suffix[1:].lower() in extensions), files))
-                    if lang_files:
-                        co_start = time.time()
-                        repo.git.checkout(commit.hash, force=True)
-                        co_end = time.time()
-                        module_logger.info("Checkint out took {0:.6f} seconds.".format(co_end-co_start))
-                        break
+                # Estimate the summed size of the changed files in the commit. If too much, skip the commit altogether.
+                est_size = _estimate_changed_file_size(files)
+                if est_size > 5:
+                    module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
+                    continue
 
+                module_logger.debug("Changed file list is {} MBs. Analyzing commit.".format(est_size))
                 for lang, extensions in supported_languages.items():
                     # we have extensions now, filter the list to only files with those extensions
                     lang_files = list(filter(lambda x: (pathlib.Path(
                         x).suffix[1:].lower() in extensions), files))
                     if lang_files:
-                        module_logger.info("Current language is {}, and extensions are{}".format(lang, extensions))
+                        module_logger.debug("Current language is {}, and extensions are{}".format(lang, extensions))
                         # if we go to this point, there were files modified in the language we support
                         # check out the commit in our temporary branch
-                        # repo.git.checkout(commit.hash, force=True)
+                        co_start = time.time()
+                        repo.git.checkout(commit.hash, force=True)
+                        co_end = time.time()
+                        module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
                         # we need to filter again for files, that got deleted during the checkout
                         # we also filter out tiles, which are larger than 2 MB to speed up the process
                         lang_files_filtered = list(filter(lambda x:
-                                                          os.path.isfile(x), lang_files))
+                                                          os.path.isfile(x)
+                                                          and os.stat(x).st_size < 2 * (1024**2)
+                                                          , lang_files))
 
                         total_size = sum(os.stat(f).st_size for f in lang_files_filtered)
-                        module_logger.info("The number of files in lang_files_filtered"
-                                           " is {0}, the total size is {1:.2f} MB".
-                                           format(
-                                                len(lang_files_filtered), total_size / (1024 ** 2)
-                                            ))
+                        module_logger.debug("The number of files in lang_files_filtered"
+                                            " is {0}, the total size is {1:.2f} MB".
+                                            format(
+                                                 len(lang_files_filtered), total_size / (1024 ** 2)
+                                             ))
                         # now we need to run regex for imports for every single of such file
                         # Load the language plugin that is responsible for parsing those files for libraries used
                         parser = load_language(lang)
@@ -99,7 +101,9 @@ class AnalyzeLibraries:
 
                 prog += 1
                 end = time.time()
-                module_logger.info("Time spent processing commit {0} was {1:.4f} seconds.".format(commit.hash, end-start))
+                module_logger.debug("Time spent processing commit {0} was {1:.4f} seconds.".format(
+                    commit.hash, end-start))
+
                 progress(prog, total, 'Analyzing libraries')
 
                 if libs_in_commit:
@@ -112,6 +116,16 @@ class AnalyzeLibraries:
 
         _cleanup(tmp_repo_path)
         return res
+
+
+def _estimate_changed_file_size(file_list):
+    total_size = 0
+    for file in file_list:
+        try:
+            total_size += os.stat(file).st_size / (1024**2)
+        except FileNotFoundError:
+            continue
+    return total_size
 
 
 def _cleanup(tmp_repo_path):
@@ -129,7 +143,8 @@ def _filter_commits_by_author_emails(commit_list, author_emails):
 
 
 def _get_temp_repo_path():
-    return os.path.join("D:/CodersRank/repo_info_extractor_test_data", str(uuid.uuid4()))
+    return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
+
 
 
 def _log_info(message, *argv):

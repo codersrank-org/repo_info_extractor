@@ -6,8 +6,6 @@ from ui.questions import Questions
 import logging
 
 
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -52,10 +50,10 @@ if __name__ == "__main__":
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)
     logger.addHandler(fh)
-    logger.info("Initialized main logger.")
+    logger.debug("Initialized main logger.")
 
     import multiprocessing
     multiprocessing.set_start_method('spawn', True)
-    logger.info("Starting main...")
+    logger.debug("Starting main...")
     main()
 
