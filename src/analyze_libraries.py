@@ -126,13 +126,14 @@ class AnalyzeLibraries:
         _cleanup(tmp_repo_path)
         return res
 
+
 def _should_we_check_out(file_list):
+
     for lang, extensions in supported_languages.items():
-        lang_files = list(filter(lambda x: (pathlib.Path(
-            x).suffix[1:].lower() in extensions), file_list))
+        lang_files = list(filter(lambda x: (pathlib.Path(x).suffix[1:].lower() in extensions), file_list))
         if lang_files:
             return True
-        return False
+    return False
 
 
 def _estimate_changed_file_size(file_list):
@@ -161,7 +162,6 @@ def _filter_commits_by_author_emails(commit_list, author_emails):
 
 def _get_temp_repo_path():
     return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
-
 
 
 def _log_info(message, *argv):
