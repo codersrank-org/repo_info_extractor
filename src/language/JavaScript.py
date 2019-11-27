@@ -14,9 +14,9 @@ def extract_libraries(files):
     res = []
     # regex for
     # require('abc') as well as const lib = require('abc') and others
-    regex1 = re.compile(r'require\(["\'](.+)["\']\);?\s', re.IGNORECASE)
+    # regex1 = re.compile(r'require\(["\'](.+)["\']\);?\s', re.IGNORECASE)
     # ES6 imports
-    regex2 = re.compile(r'import\s*(?:.+ from)?\s?\(?[\'"](.+)[\'"]\)?;?\s', re.IGNORECASE)
+    # regex2 = re.compile(r'import\s*(?:.+ from)?\s?\(?[\'"](.+)[\'"]\)?;?\s', re.IGNORECASE)
     for f in files:
         size = os.stat(f).st_size / (1024**2)
         js_logger.debug("Opening file {0}. The size of the file is {1:.4f} MB.".format(f, size))
@@ -27,8 +27,9 @@ def extract_libraries(files):
             js_logger.debug("# of line in {} is {}.".format(f, len(lines)))
             start2 = time.time()
             contents = ' '.join(lines)
-            matches = regex1.findall(contents)
-            matches.extend(regex2.findall(contents))
+            matches = contents[0:20]
+            # matches = regex1.findall(contents)
+            # matches.extend(regex2.findall(contents))
 
             end2 = time.time()
             js_logger.debug("Time spent on open for {0} is {1:.6f} seconds.".format(f, end1 - start1))
