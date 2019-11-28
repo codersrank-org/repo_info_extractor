@@ -66,7 +66,7 @@ class AnalyzeLibraries:
                     # or there are no changed files we recognize, we skip the commit (don't check out)
                     est_size = _estimate_changed_file_size(files)
                     module_logger.debug("Changed file list is {} MBs.".format(est_size))
-                    if (est_size < 10) and _should_we_check_out(files):
+                    if (est_size < 5) and _should_we_check_out(files):
 
                         module_logger.debug("Checking out and analyzing commit.")
                         co_start = time.time()

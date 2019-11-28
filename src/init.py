@@ -9,11 +9,11 @@ from ui.questions import Questions
 from obfuscator import obfuscate
 
 
-def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload, debug_logging, skip):
+def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload, debug_mode, skip):
 
     # Initialize logger
     logger = logging.getLogger("main")
-    if debug_logging:
+    if debug_mode:
         logger.setLevel(logging.DEBUG)
         fh = logging.FileHandler('extractor_debug_info.log')
         fh.setLevel(logging.DEBUG)

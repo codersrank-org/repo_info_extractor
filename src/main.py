@@ -19,10 +19,10 @@ def main():
                         dest='email', help='If set, commits from this email are preselected on authors list')
     parser.add_argument('--skip_upload',  default=False, action='store_true',
                         dest='skip_upload', help="If true, don't prompt for inmediate upload")
-    parser.add_argument('--debug_logging', default=False,
-                        dest='debug_logging', help="If true, print additional debug info into extractor_debug_info.log")
-    parser.add_argument('--skip', default=True, dest='skip',
-                        help='If false, do not skip any commits in analyze_libraries. May impact running time.')
+    parser.add_argument('--debug_mode', default=False, action='store_true',
+                        dest='debug_mode', help="Print additional debug info into extractor_debug_info.log")
+    parser.add_argument('--noskip', default=True, dest='skip', action='store_true',
+                        help='Do not skip any commits in analyze_libraries. May impact running time.')
     try:
         args = parser.parse_args()
         folders=args.directory.split('|,|')
@@ -35,12 +35,12 @@ def main():
                 repo_name = os.path.basename(repo).replace(' ','_')
                 output=('./%s.json' % (repo_name))
                 initialize(repo, args.skip_obfuscation, output, args.parse_libraries, args.email, args.skip_upload,
-                           args.debug_logging, args.skip)
+                           args.debug_mode, args.skip)
                 print('Finished analyzing %s ' % (repo_name))
 
         else:
             initialize(args.directory, args.skip_obfuscation, args.output,
-                       args.parse_libraries, args.email, args.skip_upload, args.debug_logging, args.skip)
+                       args.parse_libraries, args.email, args.skip_upload, args.debug_mode, args.skip)
 
     except KeyboardInterrupt:
         print("Cancelled by user")
