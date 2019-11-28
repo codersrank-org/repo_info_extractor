@@ -1,5 +1,6 @@
 import hashlib as md5
 import git
+import logging
 import os
 from export_result import ExportResult
 from analyze_repo import AnalyzeRepo
@@ -9,6 +10,17 @@ from obfuscator import obfuscate
 
 
 def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload):
+
+    # Initialize logger
+    logger = logging.getLogger("main")
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler('extractor_debug_info.log')
+    fh.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    logger.debug("Initialized main logger.")
+
     repo = git.Repo(directory)
     ar = AnalyzeRepo(repo)
     q = Questions()

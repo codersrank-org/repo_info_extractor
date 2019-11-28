@@ -3,7 +3,6 @@ from init import initialize
 from pprint import pprint
 import os
 from ui.questions import Questions
-import logging
 
 
 def main():
@@ -43,17 +42,7 @@ def main():
 
 
 if __name__ == "__main__":
-    logger = logging.getLogger("main")
-    logger.setLevel(logging.DEBUG)
-    fh = logging.FileHandler('repo2.log')
-    fh.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    logger.debug("Initialized main logger.")
-
     import multiprocessing
     multiprocessing.set_start_method('spawn', True)
-    logger.debug("Starting main...")
     main()
 
