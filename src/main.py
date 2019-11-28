@@ -21,7 +21,7 @@ def main():
                         dest='skip_upload', help="If true, don't prompt for inmediate upload")
     parser.add_argument('--debug_mode', default=False, action='store_true',
                         dest='debug_mode', help="Print additional debug info into extractor_debug_info.log")
-    parser.add_argument('--noskip', default=True, dest='skip', action='store_true',
+    parser.add_argument('--noskip', default=True, dest='skip', action='store_false',
                         help='Do not skip any commits in analyze_libraries. May impact running time.')
     try:
         args = parser.parse_args()

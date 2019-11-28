@@ -104,7 +104,7 @@ class AnalyzeLibraries:
                         # we also filter out tiles, which are larger than 2 MB to speed up the process
                         lang_files_filtered = list(filter(lambda x:
                                                           os.path.isfile(x)
-                                                          and os.stat(x).st_size < 5 * (1024**2)
+                                                          and os.stat(x).st_size < 2 * (1024**2)
                                                           , lang_files))
 
                         total_size = sum(os.stat(f).st_size for f in lang_files_filtered)
