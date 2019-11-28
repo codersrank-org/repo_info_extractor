@@ -29,8 +29,7 @@ class AnalyzeLibraries:
         if not commits:
             _log_info("No commmits found for the authored by selected users")
             return res
-        if not self.skip:
-            _log_info("Skipping is set to False. All commits and files will be evaluated. This may take time.")
+
 
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
@@ -51,6 +50,9 @@ class AnalyzeLibraries:
 
         prog = 0
         total = len(commits)
+
+        if not self.skip:
+            _log_info("Skipping is set to False. All commits and files will be evaluated. This may take time.")
 
         try:
             for commit in commits:
