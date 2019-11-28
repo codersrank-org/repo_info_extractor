@@ -16,10 +16,11 @@ module_logger = logging.getLogger("main.analyze_libraries")
 
 
 class AnalyzeLibraries:
-    def __init__(self, commit_list, author_emails, basedir):
+    def __init__(self, commit_list, author_emails, basedir, skip):
         self.commit_list = commit_list
         self.author_emails = author_emails
         self.basedir = basedir
+        self.skip = skip
 
     # Return a dict of commit -> language -> list of libraries
     def get_libraries(self):
@@ -57,31 +58,34 @@ class AnalyzeLibraries:
                 files = [os.path.join(tmp_repo_path, x.file_name)
                          for x in commit.changed_files]
 
-                # Estimate the summed size of the changed files in the commit. If too much, skip the commit altogether.
-                se_start = time.time()
-                est_size = _estimate_changed_file_size(files)
-                se_end = time.time()
-                module_logger.debug("Size estimation took {} seconds.".format(se_end - se_start))
-                if est_size > 5:
-                    module_logger.debug("Changed file list is {} MBs. Skipping commit.".format(est_size))
-                    prog += 1
-                    progress(prog, total, 'Analyzing libraries')
-                    continue
+                # if skip is not set to false in rargs, we may skip certain commits
+                if self.skip:
+                    # Estimate the summed size of the changed files in the commit. If changed files sum more than 10 MB
+                    # or there are no changed files we recognize, we skip the commit (don't check out)
+                    est_size = _estimate_changed_file_size(files)
+                    module_logger.debug("Changed file list is {} MBs.".format(est_size))
+                    if (est_size < 10) and _should_we_check_out(files):
 
-                # Check if there are changed files in any language we recognize. If not, skip checkout. If we find
-                # a language, we only checkout once, not for every language
-                if _should_we_check_out(files):
+                        module_logger.debug("Checking out and analyzing commit.")
+                        co_start = time.time()
+                        repo.git.checkout(commit.hash, force=True)
+                        co_end = time.time()
+                        module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
+
+                    else:
+                        module_logger.debug("Skipping commit.")
+                        prog += 1
+                        progress(prog, total, 'Analyzing libraries')
+                        continue
+
+                # if skip is set to false, we avaluate everything
+                else:
+                    module_logger.debug("Skipping set to false. Checking out and analyzing commit.")
                     co_start = time.time()
                     repo.git.checkout(commit.hash, force=True)
                     co_end = time.time()
                     module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
-                else:
-                    module_logger.debug("No supported files changed, skipping checkout.")
-                    prog += 1
-                    progress(prog, total, 'Analyzing libraries')
-                    continue
 
-                module_logger.debug("Changed file list is {} MBs. Analyzing commit.".format(est_size))
                 for lang, extensions in supported_languages.items():
                     # we have extensions now, filter the list to only files with those extensions
                     lang_files = list(filter(lambda x: (pathlib.Path(
@@ -98,7 +102,7 @@ class AnalyzeLibraries:
                         # we also filter out tiles, which are larger than 2 MB to speed up the process
                         lang_files_filtered = list(filter(lambda x:
                                                           os.path.isfile(x)
-                                                          and os.stat(x).st_size < 2 * (1024**2)
+                                                          and os.stat(x).st_size < 5 * (1024**2)
                                                           , lang_files))
 
                         total_size = sum(os.stat(f).st_size for f in lang_files_filtered)

@@ -9,11 +9,15 @@ from ui.questions import Questions
 from obfuscator import obfuscate
 
 
-def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload):
+def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload, debug_logging, skip):
 
     # Initialize logger
     logger = logging.getLogger("main")
-    logger.setLevel(logging.DEBUG)
+    if debug_logging:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.WARNING)
+
     fh = logging.FileHandler('extractor_debug_info.log')
     fh.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -78,7 +82,7 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
             author_emails = [i.split(' -> ', 1)[1] for i in r.local_usernames]
 
             if author_emails:
-                al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir)
+                al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir, skip)
                 libs = al.get_libraries()
                 # combine repo stats with libs used
                 for i in range(len(r.commits)):
