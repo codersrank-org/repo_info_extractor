@@ -78,7 +78,7 @@ class AnalyzeLibraries:
                         progress(prog, total, 'Analyzing libraries')
                         continue
 
-                # if skip is set to false, we avaluate everything
+                # if skip is set to false, we evaluate everything
                 else:
                     module_logger.debug("Skipping set to false. Checking out and analyzing commit.")
                     co_start = time.time()

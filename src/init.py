@@ -15,14 +15,14 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
     logger = logging.getLogger("main")
     if debug_logging:
         logger.setLevel(logging.DEBUG)
+        fh = logging.FileHandler('extractor_debug_info.log')
+        fh.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
     else:
         logger.setLevel(logging.WARNING)
 
-    fh = logging.FileHandler('extractor_debug_info.log')
-    fh.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
     logger.debug("Initialized main logger.")
 
     repo = git.Repo(directory)
