@@ -29,6 +29,8 @@ class AnalyzeLibraries:
         if not commits:
             _log_info("No commmits found for the authored by selected users")
             return res
+        if not self.skip:
+            _log_info("Skipping is set to False. All commits will be evaluated. This may take time.")
 
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
