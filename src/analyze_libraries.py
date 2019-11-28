@@ -30,7 +30,7 @@ class AnalyzeLibraries:
             _log_info("No commmits found for the authored by selected users")
             return res
         if not self.skip:
-            _log_info("Skipping is set to False. All commits will be evaluated. This may take time.")
+            _log_info("Skipping is set to False. All commits and files will be evaluated. This may take time.")
 
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
@@ -102,10 +102,14 @@ class AnalyzeLibraries:
                         # module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
                         # we need to filter again for files, that got deleted during the checkout
                         # we also filter out tiles, which are larger than 2 MB to speed up the process
-                        lang_files_filtered = list(filter(lambda x:
-                                                          os.path.isfile(x)
-                                                          and os.stat(x).st_size < 2 * (1024**2)
-                                                          , lang_files))
+                        if self.skip:
+                            lang_files_filtered = list(filter(lambda x:
+                                                              os.path.isfile(x)
+                                                              and os.stat(x).st_size < 2 * (1024**2)
+                                                              , lang_files))
+                        else:
+                            lang_files_filtered = list(filter(lambda x:
+                                                              os.path.isfile(x), lang_files))
 
                         total_size = sum(os.stat(f).st_size for f in lang_files_filtered)
                         module_logger.debug("The number of files in lang_files_filtered"
