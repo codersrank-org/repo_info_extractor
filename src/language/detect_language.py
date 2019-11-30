@@ -40,6 +40,7 @@ supported_languages = {
     'Ruby': ['rb'],
     'Rust': ['rs'],
     'Scala': ['scala'],
+    'SASS': ['sass'],
     'SCSS': ['scss'],
     'Shell': ['sh'],
     'Smalltalk': ['st'],
