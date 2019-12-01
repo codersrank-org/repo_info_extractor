@@ -57,7 +57,10 @@ class AnalyzeLibraries:
                     if lang_files:
                         # if we go to this point, there were files modified in the language we support
                         # check out the commit in our temporary branch
-                        repo.git.checkout(commit.hash, force=True)
+                        try:
+                            repo.git.checkout(commit.hash, force=True)
+                        except Exception:
+                            continue
                         # we need to filter again for files, that got deleted during the checkout
                         lang_files_filtered = list(filter(lambda x: os.path.isfile(x), lang_files))
                         # now we need to run regex for imports for every single of such file
