@@ -98,10 +98,7 @@ class AnalyzeLibraries:
                         module_logger.debug("Current language is {}, and extensions are{}".format(lang, extensions))
                         # if we go to this point, there were files modified in the language we support
                         # check out the commit in our temporary branch
-                        # co_start = time.time()
-                        # repo.git.checkout(commit.hash, force=True)
-                        # co_end = time.time()
-                        # module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
+
                         # we need to filter again for files, that got deleted during the checkout
                         # we also filter out tiles, which are larger than 2 MB to speed up the process
                         if self.skip:
