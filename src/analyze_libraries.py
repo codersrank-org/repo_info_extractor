@@ -66,36 +66,28 @@ class AnalyzeLibraries:
                 files = [os.path.join(tmp_repo_path, x.file_name)
                          for x in commit.changed_files]
 
-                # if skip is not set to false in rargs, we may skip certain commits
-                if self.skip:
-                    # Estimate the summed size of the changed files in the commit. If changed files sum more than 10 MB
-                    # or there are no changed files we recognize, we skip the commit (don't check out)
-                    est_size = _estimate_changed_file_size(files)
-                    module_logger.debug("Changed file list is {} MBs.".format(est_size))
-                    if (est_size < self.commit_size_limit) and _should_we_check_out(files):
+                # if skip is not set to false in args, we may skip certain commits
+                # Estimate the summed size of the changed files in the commit. If changed files sum more than 10 MB
+                # or there are no changed files we recognize, we skip the commit (don't check out)
+                est_size = _estimate_changed_file_size(files)
+                module_logger.debug("Changed file list is {} MBs.".format(est_size))
+                module_logger.debug("Skip is set to {}.".format(self.skip))
+                if not self.skip or ((est_size < self.commit_size_limit) and _should_we_check_out(files)):
 
-                        module_logger.debug("Checking out and analyzing commit.")
-                        co_start = time.time()
-                        try:
-                            repo.git.checkout(commit.hash, force=True)
-                        except Exception:
-                            continue
-                        co_end = time.time()
-                        module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
-
-                    else:
-                        module_logger.debug("Skipping commit.")
-                        prog += 1
-                        progress(prog, total, 'Analyzing libraries')
-                        continue
-
-                # if skip is set to false, we evaluate everything
-                else:
-                    module_logger.debug("Skipping set to false. Checking out and analyzing commit.")
+                    module_logger.debug("Checking out and analyzing commit.")
                     co_start = time.time()
-                    repo.git.checkout(commit.hash, force=True)
+                    try:
+                        repo.git.checkout(commit.hash, force=True)
+                    except Exception:
+                        continue
                     co_end = time.time()
                     module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
+
+                else:
+                    module_logger.debug("Skipping commit.")
+                    prog += 1
+                    progress(prog, total, 'Analyzing libraries')
+                    continue
 
                 for lang, extensions in supported_languages.items():
                     # we have extensions now, filter the list to only files with those extensions
@@ -112,13 +104,13 @@ class AnalyzeLibraries:
                         # we need to filter again for files, that got deleted during the checkout
                         # we also filter out tiles, which are larger than 2 MB to speed up the process
                         if self.skip:
-                            lang_files_filtered = list(filter(lambda x:
-                                                              os.path.isfile(x)
-                                                              and os.stat(x).st_size < self.file_size_limit * (1024**2)
-                                                              , lang_files))
+                            filter_func = (lambda x: os.path.isfile(x) and os.stat(x).st_size
+                                           < self.file_size_limit * (1024**2))
                         else:
-                            lang_files_filtered = list(filter(lambda x:
-                                                              os.path.isfile(x), lang_files))
+                            filter_func = (lambda x: os.path.isfile(x))
+
+                        lang_files_filtered = list(filter(filter_func
+                                                          , lang_files))
 
                         total_size = sum(os.stat(f).st_size for f in lang_files_filtered)
                         module_logger.debug("The number of files in lang_files_filtered"
