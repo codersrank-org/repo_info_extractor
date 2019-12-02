@@ -4,6 +4,7 @@ import hashlib as md5
 import tempfile
 import shutil
 import git
+import stat
 import uuid
 from ui.progress import progress
 from language.loader import load as load_language
@@ -167,10 +168,17 @@ def _estimate_changed_file_size(file_list):
     return total_size
 
 
+def _remove_readonly(func, path, _):
+
+    """Clear the readonly bit and reattempt the removal"""
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
 def _cleanup(tmp_repo_path):
     _log_info("Deleting", tmp_repo_path)
     try:
-        shutil.rmtree(tmp_repo_path)
+        shutil.rmtree(tmp_repo_path, onerror=_remove_readonly)
     except (PermissionError, NotADirectoryError) as e:
         _log_info("Error when deleting {}".format(str(e)))
 
