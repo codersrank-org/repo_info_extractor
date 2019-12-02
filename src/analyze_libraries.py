@@ -160,7 +160,8 @@ def _estimate_changed_file_size(file_list):
     for file in file_list:
         try:
             total_size += os.stat(file).st_size / (1024**2)
-        except FileNotFoundError:
+        except (FileNotFoundError, Exception) as e:
+            _log_info("Error when getting file size {}".format(str(e)))
             continue
     return total_size
 
@@ -176,7 +177,7 @@ def _cleanup(tmp_repo_path):
     _log_info("Deleting", tmp_repo_path)
     try:
         shutil.rmtree(tmp_repo_path, onerror=_remove_readonly)
-    except (PermissionError, NotADirectoryError) as e:
+    except (PermissionError, NotADirectoryError, Exception) as e:
         _log_info("Error when deleting {}".format(str(e)))
 
 
