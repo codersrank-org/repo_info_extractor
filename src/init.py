@@ -103,7 +103,8 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
 # user_commit - consider only these user commits for extracting the repo information
 # emails - merge these emails with these emails extracted from the repo
 # reponame - name of the repo
-def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, user_commits, reponame):
+def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, user_commits, reponame,
+                  skip, commit_size_limit, file_size_limit):
     repo = git.Repo(directory)
     ar = AnalyzeRepo(repo)
     q = Questions()
@@ -131,7 +132,8 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
             author_emails.append(email)
         
         if author_emails:
-            al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir)
+            al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
+                                  skip, commit_size_limit, file_size_limit)
             libs = al.get_libraries()
 
             # combine repo stats with libs used
