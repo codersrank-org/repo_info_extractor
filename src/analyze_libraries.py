@@ -16,11 +16,13 @@ module_logger = logging.getLogger("main.analyze_libraries")
 
 
 class AnalyzeLibraries:
-    def __init__(self, commit_list, author_emails, basedir, skip):
+    def __init__(self, commit_list, author_emails, basedir, skip, commit_size_limit, file_size_limit):
         self.commit_list = commit_list
         self.author_emails = author_emails
         self.basedir = basedir
         self.skip = skip
+        self.commit_size_limit = commit_size_limit
+        self.file_size_limit = file_size_limit
 
     # Return a dict of commit -> language -> list of libraries
     def get_libraries(self):
@@ -29,7 +31,6 @@ class AnalyzeLibraries:
         if not commits:
             _log_info("No commmits found for the authored by selected users")
             return res
-
 
         # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
         tmp_repo_path = _get_temp_repo_path()
@@ -53,6 +54,9 @@ class AnalyzeLibraries:
 
         if not self.skip:
             _log_info("Skipping is set to False. All commits and files will be evaluated. This may take time.")
+        else:
+            _log_info("Commit size limit is {} MBs and file size limit is {} MBs.".format(
+                self.commit_size_limit, self.file_size_limit))
 
         try:
             for commit in commits:
@@ -68,11 +72,14 @@ class AnalyzeLibraries:
                     # or there are no changed files we recognize, we skip the commit (don't check out)
                     est_size = _estimate_changed_file_size(files)
                     module_logger.debug("Changed file list is {} MBs.".format(est_size))
-                    if (est_size < 5) and _should_we_check_out(files):
+                    if (est_size < self.commit_size_limit) and _should_we_check_out(files):
 
                         module_logger.debug("Checking out and analyzing commit.")
                         co_start = time.time()
-                        repo.git.checkout(commit.hash, force=True)
+                        try:
+                            repo.git.checkout(commit.hash, force=True)
+                        except Exception:
+                            continue
                         co_end = time.time()
                         module_logger.debug("Checking out took {0:.6f} seconds.".format(co_end - co_start))
 
@@ -107,7 +114,7 @@ class AnalyzeLibraries:
                         if self.skip:
                             lang_files_filtered = list(filter(lambda x:
                                                               os.path.isfile(x)
-                                                              and os.stat(x).st_size < 2 * (1024**2)
+                                                              and os.stat(x).st_size < self.file_size_limit * (1024**2)
                                                               , lang_files))
                         else:
                             lang_files_filtered = list(filter(lambda x:

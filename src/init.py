@@ -9,7 +9,8 @@ from ui.questions import Questions
 from obfuscator import obfuscate
 
 
-def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload, debug_mode, skip):
+def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload, debug_mode, skip,
+               commit_size_limit, file_size_limit):
 
     # Initialize logger
     logger = logging.getLogger("main")
@@ -82,7 +83,8 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
             author_emails = [i.split(' -> ', 1)[1] for i in r.local_usernames]
 
             if author_emails:
-                al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir, skip)
+                al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
+                                      skip, commit_size_limit, file_size_limit)
                 libs = al.get_libraries()
                 # combine repo stats with libs used
                 for i in range(len(r.commits)):

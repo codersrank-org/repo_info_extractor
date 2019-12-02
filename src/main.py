@@ -23,6 +23,10 @@ def main():
                         dest='debug_mode', help="Print additional debug info into extractor_debug_info.log")
     parser.add_argument('--noskip', default=True, dest='skip', action='store_false',
                         help='Do not skip any commits in analyze_libraries. May impact running time.')
+    parser.add_argument('--commit_size_limit', default=5, type=int,
+                        help='If the estimated size of the changed files is bigger than this, we skip the commit')
+    parser.add_argument('--file_size_limit', default=2, type=int,
+                        help='The library analyzer skips files bigger than this limit')
     try:
         args = parser.parse_args()
         folders=args.directory.split('|,|')
@@ -35,12 +39,13 @@ def main():
                 repo_name = os.path.basename(repo).replace(' ','_')
                 output=('./%s.json' % (repo_name))
                 initialize(repo, args.skip_obfuscation, output, args.parse_libraries, args.email, args.skip_upload,
-                           args.debug_mode, args.skip)
+                           args.debug_mode, args.skip, args.commit_size_limit, args.file_size_limit)
                 print('Finished analyzing %s ' % (repo_name))
 
         else:
             initialize(args.directory, args.skip_obfuscation, args.output,
-                       args.parse_libraries, args.email, args.skip_upload, args.debug_mode, args.skip)
+                       args.parse_libraries, args.email, args.skip_upload, args.debug_mode, args.skip,
+                       args.commit_size_limit, args.file_size_limit)
 
     except KeyboardInterrupt:
         print("Cancelled by user")
