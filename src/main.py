@@ -19,7 +19,7 @@ def main():
                         dest='email', help='If set, commits from this email are preselected on authors list')
     parser.add_argument('--skip_upload',  default=False, action='store_true',
                         dest='skip_upload', help="If true, don't prompt for inmediate upload")
-    parser.add_argument('--debug_mode', default=False, action='store_true',
+    parser.add_argument('--debug_mode', default=True, action='store_true',
                         dest='debug_mode', help="Print additional debug info into extractor_debug_info.log")
     parser.add_argument('--noskip', default=True, dest='skip', action='store_false',
                         help='Do not skip any commits in analyze_libraries. May impact running time.')
