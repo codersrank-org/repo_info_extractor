@@ -1,5 +1,6 @@
 import hashlib as md5
 import git
+import logging
 import os
 from export_result import ExportResult
 from analyze_repo import AnalyzeRepo
@@ -8,7 +9,23 @@ from ui.questions import Questions
 from obfuscator import obfuscate
 
 
-def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload):
+def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload, debug_mode, skip,
+               commit_size_limit, file_size_limit):
+
+    # Initialize logger
+    logger = logging.getLogger("main")
+    if debug_mode:
+        logger.setLevel(logging.DEBUG)
+        fh = logging.FileHandler('extractor_debug_info.log')
+        fh.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
+    else:
+        logger.setLevel(logging.WARNING)
+
+    logger.debug("Initialized main logger.")
+
     repo = git.Repo(directory)
     ar = AnalyzeRepo(repo)
     q = Questions()
@@ -66,7 +83,8 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
             author_emails = [i.split(' -> ', 1)[1] for i in r.local_usernames]
 
             if author_emails:
-                al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir)
+                al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
+                                      skip, commit_size_limit, file_size_limit)
                 libs = al.get_libraries()
                 # combine repo stats with libs used
                 for i in range(len(r.commits)):
@@ -85,7 +103,8 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
 # user_commit - consider only these user commits for extracting the repo information
 # emails - merge these emails with these emails extracted from the repo
 # reponame - name of the repo
-def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, user_commits, reponame):
+def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, user_commits, reponame,
+                  skip, commit_size_limit, file_size_limit):
     repo = git.Repo(directory)
     ar = AnalyzeRepo(repo)
     q = Questions()
@@ -113,7 +132,8 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
             author_emails.append(email)
         
         if author_emails:
-            al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir)
+            al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
+                                  skip, commit_size_limit, file_size_limit)
             libs = al.get_libraries()
 
             # combine repo stats with libs used

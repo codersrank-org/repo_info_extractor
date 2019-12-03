@@ -19,6 +19,14 @@ def main():
                         dest='email', help='If set, commits from this email are preselected on authors list')
     parser.add_argument('--skip_upload',  default=False, action='store_true',
                         dest='skip_upload', help="If true, don't prompt for inmediate upload")
+    parser.add_argument('--debug_mode', default=True, action='store_true',
+                        dest='debug_mode', help="Print additional debug info into extractor_debug_info.log")
+    parser.add_argument('--noskip', default=False, dest='skip', action='store_false',
+                        help='Do not skip any commits in analyze_libraries. May impact running time.')
+    parser.add_argument('--commit_size_limit', default=5, type=int,
+                        help='If the estimated size of the changed files is bigger than this, we skip the commit')
+    parser.add_argument('--file_size_limit', default=2, type=int,
+                        help='The library analyzer skips files bigger than this limit')
     try:
         args = parser.parse_args()
         folders=args.directory.split('|,|')
@@ -30,15 +38,19 @@ def main():
             for repo in repos['chosen_repos']:
                 repo_name = os.path.basename(repo).replace(' ','_')
                 output=('./%s.json' % (repo_name))
-                initialize(repo, args.skip_obfuscation, output, args.parse_libraries, args.email, args.skip_upload)
+                initialize(repo, args.skip_obfuscation, output, args.parse_libraries, args.email, args.skip_upload,
+                           args.debug_mode, args.skip, args.commit_size_limit, args.file_size_limit)
                 print('Finished analyzing %s ' % (repo_name))
 
         else:
-            initialize(args.directory, args.skip_obfuscation, args.output, args.parse_libraries, args.email, args.skip_upload)
+            initialize(args.directory, args.skip_obfuscation, args.output,
+                       args.parse_libraries, args.email, args.skip_upload, args.debug_mode, args.skip,
+                       args.commit_size_limit, args.file_size_limit)
 
     except KeyboardInterrupt:
-        print ("Cancelled by user")
+        print("Cancelled by user")
         os._exit(0)
+
 
 if __name__ == "__main__":
     import multiprocessing
