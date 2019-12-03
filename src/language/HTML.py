@@ -18,12 +18,6 @@ class HTMLExtractor(HTMLParser):
                         self.imports["CSS"] = []
                     self.imports["CSS"].append(value.split("/")[-1])
 
-    #     print "Encountered a start tag:", tag
-    # def handle_endtag(self, tag):
-    #     print "Encountered an end tag :", tag
-    # def handle_data(self, data):
-    #     print "Encountered some data  :", data
-
 def extract_libraries(files):
     """Extracts a list of imports that were used in the files
 
