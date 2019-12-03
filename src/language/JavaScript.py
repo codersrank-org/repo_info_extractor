@@ -29,4 +29,8 @@ def extract_libraries(files):
 
         if matches:
             res.extend(matches)
+        
+    # remove relative imports
+    res = [x for x in res if ".." not in x and "./" not in x] 
+
     return {"JavaScript": res}
