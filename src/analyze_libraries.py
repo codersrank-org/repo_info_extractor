@@ -123,6 +123,8 @@ class AnalyzeLibraries:
                         if parser:
                             mapped_libs = parser.extract_libraries(lang_files_filtered).items()
                             for lang, libraries in mapped_libs:
+                                if len(libraries) == 0:
+                                    continue
                                 if lang not in libs_in_commit.keys():
                                     libs_in_commit[lang] = []
                                 libs_in_commit[lang].extend(libraries)
