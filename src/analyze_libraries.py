@@ -56,7 +56,7 @@ class AnalyzeLibraries:
         if not self.skip:
             _log_info("Skipping is set to False. All commits and files will be evaluated. This may take time.")
         else:
-            _log_info("Commit size limit is {} MBs and file size limit is {} MBs.".format(
+            _log_info("Commit size limit is {} MB and file size limit is {} MB.".format(
                 self.commit_size_limit, self.file_size_limit))
 
         try:
@@ -163,7 +163,7 @@ def _estimate_changed_file_size(file_list):
         try:
             total_size += os.stat(file).st_size / (1024**2)
         except (FileNotFoundError, Exception) as e:
-            _log_info("Error when getting file size {}".format(str(e)))
+            module_logger.debug("Error when getting file size {}".format(str(e)))
             continue
     return total_size
 
