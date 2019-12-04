@@ -121,11 +121,13 @@ class AnalyzeLibraries:
                         parser = load_language(lang)
                         # Only parse libraries if we support the current language
                         if parser:
-                            if lang not in libs_in_commit.keys():
-                                libs_in_commit[lang] = []
-
-                            libs_in_commit[lang].extend(
-                                parser.extract_libraries(lang_files_filtered))
+                            mapped_libs = parser.extract_libraries(lang_files_filtered).items()
+                            for lang, libraries in mapped_libs:
+                                if len(libraries) == 0:
+                                    continue
+                                if lang not in libs_in_commit.keys():
+                                    libs_in_commit[lang] = []
+                                libs_in_commit[lang].extend(libraries)
 
                 prog += 1
                 end = time.time()

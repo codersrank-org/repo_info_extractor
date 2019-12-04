@@ -7,31 +7,24 @@ def test_extract_libraries():
     files = ['fixtures/JavaScript.js']
     fq_files = [os.path.join(dir_path, f) for f in files]
     libs = extract_libraries(fq_files)
-    assert libs == [
+    assert len(libs) == 1
+    assert libs["JavaScript"] == [
         'lib1', 
         'lib2', 
         'lib3',
         'lib4',
-        './lib5',
-        './lib6',
         'lib7', 
         'lib8', 
         'lib9',
         'lib10',
-        './lib11',
-        './lib12',
         'lib13', 
         'lib14', 
         'lib15',
         'lib16',
-        './lib17',
-        './lib18',
         'lib19', 
         'lib20', 
         'lib21',
         'lib22',
-        './lib23',
-        './lib24',
         'lib25', 
         'lib26', 
         'lib27',

@@ -3,14 +3,23 @@ import logging
 import time
 import os
 
-"""
-Extract a list of JS libraries used from a fully qualified paths of files
-"""
-
 js_logger = logging.getLogger("main.analyze_libraries.javascript")
 
 
 def extract_libraries(files):
+    """Extracts a list of imports that were used in the files
+
+    Parameters
+    ----------
+    files : []string
+        Full paths to files that need to be analysed
+
+    Returns
+    -------
+    dict
+        imports that were used in the provided files, mapped against the language
+    """
+
     res = []
     # regex for
     # require('abc') as well as const lib = require('abc') and others
@@ -36,4 +45,8 @@ def extract_libraries(files):
         if matches:
             js_logger.debug("Library found in {}. The first 20 chars of matches is {}".format(f, matches[0][0:20]))
             res.extend(matches)
-    return res
+
+    # remove relative imports
+    res = [x for x in res if ".." not in x and "./" not in x]
+
+    return {"JavaScript": res}
