@@ -37,8 +37,10 @@ class AnalyzeLibraries:
         tmp_repo_path = _get_temp_repo_path()
 
         _log_info("Copying the repository to a temporary location, this can take a while...")
-
-        shutil.copytree(self.basedir, tmp_repo_path, symlinks=True)
+        try:
+            shutil.copytree(self.basedir, tmp_repo_path, symlinks=True)
+        except shutil.Error as e:
+            module_logger.debug("Shutil error messages: {}.".format(str(e)))
         _log_info("Finished copying the repository to", tmp_repo_path)
 
         # Initialise the next tmp directory as a repo and hard reset, just in case
@@ -48,7 +50,11 @@ class AnalyzeLibraries:
             repo.git.checkout('master')
         except git.exc.GitCommandError as err:
             _log_info("Cannot checkout master on repository: ", err)
-        repo.git.reset('--hard')
+
+        try:
+            repo.git.reset('--hard')
+        except git.exc.GitCommandError as err:
+            _log_info("Cannot reset repository: ", err)
 
         prog = 0
         total = len(commits)
