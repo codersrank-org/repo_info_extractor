@@ -3,7 +3,7 @@ from language import detect_language
 
 def test_ext_lang_map_built():
     # Just some extensions to ensure the ext to lang map was populated
-    extensions = ['js', 'go', 'py']
+    extensions = ['js', 'go', 'py', 'html']
     for ext in extensions:
         assert ext in detect_language._ext_lang
 

@@ -1,10 +1,19 @@
 import re
 
-"""
-Extract a list of Go libraries used from a fully qualified paths of files
-"""
-
 def extract_libraries(files):
+    """Extracts a list of imports that were used in the files
+
+    Parameters
+    ----------
+    files : []string
+        Full paths to files that need to be analysed
+
+    Returns
+    -------
+    dict
+        imports that were used in the provided files, mapped against the language
+    """
+
     res = []
     # regex for imports like this: import _ "github.com/user/repo/..."
     regex1 = re.compile(r'import[\t ]*(?:[_\.].*)?[\t ]?\(?"(.+)"\)?;?\s', re.IGNORECASE)
@@ -28,4 +37,4 @@ def extract_libraries(files):
 
         if matches:
             res.extend(matches)
-    return res
+    return {"Go": res}
