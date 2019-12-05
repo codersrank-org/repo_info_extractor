@@ -61,8 +61,7 @@ import ("lib42")
 import ('lib43');
 import ("lib44");
 
-const socket = new WebSocket('ws://localhost:8080');
-const socket = new WebSocket("ws://localhost:8080");
+const socket = new WebSocket(process.env.WEBSOCKET_URL)
 
 import'lib45'
 import"lib46"

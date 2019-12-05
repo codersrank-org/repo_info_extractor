@@ -42,7 +42,7 @@ def extract_libraries(files):
             if "// @flow" in contents:
                 matches.extend(["flowjs"])
 
-            if "new WebSocket(\"ws://" in contents or "new WebSocket('ws://":
+            if "new WebSocket(" in contents:
                 matches.extend(["websocketjs"])
 
             end2 = time.time()
