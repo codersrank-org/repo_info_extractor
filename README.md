@@ -94,7 +94,7 @@ If this for some reason does not work, just remove the repository and clone it a
 
 # How to contribute?
 ## Set up working eenvironment
-We recommend to use Python virtual environments. We only support Python3, but please check you code in all major versions of Python3 starting with Python3.5.
+We recommend to use Python virtual environments. We only support Python3, but please test your code in all major versions of Python3 starting with Python3.5.
 
 ### Run UnitTests 
 First you have to install nose2.
