@@ -54,5 +54,5 @@ def test_extract_libraries():
         'lib51',
         'lib52',
         'lib53',
-        'flow.js'
+        'flowjs'
         ], "Should extract all libraries used"
