@@ -43,7 +43,7 @@ def extract_libraries(files):
                 matches.extend(["flowjs"])
 
             if "new WebSocket(\"ws://" in contents or "new WebSocket('ws://":
-                matches.extend(["websocketsjs"])
+                matches.extend(["websocketjs"])
 
             end2 = time.time()
             js_logger.debug("Time spent on open for {0} is {1:.6f} seconds.".format(f, end1 - start1))

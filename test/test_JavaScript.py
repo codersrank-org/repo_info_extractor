@@ -55,5 +55,5 @@ def test_extract_libraries():
         'lib52',
         'lib53',
         'flowjs',
-        'websocketsjs'
+        'websocketjs'
         ], "Should extract all libraries used"
