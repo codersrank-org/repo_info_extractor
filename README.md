@@ -21,7 +21,7 @@ cd repo_info_extractor
 ```
 
 ## Docker approach
-If using this approach, the host machine does not need to have any tools installed apart of Docker. Generating the repository information is as easy as:
+If using this approach, the host machine does not need to have any tools installed apart from Docker. Generating the repository information is as easy as:
 
 ### OSX / Linux
 ```
@@ -63,7 +63,7 @@ dir
 # Dockerfile
 The provided Dockerfile builds an image that contains the Python script as well as its dependencies. To keep the final image size low, it leverages the 
 multi-stage build functionality. The first stage installs the dependencies as well as all the required build tools. The second stage, runtime,
-just copies over the installled dependencies so that they can be used by the script.
+just copies over the installed dependencies so that they can be used by the script.
 
 In order to build a new image out of it, run `make docker` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
 `codersrank/repo_info_extractor:latest` image.
@@ -89,11 +89,11 @@ If this for some reason does not work, just remove the repository and clone it a
 
 
 # How to contribute?
-## Set up working eenvironment
-We recommend to use Python virtual environments. We support Python2 and Python3 too. So you must have an environment for both and test your code with Python2 and Python3. 
+## Set up working environment
+We recommend using Python virtual environments. We support Python2 and Python3 too. So you must have an environment for both and test your code with Python2 and Python3. 
 
 ### Run UnitTests 
-First you have to install nose2.
+First, you have to install nose2.
 ```
 pip install nose2
 ```
