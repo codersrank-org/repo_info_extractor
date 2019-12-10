@@ -103,8 +103,20 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
 # user_commit - consider only these user commits for extracting the repo information
 # emails - merge these emails with these emails extracted from the repo
 # reponame - name of the repo
-def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, user_commits, reponame,
+def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, debug_mode, user_commits, reponame,
                   skip, commit_size_limit, file_size_limit):
+    # Initialize logger
+    logger = logging.getLogger("main")
+    if debug_mode:
+        logger.setLevel(logging.DEBUG)
+        fh = logging.FileHandler('extractor_debug_info.log')
+        fh.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
+    else:
+        logger.setLevel(logging.WARNING)
+
     repo = git.Repo(directory)
     ar = AnalyzeRepo(repo)
     q = Questions()
