@@ -37,8 +37,10 @@ class AnalyzeLibraries:
         tmp_repo_path = _get_temp_repo_path()
 
         _log_info("Copying the repository to a temporary location, this can take a while...")
-
-        shutil.copytree(self.basedir, tmp_repo_path, symlinks=True)
+        try:
+            shutil.copytree(self.basedir, tmp_repo_path, symlinks=True)
+        except shutil.Error as e:
+            module_logger.debug("Shutil error messages: {}.".format(str(e)))
         _log_info("Finished copying the repository to", tmp_repo_path)
 
         # Initialise the next tmp directory as a repo and hard reset, just in case
@@ -48,7 +50,11 @@ class AnalyzeLibraries:
             repo.git.checkout('master')
         except git.exc.GitCommandError as err:
             _log_info("Cannot checkout master on repository: ", err)
-        repo.git.reset('--hard')
+
+        try:
+            repo.git.reset('--hard')
+        except git.exc.GitCommandError as err:
+            _log_info("Cannot reset repository: ", err)
 
         prog = 0
         total = len(commits)
@@ -56,7 +62,7 @@ class AnalyzeLibraries:
         if not self.skip:
             _log_info("Skipping is set to False. All commits and files will be evaluated. This may take time.")
         else:
-            _log_info("Commit size limit is {} MBs and file size limit is {} MBs.".format(
+            _log_info("Commit size limit is {} MB and file size limit is {} MB.".format(
                 self.commit_size_limit, self.file_size_limit))
 
         try:
@@ -163,7 +169,7 @@ def _estimate_changed_file_size(file_list):
         try:
             total_size += os.stat(file).st_size / (1024**2)
         except (FileNotFoundError, Exception) as e:
-            _log_info("Error when getting file size {}".format(str(e)))
+            module_logger.debug("Error when getting file size {}".format(str(e)))
             continue
     return total_size
 
