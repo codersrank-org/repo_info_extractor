@@ -34,7 +34,11 @@ run-docker.bat <path to the repository>
 ```
 
 ## Using Python on the host machine approach
-First, be sure you have Python and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip)
+First, be sure you have Python and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip). We only support Python3,
+so if using pre-isntalled python, please check the version with:
+```
+python -V
+```
 ### OSX
 ```
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
@@ -89,8 +93,10 @@ If this for some reason does not work, just remove the repository and clone it a
 
 
 # How to contribute?
+
 ## Set up working environment
-We recommend using Python virtual environments. We support Python2 and Python3 too. So you must have an environment for both and test your code with Python2 and Python3. 
+We recommend using Python virtual environments. We only support Python3, but please test your code in all major versions of Python3 starting with Python3.5.
+
 
 ### Run UnitTests 
 First, you have to install nose2.
