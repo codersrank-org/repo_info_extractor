@@ -53,6 +53,7 @@ import whatever from "lib36";
 // Import the entire module
 import 'lib37'
 import "lib38"
+// @flow
 import 'lib39';
 import "lib40";
 import ('lib41')

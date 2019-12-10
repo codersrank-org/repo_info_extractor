@@ -39,6 +39,9 @@ def extract_libraries(files):
             matches = regex1.findall(contents)
             matches.extend(regex2.findall(contents))
 
+            if "// @flow" in contents:
+                matches.extend(["flowjs"])
+
             end2 = time.time()
             js_logger.debug("Time spent on open for {0} is {1:.6f} seconds.".format(f, end1 - start1))
             js_logger.debug("Time spent processing {0} is {1:.6f} seconds.".format(f, end2 - start2))
