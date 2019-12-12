@@ -2,6 +2,7 @@ import argparse
 from init import initialize
 from pprint import pprint
 import os
+from pathlib import Path,PurePosixPath
 from ui.questions import Questions
 
 
@@ -27,21 +28,32 @@ def main():
                         help='If the estimated size of the changed files is bigger than this, we skip the commit')
     parser.add_argument('--file_size_limit', default=2, type=int,
                         help='The library analyzer skips files bigger than this limit')
+    parser.add_argument('--depth',  default=1,  dest='depth', help="Search repos recursively up to this depth from <directory>")
+
     try:
         args = parser.parse_args()
-        folders=args.directory.split('|,|')
+        folders=[]
+        directory=Path(args.directory)
+        if(args.depth!=1):
+            for folder in directory.glob('*/*.git'):
+                folders.append('%s' % (folder.parent))
+
+        output=args.output.replace('.json','')
         if len(folders) > 1:
+            os.makedirs('%s' %(directory.name), mode=0o777, exist_ok=True)
             q = Questions()
+
             repos = q.ask_which_repos(folders)
             if 'chosen_repos' not in repos or len(repos['chosen_repos']) == 0:
                 print("No repos chosen, will exit")
+                os._exit(0)
             for repo in repos['chosen_repos']:
                 repo_name = os.path.basename(repo).replace(' ','_')
-                output=('./%s.json' % (repo_name))
+                output=('./%s/%s.json' % (directory.name, repo_name))
+                # Avoid aborting the batch if one analysis is cancelled
                 initialize(repo, args.skip_obfuscation, output, args.parse_libraries, args.email, args.skip_upload,
                            args.debug_mode, args.skip, args.commit_size_limit, args.file_size_limit)
                 print('Finished analyzing %s ' % (repo_name))
-
         else:
             initialize(args.directory, args.skip_obfuscation, args.output,
                        args.parse_libraries, args.email, args.skip_upload, args.debug_mode, args.skip,

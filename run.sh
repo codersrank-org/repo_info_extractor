@@ -60,10 +60,7 @@ local_projects() {
       echo "  You specified the ${BBRIGHT}--dry${RESET} flag."
       return
   fi
-  #repostring=`printf "%s➕" "${concatenated_repos[@]}" | sed -e 's/➕$//g' `
-  repostring=`printf "%s|,|" "${concatenated_repos[@]}" | sed -e 's/|,|$//g' `
-
-  python src/main.py $other_args "$repostring" ;\
+  python src/main.py $other_args --depth=$depth "$folder" ;\
   wait ;\
   return
  
