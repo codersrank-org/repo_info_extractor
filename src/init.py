@@ -74,6 +74,10 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
         identities_err = None
         identities = q.ask_user_identity(authors, identities_err, email)
         MAX_LIMIT = 50
+        # If the user aborts the prompt with CTRL+C, avoid crashing and return instead
+        if 'user_identity' not in identities:
+            print('No authors detected, will ignore this repo')
+            return
         while len(identities['user_identity']) == 0 or len(identities['user_identity']) > MAX_LIMIT:
             if len(identities['user_identity']) == 0:
                 identities_err = 'Please select at least one author'
