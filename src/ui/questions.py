@@ -3,7 +3,7 @@ import sys
 
 def sort_by_checked_and_email(d):
     """ Sort by author match, then email. """
-    email=d['name'].split(' -> ', 1)[1]
+    email=d['name'].split(' -> ', 1)[1].lower()
     checked=d['checked']
     order = '1'+email
     if(checked==True):
@@ -64,7 +64,7 @@ class Questions:
             
         print("We found the following repos in the chosen path")
 
-        sorted_choices = sorted(choices, key= lambda x: x['name'])
+        sorted_choices = sorted(choices, key= lambda x: x['name'].lower())
         questions = [
             {
                 'type': 'checkbox',

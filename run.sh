@@ -15,6 +15,10 @@ BPURPLE=`tput bold && tput setaf 5`
 BCYAN=`tput bold && tput setaf 6`
 BBRIGHT=`tput bold && tput setaf 7`
 
+
+cr_green=`tput setaf 73`
+cr_blue=`tput setaf 25`
+
 RESET=`tput sgr0`
 exitfn () {
     trap SIGINT              
@@ -24,6 +28,33 @@ exitfn () {
 
 trap "exitfn" INT
 
+print_logo() {
+  echo
+  echo -e "${cr_blue}                                          ':'   ${cr_green}                                ${RESET}"
+  echo -e "${cr_blue}                                       .+ymo     ${cr_green}     .+/:.                     ${RESET}"
+  echo -e "${cr_blue}                                    -ohmmms'     ${cr_green}    '++++++/-'                 ${RESET}"
+  echo -e "${cr_blue}                                ':sdmmmmmh'     ${cr_green}    '/+++++++++/-.              ${RESET}"
+  echo -e "${cr_blue}                             '/ymmmmmmmmd.     ${cr_green}     /++++++++++++++:-'          ${RESET}"
+  echo -e "${cr_blue}                          .+hmmmmmmmmmmm-       ${cr_green}   :++++++++++++++++++/-'       ${RESET}"
+  echo -e "${cr_blue}                       -odmmmmmmmmmmmmm/        ${cr_green}   -:+++++++++++++++++++++:.    ${RESET}"
+  echo -e "${cr_blue}                   ':sdmmmmmmmmmmmmmmm+         ${cr_green}      .-/+++++++++++++++++++/'  ${RESET}"
+  echo -e "${cr_blue}                ./ymmmmmmmmmmmmmmmmmmo         ${cr_green}          '-:+++++++++++++++++-  ${RESET}"
+  echo -e "${cr_blue}             -+hmmmmmmmmmmmmmmmmmds/'         ${cr_green}              /++++++++++++++++-  ${RESET}"
+  echo -e "${cr_blue}         ':odmmmmmmmmmmmmmmmmmho-           ${cr_green}            '.:++++++++++++++++++.  ${RESET}"
+  echo -e "${cr_blue}      '/smmmmmmmmmmmmmmmmmmy/.                ${cr_green}       '-/++++++++++++++++++/-'   ${RESET}"
+  echo -e "${cr_blue}    /ymmmmmmmmmmmmmmmmmds:'                ${cr_green}      '.:+++++++++++++++++++:-'      ${RESET}"
+  echo -e "${cr_blue}   ommmmmmmmmmmmmmmmd+-                   ${cr_green}    .-/++++++++++++++++++/:.          ${RESET}"
+  echo -e "${cr_blue}   ymmmmmmmmmmmmmmmm+                    ${cr_green}  .:+++++++++++++++++++/-'             ${RESET}"
+  echo -e "${cr_blue}   ymmmmmmmmmmmmmmmmmds/'              ${cr_green}   :+++++++++++++++++/:.'                ${RESET}"
+  echo -e "${cr_blue}   .hmmmmmmmmmmmmmmmmmmmmho:'         ${cr_green}   -+++++++++++++++++:                    ${RESET}"
+  echo -e "${cr_blue}     .+ymmmmmmmmmmmmmmmmmmmmms       ${cr_green}   -+++++++++++++++++++:'                  ${RESET}"
+  echo -e "${cr_blue}        ':sdmmmmmmmmmmmmmmmmd-      ${cr_green}   .+++++++++++++++++++++/'                 ${RESET}"
+  echo -e "${cr_blue}            .+ymmmmmmmmmmmmm:       ${cr_green}  .++++++++/-/+++++++++++++-                ${RESET}"
+  echo -e "${cr_blue}               ':ohmmmmmmmm/      ${cr_green}   '++++++:.   ':+++++++++++++:'              ${RESET}"
+  echo -e "${cr_blue}                   ./smmmmo      ${cr_green}   '/++/-'        .+++++++++++++/'             ${RESET}"
+  echo -e "${cr_blue}                       -++      ${cr_green}    /:.'            ':++++++++++++/             ${RESET}"
+  echo
+}
 parameter_definition() {
   echo -e " ${BBRIGHT} $1 ${RESET}    $2  $3"
 }
@@ -111,6 +142,10 @@ while getopts "$optspec" optchar; do
 
                 help)
                     print_help
+                    exit 0
+                    ;;
+                logo)
+                    print_logo
                     exit 0
                     ;;
                 *)
