@@ -1,6 +1,14 @@
 from whaaaaat import style_from_dict, Token, prompt, print_json, default_style, Separator
 import sys
 
+def sort_by_checked_and_email(d):
+    """ Sort by author match, then email. """
+    email=d['name'].split(' -> ', 1)[1]
+    checked=d['checked']
+    order = '1'+email
+    if(checked==True):
+        order = '0'+email
+    return order
 
 class Questions:
 
@@ -30,7 +38,7 @@ class Questions:
                 'name': name + ' -> ' + email,
                 'checked': checked
             })
-            
+        choices.sort(key=sort_by_checked_and_email)
         message = 'The following contributors were found in the repository. \
             Select which ones you are. (With SPACE you can select more than one)'
         if err:
@@ -56,13 +64,13 @@ class Questions:
             
         print("We found the following repos in the chosen path")
 
-        
+        sorted_choices = sorted(choices, key= lambda x: x['name'])
         questions = [
             {
                 'type': 'checkbox',
                 'name': 'chosen_repos',
                 'message': 'Select which ones you want to analyze (With SPACE you can select more than one)',
-                'choices': choices
+                'choices': sorted_choices
             }
         ]
 
