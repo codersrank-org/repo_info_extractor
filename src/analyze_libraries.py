@@ -11,42 +11,53 @@ from language.loader import load as load_language
 from language.detect_language import supported_languages
 from datetime import datetime
 import logging
-import fnmatch
 import time
 
 module_logger = logging.getLogger("main.analyze_libraries")
 
 
 class AnalyzeLibraries:
-    def __init__(self, commit_list, author_emails, basedir, skip, commit_size_limit, file_size_limit, headless=False):
+    def __init__(self, commit_list, author_emails, basedir, skip, commit_size_limit, file_size_limit):
         self.commit_list = commit_list
         self.author_emails = author_emails
         self.basedir = basedir
         self.skip = skip
         self.commit_size_limit = commit_size_limit
         self.file_size_limit = file_size_limit
-        self.headless = headless
 
     # Return a dict of commit -> language -> list of libraries
     def get_libraries(self):
-
         res = {}
         commits = _filter_commits_by_author_emails(self.commit_list, self.author_emails)
         if not commits:
             _log_info("No commmits found for the authored by selected users")
             return res
 
-        # If we are in headless mode, we don't copy the repo to temp location
-        if self.headless:
-            tmp_repo_path = self.basedir
-            repo = git.Repo(tmp_repo_path)
-        else:
-            # Before we do anything, copy the repo to
-            # a temporary location so that we don't mess with the original repo
-            tmp_repo_path = _get_temp_repo_path()
-            repo = self._initialize_repository(tmp_repo_path)
+        # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
+        tmp_repo_path = _get_temp_repo_path()
+
+        _log_info("Copying the repository to a temporary location, this can take a while...")
+        try:
+            shutil.copytree("%s/.git" % (self.basedir),
+                            "%s/.git" % ( tmp_repo_path),
+                            symlinks=True)
+
+        except shutil.Error as e:
+            module_logger.debug("Shutil error messages: {}.".format(str(e)))
+        _log_info("Finished copying the repository to", tmp_repo_path)
 
         # Initialise the next tmp directory as a repo and hard reset, just in case
+        repo = git.Repo(tmp_repo_path)
+        repo.git.clean('-fd')
+        try:
+            repo.git.checkout('master')
+        except git.exc.GitCommandError as err:
+            _log_info("Cannot checkout master on repository: ", err)
+
+        try:
+            repo.git.reset('--hard')
+        except git.exc.GitCommandError as err:
+            _log_info("Cannot reset repository: ", err)
 
         prog = 0
         total = len(commits)
@@ -139,53 +150,11 @@ class AnalyzeLibraries:
 
         except (Exception, KeyboardInterrupt) as err:
             # make sure to clean up the tmp folder before dying
-            # if we are in headless mode, it is not necessary to cleanup,
-            # the repo will be deleted later
-            if not self.headless:
-                _cleanup(tmp_repo_path)
-
+            _cleanup(tmp_repo_path)
             raise err
 
-        if not self.headless:
-            _cleanup(tmp_repo_path)
-
+        _cleanup(tmp_repo_path)
         return res
-
-    def _initialize_repository(self, tmp_repo_path):
-        """
-        Copy the repository to a new temporary location and create a new git.repo object from
-        the new path.
-        """
-
-        _log_info("Copying the repository to a temporary location, this can take a while...")
-        try:
-            shutil.copytree(self.basedir, tmp_repo_path, symlinks=True, ignore=_ignore_gitignore(self.basedir))
-        except shutil.Error as e:
-            module_logger.debug("Shutil error messages: {}.".format(str(e)))
-
-        # Make sure that the .git folder gets copied, even if it's in .gitignore
-        if not os.path.exists(os.path.join(tmp_repo_path, ".git")):
-            try:
-                shutil.copytree(os.path.join(self.basedir, ".git"),
-                                os.path.join(tmp_repo_path, ".git"), symlinks=True)
-            except shutil.Error as e:
-                module_logger.debug("Shutil error when copying .git; {}".format(str(e)))
-
-        _log_info("Finished copying the repository to", tmp_repo_path)
-
-        repo = git.Repo(tmp_repo_path)
-        repo.git.clean('-fd')
-        try:
-            repo.git.checkout('master')
-        except git.exc.GitCommandError as err:
-            _log_info("Cannot checkout master on repository: ", err)
-
-        try:
-            repo.git.reset('--hard')
-        except git.exc.GitCommandError as err:
-            _log_info("Cannot reset repository: ", err)
-
-        return repo
 
 
 def _should_we_check_out(file_list):
@@ -236,29 +205,3 @@ def _get_temp_repo_path():
 def _log_info(message, *argv):
     timed_message = "[%s] %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), message)
     print(timed_message, *argv)
-
-
-def _ignore_gitignore(basedir):
-    """
-    Function that can be used as copytree() ignore parameter using a glob style parameter.
-    Reads the .gitignore (if exists) and adding it to an ignore array.
-    """
-    if os.path.isfile(basedir+'/.gitignore'):
-        with open(basedir+'/.gitignore') as f:
-            gitignores = f.readlines()
-    else:
-        gitignores = []
-
-    gitignores = [x.strip() for x in gitignores]
-    filtered = []
-    for pattern in gitignores:
-        if (pattern != "" and pattern[0] != "#"): # Strip comments and linebreaks
-            filtered.append(pattern.rstrip('/').lstrip('/')) # Remove first and last char slashes to comply w/ glob
-    gitignores = filtered
-
-    def _ignore_gitignore(path, names):
-        ignored_names = []
-        for pattern in gitignores:
-            ignored_names.extend(fnmatch.filter(names, pattern))
-        return set(ignored_names)
-    return _ignore_gitignore
