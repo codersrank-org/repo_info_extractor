@@ -57,6 +57,8 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.m") == "MATLAB"
     assert detect_language.detect_language(
         "/tmp/some_file.mm") == "Objective-C"
+    assert detect_language.detect_language("/tmp/some_file.pkb") == "PLSQL"
+    assert detect_language.detect_language("/tmp/some_file.pks") == "PLSQL"    
     assert detect_language.detect_language("/tmp/some_file.pl") == "Perl"
     assert detect_language.detect_language("/tmp/some_file.php") == "PHP"
     assert detect_language.detect_language(
