@@ -16,6 +16,7 @@ supported_languages = {
     'Groovy': ['groovy', 'gvy', 'gy', 'gsh'],
     'HTML+Razor': ['cshtml'],
     'Elixir': ['ex', 'exs'],
+    'Elm': ['elm'],
     'ERB': ['erb'],
     'F#': ['fs', 'fsi', 'fsx', 'fsscript'],
     'Fortran': ['f90', 'f95', 'f03', 'f08', 'for'],
