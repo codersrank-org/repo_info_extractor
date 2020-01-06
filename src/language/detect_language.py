@@ -35,6 +35,7 @@ supported_languages = {
     'Objective-C': ['mm'],
     'Perl': ['pl'],
     'PHP': ['php'],
+    'PLSQL': ['pks', 'pkb'],
     'Protocol Buffer': ['proto'],
     'Python': ['py'],
     'R': ['r'],
