@@ -5,6 +5,22 @@ import os
 from pathlib import Path,PurePosixPath
 from ui.questions import Questions
 
+def fast_scandir(dirname,maxdepth,depth=0):
+    # get all folders under dirname
+    subfolders= [f.path for f in os.scandir(dirname) if f.is_dir()]
+    # filter the ones that end with '.git'
+    gitfolder=list(filter(lambda gf: gf.endswith('.git'),subfolders))
+    # if there are any...
+    if(len(gitfolder)>0):
+        # we found a repo, return its path
+        return gitfolder
+    # we haven't found a repo, and we reached max depth
+    elif (depth+1>=maxdepth):
+        return subfolders
+    # recurse into next depth level of subfolders
+    for subfolder in list(subfolders):
+        subfolders.extend(fast_scandir(subfolder,maxdepth,depth+1))
+    return subfolders
 
 def main():
     parser = argparse.ArgumentParser()
@@ -35,11 +51,14 @@ def main():
         folders=[]
         directory=Path(args.directory)
         if(args.depth!=1):
-            for folder in directory.glob('*/*.git'):
-                folders.append('%s' % (folder.parent))
+            for folder in filter(lambda f:f.endswith('.git'),fast_scandir(directory,int(args.depth),0)):
+                folders.append('%s' % (os.path.dirname(folder)))
 
         output=args.output.replace('.json','')
-        if len(folders) > 1:
+        if len(folders) == 0:
+            print('Found no repos')
+
+        elif len(folders) > 1:
             os.makedirs('%s' %(directory.name), mode=0o777, exist_ok=True)
             q = Questions()
 

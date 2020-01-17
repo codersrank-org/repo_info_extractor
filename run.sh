@@ -127,6 +127,12 @@ email=""
 upload='default'
 optspec=":h-:"
 other_args=''
+
+if [ $paramnum -eq 0 ]; then
+  print_help
+  exit 0
+fi
+
 while getopts "$optspec" optchar; do
      case "${optchar}" in
         -)
