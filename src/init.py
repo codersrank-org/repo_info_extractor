@@ -146,7 +146,7 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
         author_emails = []
         for email in r.local_usernames:
             author_emails.append(email)
-
+        
         if author_emails:
             al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
                                   skip, commit_size_limit, file_size_limit)
