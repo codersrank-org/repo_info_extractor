@@ -132,6 +132,10 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
     r = ar.create_repo_entity(directory)
 
     r.local_usernames = list(set(r.local_usernames + emails))
+    MAX_EMAIL_LIMIT = 50
+    if len(r.local_usernames) > MAX_EMAIL_LIMIT:
+        print("Email count (" + str(len(r.local_usernames)) + ") for this repo exceeds the limit of " + str(MAX_EMAIL_LIMIT) + " emails.")
+        r.local_usernames = r.local_usernames[0:MAX_EMAIL_LIMIT]
     print('Setting the local user_names ::',r.local_usernames)
     r.repo_name = reponame
 
@@ -142,7 +146,7 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
         author_emails = []
         for email in r.local_usernames:
             author_emails.append(email)
-        
+
         if author_emails:
             al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
                                   skip, commit_size_limit, file_size_limit)
