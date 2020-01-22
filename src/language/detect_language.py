@@ -18,6 +18,7 @@ supported_languages = {
     'Elixir': ['ex', 'exs'],
     'Elm': ['elm'],
     'ERB': ['erb'],
+    'Erlang': ['erl', 'hrl'],
     'F#': ['fs', 'fsi', 'fsx', 'fsscript'],
     'Fortran': ['f90', 'f95', 'f03', 'f08', 'for'],
     'Go': ['go'],
