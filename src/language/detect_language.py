@@ -34,6 +34,7 @@ supported_languages = {
     'Lua': ['lua'],
     'MATLAB': ['m'],
     'Objective-C': ['mm'],
+    'OpenEdge ABL': ['p', 'ab', 'w', 'i', 'x', 'cls'],
     'Perl': ['pl'],
     'PHP': ['php'],
     'PLSQL': ['pks', 'pkb'],
