@@ -49,6 +49,7 @@ supported_languages = {
     'Shell': ['sh'],
     'Smalltalk': ['st'],
     'Stylus': ['styl'],
+    'Svelte': ['svelte'],
     'Swift': ['swift'],
     'TypeScript': ['ts', 'tsx'],
     'Vue': ['vue'],

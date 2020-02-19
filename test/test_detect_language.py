@@ -80,6 +80,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.scss") == "SCSS"
     assert detect_language.detect_language("/tmp/some_file.sh") == "Shell"
     assert detect_language.detect_language("/tmp/some_file.st") == "Smalltalk"
+    assert detect_language.detect_language("/tmp/some_file.svelte") == "Svelte"
     assert detect_language.detect_language("/tmp/some_file.swift") == "Swift"
     assert detect_language.detect_language("/tmp/some_file.ts") == "TypeScript"
     assert detect_language.detect_language(
