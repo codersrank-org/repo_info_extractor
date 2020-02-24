@@ -1,4 +1,5 @@
 import os
+from .detect_language_from_file import detect_language_from_file 
 
 supported_languages = {
     '1C Enterprise': ['bsl', 'os'],
@@ -70,7 +71,7 @@ def _build_ext_lang_map():
     return _ext_lang
 
 
-def detect_language(file_path):
+def detect_language(repo_dir, file_path):
     parts = file_path.split(os.sep)
     file_name = parts[-1]
 
@@ -80,6 +81,12 @@ def detect_language(file_path):
         return 'Makefile'
 
     ext = file_name.split('.')[-1].lower()
+
+    if ext == 'm':
+        lang = detect_language_from_file(repo_dir, file_path)
+        if lang is not None:
+            return lang
+        return ''    
 
     if ext in _ext_lang:
         return _ext_lang[ext]
