@@ -7,7 +7,7 @@ def detect_language_from_file(repo_dir, file_path, test=False):
 
     enry_path = '/app/src/bin/enry_linux'
 
-    # This is for mac os
+    # This is for mac os beacuse we need to use different binaries for different platforms
     if sys.platform == "darwin":
         enry_path = os.getcwd() + '/src/bin/enry'
 
