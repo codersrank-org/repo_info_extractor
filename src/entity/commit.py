@@ -25,7 +25,7 @@ class Commit:
     def set_commit_stats(self, stats, repo_dir):
         for f in stats:
             self.changed_files.append(FileChange(
-                f, stats[f]['deletions'], stats[f]['insertions'], detect_language.detect_language(repo_dir, f)))
+                f, stats[f]['deletions'], stats[f]['insertions'], detect_language.detect_language(f, repo_dir)))
 
     def json_ready(self):
         changed_files = []

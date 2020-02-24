@@ -3,7 +3,7 @@ import sys
 import subprocess
 import json
 
-def detect_language_from_file(repo_dir, file_path, test=False):
+def detect_language_from_file(file_path, repo_dir):
 
     enry_path = '/app/src/bin/enry_linux'
 
