@@ -11,6 +11,8 @@ def detect_language_from_file(file_path, repo_dir):
             with open(full_path, 'r') as file:
                 code = file.read()
                 language = guess_lexer(code)
+                if language is None:
+                    return None
                 if language.name == 'Objective-C':
                     return language.name
                 else:
