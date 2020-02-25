@@ -4,3 +4,4 @@ whaaaaat==0.5.2
 requests
 requests_toolbelt
 nose2
+Pygments
