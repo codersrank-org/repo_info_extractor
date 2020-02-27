@@ -22,10 +22,11 @@ class Commit:
         self.is_duplicated = False
         self.libraries = None
 
-    def set_commit_stats(self, stats):
+    def set_commit_stats(self, stats, repo_dir):
         for f in stats:
+            full_path = repo_dir + "/" + f
             self.changed_files.append(FileChange(
-                f, stats[f]['deletions'], stats[f]['insertions'], detect_language.detect_language(f)))
+                f, stats[f]['deletions'], stats[f]['insertions'], detect_language.detect_language(full_path)))
 
     def json_ready(self):
         changed_files = []

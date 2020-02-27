@@ -19,6 +19,7 @@ class AnalyzeRepo:
         self.commit_list = {}
         self.user_commits = {}
 
+
     def create_commits_entity_from_branch(self, branch):
         '''
         Extract the commits from a given branch
@@ -68,7 +69,7 @@ class AnalyzeRepo:
             pool.join()
 
         for result in self.results:
-            self.commit_list[result['hash']].set_commit_stats(result['stats'])
+            self.commit_list[result['hash']].set_commit_stats(result['stats'], self.repo.working_dir)
 
     def flag_duplicated_commits(self):
         '''
