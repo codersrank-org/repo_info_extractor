@@ -71,7 +71,7 @@ def _build_ext_lang_map():
     return _ext_lang
 
 
-def detect_language(file_path, repo_dir=""):
+def detect_language(file_path):
     parts = file_path.split(os.sep)
     file_name = parts[-1]
 
@@ -83,7 +83,7 @@ def detect_language(file_path, repo_dir=""):
     ext = file_name.split('.')[-1].lower()
 
     if ext == 'm':
-        lang = detect_language_from_file(file_path, repo_dir)
+        lang = detect_language_from_file(file_path)
         if lang is not None:
             return lang
         return ''    

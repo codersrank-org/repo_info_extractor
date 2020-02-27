@@ -57,8 +57,8 @@ def test_languages_recognised():
         "/tmp/some_file.ipynb") == "Jupyter Notebook"
     assert detect_language.detect_language("/tmp/some_file.liquid") == "Liquid"
     assert detect_language.detect_language("/tmp/some_file.lua") == "Lua"
-    assert detect_language.detect_language( "fixtures/matlab.m", os.getcwd() + "/test") == "MATLAB"
-    assert detect_language.detect_language("fixtures/objective-c.m", os.getcwd() + "/test") == "Objective-C"
+    assert detect_language.detect_language(os.getcwd() + "/test/fixtures/matlab.m") == "MATLAB"
+    assert detect_language.detect_language(os.getcwd() + "/test/fixtures/objective-c.m") == "Objective-C"
 
     assert detect_language.detect_language(
         "/tmp/some_file.mm") == "Objective-C"

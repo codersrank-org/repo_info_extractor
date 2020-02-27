@@ -4,11 +4,10 @@ import subprocess
 import json
 from pygments.lexers import guess_lexer
 
-def detect_language_from_file(file_path, repo_dir):
-    full_path = repo_dir + "/" + file_path
-    if os.path.exists(full_path):
+def detect_language_from_file(file_path):
+    if os.path.exists(file_path):
         try:
-            with open(full_path, 'r') as file:
+            with open(file_path, 'r') as file:
                 code = file.read()
                 language = guess_lexer(code)
                 if language.name == 'Objective-C':
