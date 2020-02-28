@@ -22,6 +22,7 @@ class Repository:
     # reponame - name of the repo
     def __init__(self, repo_name, repo, commits, user_commits):
         remotes = {}
+        self.emails_v2 = []
         self.original_remotes = {}
         self.contributors = {}
         self.local_usernames = []
@@ -93,5 +94,6 @@ class Repository:
             'primaryRemoteUrl': self.primary_remote_url,
             'numberOfBranches': self.number_of_branches,
             'numberOfTags': self.number_of_tags,
-            'commits': commits
+            'commits': commits,
+            'emails_v2': self.emails_v2
         }

@@ -1,12 +1,14 @@
 import hashlib as md5
 import git
 import logging
-import os
+
 from export_result import ExportResult
 from analyze_repo import AnalyzeRepo
 from analyze_libraries import AnalyzeLibraries
 from ui.questions import Questions
 from obfuscator import obfuscate
+
+from identity_matching.matcher import match_emails
 
 
 def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload, debug_mode, skip,
@@ -104,7 +106,7 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
 # emails - merge these emails with these emails extracted from the repo
 # reponame - name of the repo
 def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, debug_mode, user_commits, reponame,
-                  skip, commit_size_limit, file_size_limit):
+                  skip, commit_size_limit, file_size_limit, seed):
     # Initialize logger
     logger = logging.getLogger("main")
     if debug_mode:
@@ -158,9 +160,12 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
                 if c.hash in libs.keys():
                     r.commits[i].libraries = libs[c.hash]
 
+        # new email detection
+        emails_v2 = match_emails(directory, seed)
+        r.emails_v2 = emails_v2["emails"]
+
     if not skip_obfuscation:
         r = obfuscate(r)
-
 
     er = ExportResult(r)
     er.export_to_json_headless(output)
