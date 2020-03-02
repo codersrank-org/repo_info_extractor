@@ -5,3 +5,4 @@ requests
 requests_toolbelt
 nose2
 Pygments
+numpy
