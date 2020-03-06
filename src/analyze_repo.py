@@ -90,10 +90,12 @@ class AnalyzeRepo:
     def callback_func(self, data):
         # Sanitize filenames because they might have weird characters
         # Also cast dict.keys() to the list() so we don't get Runtime Errors
-        for k, v in list(data["stats"].items()):
+        keys = list(data["stats"].items())
+        for k, v in keys:
             sanitized_key = sanitize_filename(k)
-            data["stats"][sanitized_key] = v
-            data["stats"].pop(k, None)
+            if sanitized_key != k:
+                data["stats"][sanitized_key] = v
+                data["stats"].pop(k, None)
 
         self.results.append(data)
         self.prog += 1
