@@ -4,7 +4,7 @@ from init import init_headless
 
 
 # You can test other repos on your computer by changing this values
-# Default avlues are for repo_info_extractor repository
+# Default values are for repo_info_extractor repository
 repo_name = "repo_info_extractor"
 # Use full paths instead of relative ones
 repo_path = os.getcwd() 

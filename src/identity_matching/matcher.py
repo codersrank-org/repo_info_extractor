@@ -24,7 +24,7 @@ def match_emails(directory, seed):
     short_log_file = directory + "/shortlog.txt"
 
     with open(short_log_file, "w+", encoding="latin-1", errors="replace") as outfile:
-        result = subprocess.call(["git", "-C", directory, "shortlog", "-se"], stdout=outfile, universal_newlines=True)
+        subprocess.call(["git", "-C", directory, "shortlog", "-se"], stdout=outfile, universal_newlines=True)
 
     with open(short_log_file, "r", encoding="latin-1", errors="replace") as f:
         for line in f.readlines():
