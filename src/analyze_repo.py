@@ -88,6 +88,13 @@ class AnalyzeRepo:
                     self.total -= 1
 
     def callback_func(self, data):
+        # Sanitize filenames because they might have weird characters
+        # Also cast dict.keys() to the list() so we don't get Runtime Errors
+        for k, v in list(data["stats"].items()):
+            sanitized_key = sanitize_filename(k)
+            data["stats"][sanitized_key] = v
+            data["stats"].pop(k, None)
+
         self.results.append(data)
         self.prog += 1
         progress(self.prog, self.total, 'Analyzing commits')
@@ -99,4 +106,9 @@ def call_set_commit_stats(h, commit):
     return ret
 
 
-
+def sanitize_filename(path):
+    if not path[-1].isalnum():
+        path = path[:-1]
+    if not path[0].isalnum():
+        path = path[1:]    
+    return path

@@ -27,7 +27,7 @@ class Commit:
             full_path = repo_dir + "/" + f
             self.changed_files.append(FileChange(
                 f, stats[f]['deletions'], stats[f]['insertions'], detect_language.detect_language(full_path)))
-
+            
     def json_ready(self):
         changed_files = []
         for f in self.changed_files:
