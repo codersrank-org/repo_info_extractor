@@ -30,7 +30,6 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
     logger.debug("Initialized main logger.")
 
     repo = git.Repo(directory)
-    print(repo.working_dir)
     ar = AnalyzeRepo(repo)
     q = Questions()
 

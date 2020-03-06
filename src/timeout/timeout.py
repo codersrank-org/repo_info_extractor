@@ -6,8 +6,6 @@ import signal
 from contextlib import contextmanager
 
 
-
-
 @contextmanager
 def timeout(time, repo_working_dir):
     # Register a function to raise a TimeoutError on the signal.
