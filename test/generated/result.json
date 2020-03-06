@@ -1,0 +1,1559 @@
+{
+    "repoName": "repo_info_extractor",
+    "localUsernames": [
+        "alimgiray@Alims-MacBook-Pro.local"
+    ],
+    "remotes": {
+        "origin": "ff0e9c8703d91c041d2006ad55c23a47"
+    },
+    "primaryRemoteUrl": "ff0e9c8703d91c041d2006ad55c23a47",
+    "numberOfBranches": 1,
+    "numberOfTags": 0,
+    "commits": [
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2020-02-01 16:51:44 +0300",
+            "commitHash": "f66518e3b3a6685a2581720fd3e65482c69b3228",
+            "isMerge": false,
+            "parents": [
+                "94dedcd639cc80a01fb01b5d28d88eab6e12fabc"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 35,
+                    "deletions": 10
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 4,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 8,
+                    "deletions": 8
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 7,
+                    "deletions": 10
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 6,
+                    "deletions": 11
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2020-02-01 16:10:11 +0300",
+            "commitHash": "94dedcd639cc80a01fb01b5d28d88eab6e12fabc",
+            "isMerge": false,
+            "parents": [
+                "6feba8904d5a2ef80cc36b62906eda6d8e0896d5"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 12,
+                    "deletions": 11
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 6,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 6,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 10,
+                    "deletions": 10
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2020-02-01 16:01:18 +0300",
+            "commitHash": "6feba8904d5a2ef80cc36b62906eda6d8e0896d5",
+            "isMerge": false,
+            "parents": [
+                "7d0c5b0618e22c553802d8cef422ca872e15f140"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "LICENSE",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 6,
+                    "deletions": 6
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2020-02-01 15:58:53 +0300",
+            "commitHash": "7d0c5b0618e22c553802d8cef422ca872e15f140",
+            "isMerge": false,
+            "parents": [
+                "433f6cb241fe770c92c9469f5a7ef6a5e221a94b"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 2,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 57,
+                    "deletions": 57
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 32,
+                    "deletions": 32
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 10,
+                    "deletions": 10
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 37,
+                    "deletions": 37
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 28,
+                    "deletions": 39
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2020-02-01 15:39:49 +0300",
+            "commitHash": "433f6cb241fe770c92c9469f5a7ef6a5e221a94b",
+            "isMerge": false,
+            "parents": [
+                "b9b05b35216cbef3fac5120908857083e05681bd"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 5,
+                    "deletions": 5
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 9,
+                    "deletions": 36
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2020-02-01 15:10:30 +0300",
+            "commitHash": "b9b05b35216cbef3fac5120908857083e05681bd",
+            "isMerge": false,
+            "parents": [
+                "8adbdee0fa0035e1692a05b71732bbeddd137c8a"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 2,
+                    "deletions": 12
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 16,
+                    "deletions": 20
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 10,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 10,
+                    "deletions": 6
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-15 15:26:02 +0300",
+            "commitHash": "8adbdee0fa0035e1692a05b71732bbeddd137c8a",
+            "isMerge": false,
+            "parents": [
+                "82ece361492999926e0f48b0e01264d1f72133d7"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 2,
+                    "deletions": 3
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 16,
+                    "deletions": 33
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 8,
+                    "deletions": 8
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 11,
+                    "deletions": 34
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 7
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-15 14:52:44 +0300",
+            "commitHash": "82ece361492999926e0f48b0e01264d1f72133d7",
+            "isMerge": false,
+            "parents": [
+                "965763d206cd255477a70064e538819fc9173949"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 87,
+                    "deletions": 9
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 4,
+                    "deletions": 4
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 92,
+                    "deletions": 55
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "src/Ext/ClientApplicationInterface.xml",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "src/Languages/English.xml",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/Languages/\\320\\240\\321\\203\\321\\201\\321\\201\\320\\272\\320\\270\\320\\271.xml\"",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-15 14:09:09 +0300",
+            "commitHash": "965763d206cd255477a70064e538819fc9173949",
+            "isMerge": false,
+            "parents": [
+                "c1ad4996401ebde23ccfca6a84a3de9d81205b80"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 3,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 8,
+                    "deletions": 8
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 5,
+                    "deletions": 5
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-15 13:35:14 +0300",
+            "commitHash": "c1ad4996401ebde23ccfca6a84a3de9d81205b80",
+            "isMerge": false,
+            "parents": [
+                "7a8a12180e40cd60c3ed3e1888ab452546ae9186"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 3,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 74,
+                    "deletions": 14
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 10,
+                    "deletions": 4
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 6,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 5,
+                    "deletions": 5
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-14 22:43:10 +0300",
+            "commitHash": "7a8a12180e40cd60c3ed3e1888ab452546ae9186",
+            "isMerge": false,
+            "parents": [
+                "670d5b960ce2b94766e017aef5835bd2efc25f10"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271.xml\"",
+                    "language": "",
+                    "insertions": 24,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 159,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 87,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 13,
+                    "deletions": 3
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 89,
+                    "deletions": 70
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 10,
+                    "deletions": 7
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 6,
+                    "deletions": 5
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 3,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "src/Ext/ClientApplicationInterface.xml",
+                    "language": "",
+                    "insertions": 24,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-14 16:26:46 +0300",
+            "commitHash": "670d5b960ce2b94766e017aef5835bd2efc25f10",
+            "isMerge": false,
+            "parents": [
+                "9b7d528d385c67021650b4bd513b5f44ac1d4d7a"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-14 16:12:52 +0300",
+            "commitHash": "9b7d528d385c67021650b4bd513b5f44ac1d4d7a",
+            "isMerge": true,
+            "parents": [
+                "faa69ae588a95d1dc404f2a34aef256d7bbc70bd",
+                "563c169b62abda08cceaf021c7df73293ef9ca98"
+            ],
+            "changedFiles": [],
+            "isDuplicated": true
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-14 16:12:47 +0300",
+            "commitHash": "faa69ae588a95d1dc404f2a34aef256d7bbc70bd",
+            "isMerge": false,
+            "parents": [
+                "b9002284b70b9975557e5f31875cdab87eacaa64"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-13 10:04:41 +0300",
+            "commitHash": "563c169b62abda08cceaf021c7df73293ef9ca98",
+            "isMerge": false,
+            "parents": [
+                "b9002284b70b9975557e5f31875cdab87eacaa64"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-13 00:28:42 +0300",
+            "commitHash": "b9002284b70b9975557e5f31875cdab87eacaa64",
+            "isMerge": false,
+            "parents": [
+                "48397efebbda38f5c58ded2b63ff0934aa0b77e3"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 184,
+                    "deletions": 81
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 128,
+                    "deletions": 47
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 8,
+                    "deletions": 8
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 12,
+                    "deletions": 12
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 25,
+                    "deletions": 25
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-11 22:57:12 +0300",
+            "commitHash": "48397efebbda38f5c58ded2b63ff0934aa0b77e3",
+            "isMerge": false,
+            "parents": [
+                "06109d70a5b3462dd66eb9036724b2b807f82a57"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-11 22:55:02 +0300",
+            "commitHash": "06109d70a5b3462dd66eb9036724b2b807f82a57",
+            "isMerge": false,
+            "parents": [
+                "e2e1e32b479704059ca22ab6224f8cfd9ebfe9b2"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-11 22:52:54 +0300",
+            "commitHash": "e2e1e32b479704059ca22ab6224f8cfd9ebfe9b2",
+            "isMerge": false,
+            "parents": [
+                "6deda6b7b8f7c2931b8a8f9e7f83382c31a73cfd"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-11 22:50:36 +0300",
+            "commitHash": "6deda6b7b8f7c2931b8a8f9e7f83382c31a73cfd",
+            "isMerge": false,
+            "parents": [
+                "a502a1aed715c3cb49d7995687a2117f72227ce0"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 2,
+                    "deletions": 2
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-11 22:46:26 +0300",
+            "commitHash": "a502a1aed715c3cb49d7995687a2117f72227ce0",
+            "isMerge": false,
+            "parents": [
+                "e036c9e5e047fc3ff5b703ddc5f2ccfc4f01b0e9"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 147,
+                    "deletions": 645
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 519,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 9,
+                    "deletions": 9
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 3,
+                    "deletions": 3
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 89,
+                    "deletions": 99
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 10,
+                    "deletions": 10
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-11 09:00:03 +0300",
+            "commitHash": "e036c9e5e047fc3ff5b703ddc5f2ccfc4f01b0e9",
+            "isMerge": false,
+            "parents": [
+                "ef576e59d11460c60f941953f2a479b5055c1c8c"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271.xml\"",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 24
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 5
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 0,
+                    "deletions": 568
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient.xml",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 18
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 0,
+                    "deletions": 229
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingInternalClient.xml",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 18
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingInternalClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 0,
+                    "deletions": 365
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 280,
+                    "deletions": 56
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202.xml\"",
+                    "language": "",
+                    "insertions": 23,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\241\\320\\273\\321\\203\\320\\266\\320\\265\\320\\261\\320\\275\\321\\213\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 4,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 8,
+                    "deletions": 12
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 4
+                },
+                {
+                    "fileName": "src/DataProcessors/Test.xml",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 38
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form.xml",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 26
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form.xml",
+                    "language": "",
+                    "insertions": 0,
+                    "deletions": 52
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 0,
+                    "deletions": 180
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022.xml\"",
+                    "language": "",
+                    "insertions": 34,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260.xml\"",
+                    "language": "",
+                    "insertions": 22,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 56,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\2022/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 84,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-10 20:12:01 +0300",
+            "commitHash": "ef576e59d11460c60f941953f2a479b5055c1c8c",
+            "isMerge": false,
+            "parents": [
+                "e1a72010202fab7a08df9d465cd77e3640d131a3"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-10 20:09:46 +0300",
+            "commitHash": "e1a72010202fab7a08df9d465cd77e3640d131a3",
+            "isMerge": false,
+            "parents": [
+                "a30fe691499fd17845141979ceacec8019a0a50e"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 46,
+                    "deletions": 45
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202.xml\"",
+                    "language": "",
+                    "insertions": 23,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/CommonModules/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271\\320\\232\\320\\273\\320\\270\\320\\265\\320\\275\\321\\202/Ext/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 594,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 8,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/DataProcessors/Test.xml",
+                    "language": "",
+                    "insertions": 1,
+                    "deletions": 1
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 74,
+                    "deletions": 44
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-10 08:30:35 +0300",
+            "commitHash": "a30fe691499fd17845141979ceacec8019a0a50e",
+            "isMerge": false,
+            "parents": [
+                "203bd9f4839b8e4b744c6c8958e7b32bc9053eae"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271.xml\"",
+                    "language": "",
+                    "insertions": 24,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 5,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/CommonForms/\\320\\232\\320\\276\\320\\275\\320\\262\\320\\265\\320\\271\\320\\265\\321\\200\\320\\227\\320\\260\\320\\264\\320\\260\\320\\275\\320\\270\\320\\271/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 567,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 19,
+                    "deletions": 10
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 4,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202.xml\"",
+                    "language": "",
+                    "insertions": 38,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260.xml\"",
+                    "language": "",
+                    "insertions": 26,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form.xml\"",
+                    "language": "",
+                    "insertions": 64,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/DataProcessors/\\320\\242\\320\\265\\321\\201\\321\\202/Forms/\\320\\244\\320\\276\\321\\200\\320\\274\\320\\260/Ext/Form/Module.bsl\"",
+                    "language": "1C Enterprise",
+                    "insertions": 182,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-09 08:27:44 +0300",
+            "commitHash": "203bd9f4839b8e4b744c6c8958e7b32bc9053eae",
+            "isMerge": false,
+            "parents": [
+                "a195535e07b1eb36d08296a0c990f6afae5b15e2"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-08 22:25:37 +0300",
+            "commitHash": "a195535e07b1eb36d08296a0c990f6afae5b15e2",
+            "isMerge": false,
+            "parents": [
+                "236e56fe7f8add7d673322530943ee75d28a8cfc"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-08 22:01:25 +0300",
+            "commitHash": "236e56fe7f8add7d673322530943ee75d28a8cfc",
+            "isMerge": false,
+            "parents": [
+                "91f6431fbf3e283d71eb5d02e62c14a7dbabfc66"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 80,
+                    "deletions": 55
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingInternalClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 83,
+                    "deletions": 28
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 6,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 58,
+                    "deletions": 62
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-08 02:28:21 +0300",
+            "commitHash": "91f6431fbf3e283d71eb5d02e62c14a7dbabfc66",
+            "isMerge": false,
+            "parents": [
+                "6a0f857ef1a84cb534663251d6b16adad8598bc0"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 33,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 4,
+                    "deletions": 4
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-08 02:27:58 +0300",
+            "commitHash": "6a0f857ef1a84cb534663251d6b16adad8598bc0",
+            "isMerge": false,
+            "parents": [
+                "90b44a40791fc96a50c156e0d12960a1c8d61b45"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 3,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-08 00:58:32 +0300",
+            "commitHash": "90b44a40791fc96a50c156e0d12960a1c8d61b45",
+            "isMerge": false,
+            "parents": [
+                "ee61f86c2b83d6517e32ffa6f491988178f949ac"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 1,
+                    "deletions": 1
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-08 00:55:28 +0300",
+            "commitHash": "ee61f86c2b83d6517e32ffa6f491988178f949ac",
+            "isMerge": false,
+            "parents": [
+                "253fc8039fdec75f086533661f9abd621d631ef5"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 13,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-07 23:24:22 +0300",
+            "commitHash": "253fc8039fdec75f086533661f9abd621d631ef5",
+            "isMerge": false,
+            "parents": [
+                "12b070056fbd8b01dce247a97c2d31080c55d71c"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 8,
+                    "deletions": 1
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-07 23:16:51 +0300",
+            "commitHash": "12b070056fbd8b01dce247a97c2d31080c55d71c",
+            "isMerge": false,
+            "parents": [
+                "8c6d214ea1df09d6163b556ff7b0e206d0fa8e26"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "LICENSE",
+                    "language": "",
+                    "insertions": 29,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 4,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingInternalClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 4,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 4,
+                    "deletions": 4
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-07 23:09:42 +0300",
+            "commitHash": "8c6d214ea1df09d6163b556ff7b0e206d0fa8e26",
+            "isMerge": false,
+            "parents": [
+                "8cff8d4d1f7470bb2a473cfe7daea77a10bdcd51"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 6,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 4,
+                    "deletions": 4
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 4,
+                    "deletions": 10
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-07 22:53:37 +0300",
+            "commitHash": "8cff8d4d1f7470bb2a473cfe7daea77a10bdcd51",
+            "isMerge": false,
+            "parents": [
+                "b0508fda5b7782becf2a11d358d0846326e7b92f"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 14,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 4,
+                    "deletions": 4
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 8,
+                    "deletions": 14
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-07 22:43:18 +0300",
+            "commitHash": "b0508fda5b7782becf2a11d358d0846326e7b92f",
+            "isMerge": false,
+            "parents": [
+                "11e6b5f842d4921a4702a5fe615a7c08306a46bc"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 2
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 9,
+                    "deletions": 18
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-07 22:38:42 +0300",
+            "commitHash": "11e6b5f842d4921a4702a5fe615a7c08306a46bc",
+            "isMerge": false,
+            "parents": [
+                "5672e9cba753ad43e25c4e8d3961f01fd6700fd8"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 21,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingInternalClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 12,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 6,
+                    "deletions": 6
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 23,
+                    "deletions": 27
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov.as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-07 19:44:06 +0300",
+            "commitHash": "5672e9cba753ad43e25c4e8d3961f01fd6700fd8",
+            "isMerge": false,
+            "parents": [
+                "1e44304c35836c9ceb3190a3ebad0f274d2d8c79"
+            ],
+            "changedFiles": [
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient.xml",
+                    "language": "",
+                    "insertions": 18,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 138,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingInternalClient.xml",
+                    "language": "",
+                    "insertions": 18,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/CommonModules/PipelineNotifyProcessingInternalClient/Ext/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 294,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/ConfigDumpInfo.xml",
+                    "language": "",
+                    "insertions": 15,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/Configuration.xml",
+                    "language": "",
+                    "insertions": 151,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/DataProcessors/Test.xml",
+                    "language": "",
+                    "insertions": 38,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form.xml",
+                    "language": "",
+                    "insertions": 26,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form.xml",
+                    "language": "",
+                    "insertions": 52,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/DataProcessors/Test/Forms/Form/Ext/Form/Module.bsl",
+                    "language": "1C Enterprise",
+                    "insertions": 193,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "src/Languages/English.xml",
+                    "language": "",
+                    "insertions": 20,
+                    "deletions": 0
+                },
+                {
+                    "fileName": "\"src/Languages/\\320\\240\\321\\203\\321\\201\\321\\201\\320\\272\\320\\270\\320\\271.xml\"",
+                    "language": "",
+                    "insertions": 16,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        },
+        {
+            "authorName": "tsukanov-as",
+            "authorEmail": "tsukanov.as@yandex.ru",
+            "createdAt": "2019-12-07 19:37:33 +0300",
+            "commitHash": "1e44304c35836c9ceb3190a3ebad0f274d2d8c79",
+            "isMerge": false,
+            "parents": [],
+            "changedFiles": [
+                {
+                    "fileName": "README.md",
+                    "language": "",
+                    "insertions": 2,
+                    "deletions": 0
+                }
+            ],
+            "isDuplicated": false
+        }
+    ],
+    "emails_v2": []
+}

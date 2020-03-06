@@ -23,8 +23,8 @@ def match_emails(directory, seed):
     short_log = list()
     short_log_file = directory + "/shortlog.txt"
 
-    with open(short_log_file, "w", encoding="latin-1", errors="replace") as outfile:
-        subprocess.call(["git", "-C", directory, "shortlog", "-se"], stdout=outfile, universal_newlines=True)
+    with open(short_log_file, "w+", encoding="latin-1", errors="replace") as outfile:
+        result = subprocess.call(["git", "-C", directory, "shortlog", "-se"], stdout=outfile, universal_newlines=True)
 
     with open(short_log_file, "r", encoding="latin-1", errors="replace") as f:
         for line in f.readlines():
@@ -39,9 +39,13 @@ def match_emails(directory, seed):
 
     # convert seed
     seed_obj = {}
-    seed_obj["user_name"] = seed.username
-    seed_obj["names"] = list(seed.names)
-    seed_obj["emails"] = list(seed.emails)
+    seed_obj["user_name"] = ""
+    seed_obj["names"] = list()
+    seed_obj["emails"] = list()
+    if seed is not None:
+        seed_obj["user_name"] = seed.username
+        seed_obj["names"] = list(seed.names)
+        seed_obj["emails"] = list(seed.emails)
 
     # get results
     emails_v2 = im.get_emails(seed_obj, short_log)

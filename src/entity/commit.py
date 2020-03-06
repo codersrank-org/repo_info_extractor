@@ -4,7 +4,6 @@ import datetime as dt
 from .file_change import FileChange
 from language import detect_language
 
-
 class Commit:
     def __init__(self, author_name, author_email, created_at, hash, parents, branch):
         self.original_author_name = author_name
