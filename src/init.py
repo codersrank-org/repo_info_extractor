@@ -7,6 +7,7 @@ from analyze_repo import AnalyzeRepo
 from analyze_libraries import AnalyzeLibraries
 from ui.questions import Questions
 from obfuscator import obfuscate
+from timeout.timeout import timeout
 
 from identity_matching.matcher import match_emails
 
@@ -106,7 +107,7 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
 # emails - merge these emails with these emails extracted from the repo
 # reponame - name of the repo
 def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, debug_mode, user_commits, reponame,
-                  skip, commit_size_limit, file_size_limit, seed):
+                  skip, commit_size_limit, file_size_limit, seed, timeout_seconds=600):
     # Initialize logger
     logger = logging.getLogger("main")
     if debug_mode:
@@ -123,50 +124,52 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
     ar = AnalyzeRepo(repo)
     q = Questions()
 
-    print('Initialization...')
-    for branch in repo.branches:
-        ar.create_commits_entity_from_branch(branch.name)
-    ar.flag_duplicated_commits()
-    ar.get_commit_stats()
-    print('Analysing the master branch..')
-    ar.analyse_master_user_commits(user_commits)
-    print('Creating the repo entity..')
-    r = ar.create_repo_entity(directory)
+    # Use a context manager with signal to measure seconds, and timeout
+    with timeout(time=timeout_seconds, repo_working_dir=repo.working_dir):
+        print('Initialization...')
+        for branch in repo.branches:
+            ar.create_commits_entity_from_branch(branch.name)
+        ar.flag_duplicated_commits()
+        ar.get_commit_stats()
+        print('Analysing the master branch..')
+        ar.analyse_master_user_commits(user_commits)
+        print('Creating the repo entity..')
+        r = ar.create_repo_entity(directory)
 
-    r.local_usernames = list(set(r.local_usernames + emails))
-    MAX_EMAIL_LIMIT = 50
-    if len(r.local_usernames) > MAX_EMAIL_LIMIT:
-        print("Email count (" + str(len(r.local_usernames)) + ") for this repo exceeds the limit of " + str(MAX_EMAIL_LIMIT) + " emails.")
-        r.local_usernames = r.local_usernames[0:MAX_EMAIL_LIMIT]
-    print('Setting the local user_names ::',r.local_usernames)
-    r.repo_name = reponame
+        r.local_usernames = list(set(r.local_usernames + emails))
+        MAX_EMAIL_LIMIT = 50
+        if len(r.local_usernames) > MAX_EMAIL_LIMIT:
+            print("Email count (" + str(len(r.local_usernames)) + ") for this repo exceeds the limit of " + str(MAX_EMAIL_LIMIT) + " emails.")
+            r.local_usernames = r.local_usernames[0:MAX_EMAIL_LIMIT]
+        print('Setting the local user_names ::',r.local_usernames)
+        r.repo_name = reponame
 
-    if parse_libraries and len(ar.commit_list) > 0:
-        # build authors from the the email list provided 
-        # we are provided only emails in the headless mode
-        # TODO! Support both name -> email and email formats
-        author_emails = []
-        for email in r.local_usernames:
-            author_emails.append(email)
-        
-        if author_emails:
-            al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
-                                  skip, commit_size_limit, file_size_limit)
-            libs = al.get_libraries()
+        if parse_libraries and len(ar.commit_list) > 0:
+            # build authors from the the email list provided
+            # we are provided only emails in the headless mode
+            # TODO! Support both name -> email and email formats
+            author_emails = []
+            for email in r.local_usernames:
+                author_emails.append(email)
 
-            # combine repo stats with libs used
-            for i in range(len(r.commits)):
-                c = r.commits[i]
-                if c.hash in libs.keys():
-                    r.commits[i].libraries = libs[c.hash]
+            if author_emails:
+                al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
+                                      skip, commit_size_limit, file_size_limit)
+                libs = al.get_libraries()
 
-        # new email detection
-        emails_v2 = match_emails(directory, seed)
-        r.emails_v2 = emails_v2["emails"]
+                # combine repo stats with libs used
+                for i in range(len(r.commits)):
+                    c = r.commits[i]
+                    if c.hash in libs.keys():
+                        r.commits[i].libraries = libs[c.hash]
 
-    if not skip_obfuscation:
-        r = obfuscate(r)
+            # new email detection
+            emails_v2 = match_emails(directory, seed)
+            r.emails_v2 = emails_v2["emails"]
 
-    er = ExportResult(r)
-    er.export_to_json_headless(output)
-    print('Successfully analysed the repo ==>'+reponame)
+        if not skip_obfuscation:
+            r = obfuscate(r)
+
+        er = ExportResult(r)
+        er.export_to_json_headless(output)
+        print('Successfully analysed the repo ==>'+reponame)
