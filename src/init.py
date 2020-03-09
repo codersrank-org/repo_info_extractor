@@ -107,7 +107,7 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
 # emails - merge these emails with these emails extracted from the repo
 # reponame - name of the repo
 def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, debug_mode, user_commits, reponame,
-                  skip, commit_size_limit, file_size_limit, seed, timeout_seconds):
+                  skip, commit_size_limit, file_size_limit, seed, timeout_seconds=600):
     # Initialize logger
     logger = logging.getLogger("main")
     if debug_mode:
