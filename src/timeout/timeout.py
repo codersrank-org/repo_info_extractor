@@ -4,6 +4,7 @@ under Windows.
 """
 import signal
 from contextlib import contextmanager
+import shutil
 
 
 @contextmanager
@@ -16,7 +17,12 @@ def timeout(time, repo_working_dir):
     try:
         yield
     except TimeoutError:
-        print("{} timeouted.".format(repo_working_dir))
+        try:
+            shutil.rmtree(repo_working_dir)
+            print("{} timeouted, deleted files successfully.".format(repo_working_dir))
+        except (PermissionError, NotADirectoryError, Exception) as e:
+            print("{} timeouted, deletion failed with {}".format(repo_working_dir, e))
+
     finally:
         # Unregister the signal so it won't be triggered
         # if the timeout is not reached.
