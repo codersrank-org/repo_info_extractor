@@ -58,7 +58,6 @@ supported_languages = {
 
 _ext_lang = {}
 
-
 def _build_ext_lang_map():
     """
     For optimisation purposes, build ext -> language map. Supposed to run once and cache
@@ -81,7 +80,6 @@ def detect_language(file_path):
         return 'Makefile'
 
     ext = file_name.split('.')[-1].lower()
-
     if ext == 'm':
         lang = detect_language_from_file(file_path)
         if lang is not None:
