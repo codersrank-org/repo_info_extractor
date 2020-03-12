@@ -109,6 +109,6 @@ def call_set_commit_stats(h, commit):
 
 
 def sanitize_filename(path):
-    if not path[-1].isalnum():
+    if len(path) > 1 and not path[-1].isalnum():
         path = path[:-1] 
     return path
