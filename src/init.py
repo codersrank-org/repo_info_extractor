@@ -164,8 +164,11 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
                         r.commits[i].libraries = libs[c.hash]
 
             # new email detection
-            emails_v2 = match_emails(directory, seed)
-            r.emails_v2 = emails_v2["emails"]
+            try:
+                emails_v2 = match_emails(directory, seed)
+                r.emails_v2 = emails_v2["emails"]
+            except:
+                r.emails_v2 = list()
 
         if not skip_obfuscation:
             r = obfuscate(r)
