@@ -8,6 +8,7 @@ from analyze_libraries import AnalyzeLibraries
 from ui.questions import Questions
 from obfuscator import obfuscate
 from timeout.timeout import timeout
+from threading import Timer
 
 from identity_matching.matcher import match_emails
 
@@ -100,12 +101,14 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
         er = ExportResult(r)
         er.export_to_json_interactive(output, skip_upload)
     except KeyboardInterrupt:
-        print ("Cancelled by user")
+        print("Cancelled by user")
         return
 
 # user_commit - consider only these user commits for extracting the repo information
 # emails - merge these emails with these emails extracted from the repo
 # reponame - name of the repo
+
+
 def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, debug_mode, user_commits, reponame,
                   skip, commit_size_limit, file_size_limit, seed, timeout_seconds=600):
     # Initialize logger
@@ -123,9 +126,10 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
     repo = git.Repo(directory)
     ar = AnalyzeRepo(repo)
     q = Questions()
-
+    timer = Timer(timeout_seconds, timeout)
+    timer.start()
     # Use a context manager with signal to measure seconds, and timeout
-    with timeout(time=timeout_seconds, repo_working_dir=repo.working_dir):
+    try:
         print('Initialization...')
         for branch in repo.branches:
             ar.create_commits_entity_from_branch(branch.name)
@@ -176,3 +180,8 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
         er = ExportResult(r)
         er.export_to_json_headless(output)
         print('Successfully analysed the repo ==>'+reponame)
+    except KeyboardInterrupt:
+        print("{} timeouted after {} seconds.".format(repo.working_dir, timeout_seconds))
+    finally:
+        timer.cancel()
+
