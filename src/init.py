@@ -9,6 +9,7 @@ from ui.questions import Questions
 from obfuscator import obfuscate
 from timeout.timeout import timeout
 from threading import Timer
+import shutil
 
 from identity_matching.matcher import match_emails
 
@@ -182,6 +183,11 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
         print('Successfully analysed the repo ==>'+reponame)
     except KeyboardInterrupt:
         print("{} timeouted after {} seconds.".format(repo.working_dir, timeout_seconds))
+        print("Deleting", repo.working_dir)
+        try:
+            shutil.rmtree(repo.working_dir)
+        except (PermissionError, NotADirectoryError, Exception) as e:
+            print("Error when deleting {}. Message: {}".format(repo.working_dir, str(e)))
     finally:
         timer.cancel()
 
