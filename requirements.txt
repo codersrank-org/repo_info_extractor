@@ -1,4 +1,4 @@
-GitPython==2.1.11
+GitPython==2.1.15
 prompt_toolkit==1.0.14
 whaaaaat==0.5.2
 requests
