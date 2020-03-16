@@ -24,18 +24,21 @@ def match_emails(directory, seed):
     short_log_file = directory + "/shortlog.txt"
 
     with open(short_log_file, "w+", encoding="latin-1", errors="replace") as outfile:
-        subprocess.call(["git", "-C", directory, "shortlog", "-se"], stdin=subprocess.DEVNULL, stdout=outfile, universal_newlines=True)
-
-    with open(short_log_file, "r", encoding="latin-1", errors="replace") as f:
-        for line in f.readlines():
-            try:
-                count, n, e = process_shortlog_line(line)
-                test_data = (count, n, re.sub(r"[<>]", "", e))
-                short_log.append(test_data)
-            except ValueError:
-                print("error ", line)
-
-    short_log = short_log[1:]
+        try:
+            subprocess.run(["git", "-C", directory, "shortlog", "-se"], stdout=outfile, universal_newlines=True, timeout=60)
+        except subprocess.TimeoutExpired:
+            print("Shortlog timeouted for ", directory)
+        else:
+            with open(short_log_file, "r", encoding="latin-1", errors="replace") as f:
+                for line in f.readlines():
+                    try:
+                        count, n, e = process_shortlog_line(line)
+                        test_data = (count, n, re.sub(r"[<>]", "", e))
+                        short_log.append(test_data)
+                    except ValueError:
+                        print("error ", line)
+            if len(short_log) > 1:
+                short_log = short_log[1:]
 
     # convert seed
     seed_obj = {}
