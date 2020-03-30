@@ -44,6 +44,7 @@ class Preprocessor(ABC):
         """
         text = self.strip_accents(text.lower())
         text = re.sub(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+', "", text)
+        text = re.sub(r'[0-9abcdef]{8}-[0-9abcdef]{4}-[0-9abcdef]{4}-[0-9abcdef]{4}-[0-9abcdef]{12}', "", text)
         text = re.sub(r'[0-9]+', '0', text)
         text = re.sub('[^a-zA-Z0@ ._-]', '', text)
         return text
