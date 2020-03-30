@@ -7,6 +7,7 @@ from identity_matching.src.model import DistanceModel
 from identity_matching.src.preprocessor import DistancePreprocessor
 from identity_matching.src.transform_shortlog import process_shortlog_line
 
+
 def match_emails(directory, seed):
     # setup processor
     with open(os.getcwd()+"/repo_info_extractor/src/identity_matching/resources/domain_blacklist.txt", "r", encoding="utf-8") as f:

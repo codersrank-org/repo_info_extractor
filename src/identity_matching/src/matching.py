@@ -7,7 +7,7 @@ class IdentityMatcher:
     def __init__(self,
                  preprocessor,
                  model,
-                 threshold = 0.75,
+                 threshold=0.75,
                  debug=False):
 
         self._preprocessor = preprocessor
