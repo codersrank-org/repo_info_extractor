@@ -1,12 +1,7 @@
 import os
-
-import sys
-
-sys.path.append(".")
-
-from src.identity_matching.src.preprocessor import DistancePreprocessor
-from src.identity_matching.src.model import DistanceModel
-from src.identity_matching.src.matching import IdentityMatcher
+from identity_matching.src.preprocessor import DistancePreprocessor
+from identity_matching.src.model import DistanceModel
+from identity_matching.src.matching import IdentityMatcher
 
 
 def test_preprocessor():
