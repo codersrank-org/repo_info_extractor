@@ -5,5 +5,5 @@ requests
 requests_toolbelt
 nose2
 Pygments
-sklearn==0.22.1
+sklearn
 numpy
