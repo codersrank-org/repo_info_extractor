@@ -10,6 +10,10 @@ def test_ext_lang_map_built():
 
 
 def test_languages_recognised():
+    # In case of Docker environment
+    pwd = os.getcwd()
+    if pwd == "/":
+        pwd = "/app"
     assert detect_language.detect_language("/tmp/some_file.js") == "JavaScript"
     assert detect_language.detect_language(
         "/tmp/some_file.jsx") == "JavaScript"
@@ -57,8 +61,8 @@ def test_languages_recognised():
         "/tmp/some_file.ipynb") == "Jupyter Notebook"
     assert detect_language.detect_language("/tmp/some_file.liquid") == "Liquid"
     assert detect_language.detect_language("/tmp/some_file.lua") == "Lua"
-    assert detect_language.detect_language(os.getcwd() + "/test/fixtures/matlab.m") == "MATLAB"
-    assert detect_language.detect_language(os.getcwd() + "/test/fixtures/objective-c.m") == "Objective-C"
+    assert detect_language.detect_language(pwd + "/test/fixtures/matlab.m") == "MATLAB"
+    assert detect_language.detect_language(pwd + "/test/fixtures/objective-c.m") == "Objective-C"
 
     assert detect_language.detect_language(
         "/tmp/some_file.mm") == "Objective-C"

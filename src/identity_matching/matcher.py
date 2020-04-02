@@ -26,7 +26,7 @@ def match_emails(directory, seed):
 
     with open(short_log_file, "w+", encoding="latin-1", errors="replace") as outfile:
         try:
-            subprocess.run(["git", "-C", directory, "shortlog", "-se"], stdout=outfile, universal_newlines=True, timeout=60)
+            subprocess.run(["git", "-C", directory, "shortlog", "-se"], stdout=outfile, universal_newlines=True, timeout=5)
         except subprocess.TimeoutExpired:
             print("Shortlog timeouted for ", directory)
         else:
