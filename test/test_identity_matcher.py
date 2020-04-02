@@ -1,4 +1,5 @@
 import os
+
 from identity_matching.src.preprocessor import DistancePreprocessor
 from identity_matching.src.model import DistanceModel
 from identity_matching.src.matching import IdentityMatcher
@@ -6,7 +7,12 @@ from identity_matching.src.matching import IdentityMatcher
 
 def test_preprocessor():
 
-    with open(os.getcwd() + "/src/identity_matching/resources/domain_blacklist.txt", "r",
+    # Change path for Docker
+    pwd = os.getcwd()
+    if pwd == "/":
+        pwd = "/app"
+
+    with open(pwd + "/repo_info_extractor/src/identity_matching/resources/domain_blacklist.txt", "r",
               encoding="utf-8") as f:
         domain_blacklist = list()
         for line in f.readlines():
@@ -23,6 +29,11 @@ def test_preprocessor():
 
 def test_matching():
 
+    # Change path for docker
+    pwd = os.getcwd()
+    if pwd == "/":
+        pwd = "/app"
+
     seed = {"user_name": "",
             "names": ["Clark Kent"],
             "emails": ["kent.clark@gotham.io"]}
@@ -34,13 +45,13 @@ def test_matching():
         'names': ['Clark Kent', 'Clark E Kent'],
         'emails': ['kent.clark@gotham.io', 'superman@yahoo.com']}
 
-    with open(os.getcwd()+"/src/identity_matching/resources/domain_blacklist.txt", "r", encoding="utf-8") as f:
+    with open(pwd+"/repo_info_extractor/src/identity_matching/resources/domain_blacklist.txt", "r", encoding="utf-8") as f:
         domain_blacklist = list()
         for line in f.readlines():
             domain_blacklist.append(line.strip())
 
     preprocessor = DistancePreprocessor(domain_blacklist=domain_blacklist)
-    model = DistanceModel(vectorizer_path=os.getcwd()+"/src/identity_matching/resources/vectorizer.p")
+    model = DistanceModel(vectorizer_path=pwd+"/repo_info_extractor/src/identity_matching/resources/vectorizer.p")
 
     im = IdentityMatcher(preprocessor=preprocessor, model=model, threshold=0.85)
     assert im.get_emails(seed, shortlog_list) == output
