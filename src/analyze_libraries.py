@@ -67,6 +67,15 @@ class AnalyzeLibraries:
             shutil.copytree(self.basedir, tmp_repo_path, symlinks=True, ignore=ignore_gitignore(self.basedir))
         except shutil.Error as e:
             module_logger.debug("Shutil error messages: {}.".format(str(e)))
+
+        # Make sure that the .git folder gets copied, even if it's in .gitignore
+        if not os.path.exists(os.path.join(tmp_repo_path, ".git")):
+            try:
+                shutil.copytree(os.path.join(self.basedir, ".git"),
+                                os.path.join(tmp_repo_path, ".git"), symlinks=True)
+            except shutil.Error as e:
+                module_logger.debug("Shutil error when copying .git; {}".format(str(e)))
+
         _log_info("Finished copying the repository to", tmp_repo_path)
 
         # Initialise the next tmp directory as a repo and hard reset, just in case
