@@ -111,7 +111,7 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
 
 
 def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, debug_mode, user_commits, reponame,
-                  skip, commit_size_limit, file_size_limit, seed, timeout_seconds=600):
+                  skip, commit_size_limit, file_size_limit, seed, timeout_seconds=600, headless=True):
     # Initialize logger
     logger = logging.getLogger("main")
     if debug_mode:
@@ -159,7 +159,7 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
 
             if author_emails:
                 al = AnalyzeLibraries(r.commits, author_emails, repo.working_tree_dir,
-                                      skip, commit_size_limit, file_size_limit)
+                                      skip, commit_size_limit, file_size_limit, headless)
                 libs = al.get_libraries()
 
                 # combine repo stats with libs used
