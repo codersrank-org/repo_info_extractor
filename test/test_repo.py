@@ -1,13 +1,14 @@
 import os
 import json
 from init import init_headless
+import shutil
 
 
 # You can test other repos on your computer by changing this values
 # Default values are for repo_info_extractor repository
-repo_name = "repo_info_extractor"
+repo_name = "test-repo"
 # Use full paths instead of relative ones
-repo_path = os.getcwd() 
+repo_path = "/tmp/" + repo_name
 test_files = {"py": "Python", "txt": "", "xml": "", "bsl":"1C Enterprise"}
 
 local_username = "alimgiray@Alims-MacBook-Pro.local"
@@ -17,8 +18,10 @@ output_path = os.getcwd() + "/test/generated/result.json"
 # Anaylze repo and create results
 def analyze_repo():
     # because of nose2
-    os.chdir('../')
+    shutil.copytree("./", repo_path)
+    os.chdir(repo_path)
     init_headless(repo_path, True, output_path, True, [local_username], False, [], repo_name, True, 5, 2, None)
+    shutil.rmtree(repo_path)
 
 
 def test_repo():
