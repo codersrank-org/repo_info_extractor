@@ -26,6 +26,7 @@ supported_languages = {
     'Fortran': ['f90', 'f95', 'f03', 'f08', 'for'],
     'Go': ['go'],
     'Haskell': ['hs', 'lhs'],
+    'HCL': ['hcl', 'tf', 'tfvars'],
     'HTML': ['html', 'htm'],
     'JSON': ['json'],
     'Java': ['java'],
