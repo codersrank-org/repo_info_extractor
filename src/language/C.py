@@ -17,7 +17,7 @@ def extract_libraries(files):
     res = []
 
     # regex to find imports like #include<stdio.h> or #include "foo.h"
-    regex = re.compile(r"#include\s?[<\"]([a-zA-Z0-9.-]+)[\">]", re.IGNORECASE)
+    regex = re.compile(r"#include\s?[<\"]([/a-zA-Z0-9.-]+)[\">]", re.IGNORECASE)
 
     for f in files:
         with open(file=f, mode='r', errors='ignore') as fr:
