@@ -53,6 +53,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.for") == "Fortran"
     assert detect_language.detect_language("/tmp/some_file.go") == "Go"
     assert detect_language.detect_language("/tmp/some_file.lhs") == "Haskell"
+    assert detect_language.detect_language("/tmp/some_file.hs") == "Haskell"
     assert detect_language.detect_language("/tmp/some_file.html") == "HTML"
     assert detect_language.detect_language("/tmp/some_file.htm") == "HTML"
     assert detect_language.detect_language("/tmp/some_file.json") == "JSON"
@@ -62,6 +63,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.liquid") == "Liquid"
     assert detect_language.detect_language("/tmp/some_file.lua") == "Lua"
     assert detect_language.detect_language(pwd + "/test/fixtures/matlab.m") == "MATLAB"
+    assert detect_language.detect_language("/tmp/some_file.nix") == "Nix"
     assert detect_language.detect_language(pwd + "/test/fixtures/objective-c.m") == "Objective-C"
 
     assert detect_language.detect_language(
