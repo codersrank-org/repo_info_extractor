@@ -55,6 +55,8 @@ supported_languages = {
     'Swift': ['swift'],
     'TypeScript': ['ts', 'tsx'],
     'Vue': ['vue'],
+    'Xtend': ['xtend'],
+    'Xtext': ['xtext'],
 }
 
 _ext_lang = {}
