@@ -16,6 +16,7 @@ supported_languages = {
     'Dart': ['dart'],
     'Groovy': ['groovy', 'gvy', 'gy', 'gsh'],
     'HTML+Razor': ['cshtml'],
+    'EJS': ['ejs'],
     'Elixir': ['ex', 'exs'],
     'Elm': ['elm'],
     'ERB': ['erb'],

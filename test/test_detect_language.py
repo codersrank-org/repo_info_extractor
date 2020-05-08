@@ -35,6 +35,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.groovy") == "Groovy"
     assert detect_language.detect_language("/tmp/some_file.gsh") == "Groovy"
     assert detect_language.detect_language("/tmp/some_file.gvy") == "Groovy"
+    assert detect_language.detect_language("/tmp/some_file.Ejs") == "EJS"
     assert detect_language.detect_language("/tmp/some_file.ex") == "Elixir"
     assert detect_language.detect_language("/tmp/some_file.exs") == "Elixir"
     assert detect_language.detect_language("/tmp/some_file.elm") == "Elm"
