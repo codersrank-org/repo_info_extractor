@@ -18,7 +18,7 @@ def test_preprocessor():
             domain_blacklist.append(line.strip())
 
     preprocessor = DistancePreprocessor(domain_blacklist=domain_blacklist)
-    assert preprocessor.transform("arrow@gmal.com") == "arrow@"
+    assert preprocessor.transform("arrow@gmail.com") == "arrow@"
     assert preprocessor.transform("arrow.green@codersrank.io") == "arrow.green@codersrank.io"
     assert preprocessor.transform("arrow@127.0.0.1") == "arrow@"
     assert preprocessor.transform("arrow@e5c1c795-43da-0310-a71f-fac65c449510") == "arrow@"

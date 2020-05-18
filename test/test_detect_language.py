@@ -72,7 +72,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.p") == "OpenEdge ABL"
     assert detect_language.detect_language("/tmp/some_file.w") == "OpenEdge ABL"
     assert detect_language.detect_language("/tmp/some_file.i") == "OpenEdge ABL"
-    assert detect_language.detect_language("/tmp/some_file.cls") == "OpenEdge ABL"
+    assert detect_language.detect_language("/tmp/some_file.cls") == "Apex"
     assert detect_language.detect_language("/tmp/some_file.ab") == "OpenEdge ABL"
     assert detect_language.detect_language("/tmp/some_file.pkb") == "PLSQL"
     assert detect_language.detect_language("/tmp/some_file.pks") == "PLSQL"    

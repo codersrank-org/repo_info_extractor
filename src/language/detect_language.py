@@ -3,6 +3,7 @@ from .detect_language_from_file import detect_language_from_file
 
 supported_languages = {
     '1C Enterprise': ['bsl', 'os'],
+    'Apex': ['cls'],
     'Assembly': ['asm'],
     'Batchfile': ['bat'],
     'C': ['c'],
@@ -37,7 +38,7 @@ supported_languages = {
     'MATLAB': ['m'],
     'Nix': ['nix'],
     'Objective-C': ['mm'],
-    'OpenEdge ABL': ['p', 'ab', 'w', 'i', 'x', 'cls'],
+    'OpenEdge ABL': ['p', 'ab', 'w', 'i', 'x'],
     'Perl': ['pl'],
     'PHP': ['php'],
     'PLSQL': ['pks', 'pkb'],
