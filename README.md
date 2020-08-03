@@ -25,12 +25,12 @@ If using this approach, the host machine does not need to have any tools install
 
 ### OSX / Linux
 ```
-./run-docker.sh <path to the repository>
+./run-docker.sh <local path to the repository>
 ```
 
 ### Windows
 ```
-run-docker.bat <path to the repository>
+run-docker.bat <local path to the repository>
 ```
 
 ## Using Python on the host machine approach
@@ -44,7 +44,7 @@ python -V
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
 $ ./install.sh
-$ ./run.sh path/to/repository
+$ ./run.sh local_path/to/repository
 $ ls -al ./repo_data.json.zip
 ```
 ### Linux
@@ -52,7 +52,7 @@ $ ls -al ./repo_data.json.zip
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
 $ ./install.sh
-$ ./run.sh path/to/repository
+$ ./run.sh local_path/to/repository
 $ ls -al ./repo_data.json.zip
 ```
 ### Windows
@@ -60,7 +60,7 @@ $ ls -al ./repo_data.json.zip
 git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
 install.bat
-python src\main.py path\to\repo
+python src\main.py local_path\to\repo
 dir
 ```
 
