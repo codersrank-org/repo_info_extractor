@@ -60,6 +60,7 @@ supported_languages = {
     'Vue': ['vue'],
     'Xtend': ['xtend'],
     'Xtext': ['xtext'],
+    'Kivy': ['kv'],
 }
 
 _ext_lang = {}
