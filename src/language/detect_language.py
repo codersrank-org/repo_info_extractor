@@ -5,7 +5,7 @@ supported_languages = {
     '1C Enterprise': ['bsl', 'os'],
     'Apex': ['cls'],
     'Assembly': ['asm'],
-    'Batchfile': ['bat'],
+    'Batchfile': ['bat', 'cmd', 'btm'],
     'C': ['c'],
     'C++': ['cpp', 'cxx'],
     'C#': ['cs'],
