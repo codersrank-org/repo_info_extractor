@@ -32,6 +32,7 @@ supported_languages = {
     'Java': ['java'],
     'JavaScript': ['js', 'jsx'],
     'Jupyter Notebook': ['ipynb'],
+    'Kivy': ['kv'],
     'Kotlin': ['kt', 'kts'],
     'Less': ['less'], 
     'Liquid': ['liquid'],
@@ -60,7 +61,6 @@ supported_languages = {
     'Vue': ['vue'],
     'Xtend': ['xtend'],
     'Xtext': ['xtext'],
-    'Kivy': ['kv'],
 }
 
 _ext_lang = {}
