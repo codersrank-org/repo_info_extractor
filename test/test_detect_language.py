@@ -22,8 +22,10 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.cmd") == "Batchfile"
     assert detect_language.detect_language("/tmp/some_file.btm") == "Batchfile"
     assert detect_language.detect_language("/tmp/some_file.c") == "C"
+    assert detect_language.detect_language("/tmp/some_file.h") == "C"
     assert detect_language.detect_language("/tmp/some_file.cpp") == "C++"
     assert detect_language.detect_language("/tmp/some_file.cxx") == "C++"
+    assert detect_language.detect_language("/tmp/some_file.hpp") == "C++"
     assert detect_language.detect_language("/tmp/some_file.cs") == "C#"
     assert detect_language.detect_language("/tmp/some_file.clj") == "Clojure"
     assert detect_language.detect_language(
@@ -67,6 +69,7 @@ def test_languages_recognised():
         "/tmp/some_file.jsx") == "JavaScript"
     assert detect_language.detect_language(
         "/tmp/some_file.ipynb") == "Jupyter Notebook"
+    assert detect_language.detect_language("/tmp/some_file.kv") == "Kivy"
     assert detect_language.detect_language("/tmp/some_file.kt") == "Kotlin"
     assert detect_language.detect_language("/tmp/some_file.kts") == "Kotlin"
     assert detect_language.detect_language("/tmp/some_file.liquid") == "Liquid"
