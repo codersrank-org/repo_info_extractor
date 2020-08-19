@@ -64,6 +64,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.java") == "Java"
     assert detect_language.detect_language(
         "/tmp/some_file.ipynb") == "Jupyter Notebook"
+    assert detect_language.detect_language("/tmp/some_file.kv") == "Kivy"
     assert detect_language.detect_language("/tmp/some_file.liquid") == "Liquid"
     assert detect_language.detect_language("/tmp/some_file.lua") == "Lua"
     assert detect_language.detect_language(pwd + "/test/fixtures/matlab.m") == "MATLAB"
