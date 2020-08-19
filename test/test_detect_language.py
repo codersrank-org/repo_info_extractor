@@ -14,13 +14,13 @@ def test_languages_recognised():
     pwd = os.getcwd()
     if pwd == "/":
         pwd = "/app"
-    assert detect_language.detect_language("/tmp/some_file.js") == "JavaScript"
-    assert detect_language.detect_language(
-        "/tmp/some_file.jsx") == "JavaScript"
     assert detect_language.detect_language("/tmp/some_file.bsl") == "1C Enterprise"
     assert detect_language.detect_language("/tmp/some_file.os") == "1C Enterprise"
+    assert detect_language.detect_language("/tmp/some_file.cls") == "Apex"
     assert detect_language.detect_language("/tmp/some_file.asm") == "Assembly"
     assert detect_language.detect_language("/tmp/some_file.bat") == "Batchfile"
+    assert detect_language.detect_language("/tmp/some_file.cmd") == "Batchfile"
+    assert detect_language.detect_language("/tmp/some_file.btm") == "Batchfile"
     assert detect_language.detect_language("/tmp/some_file.c") == "C"
     assert detect_language.detect_language("/tmp/some_file.h") == "C"
     assert detect_language.detect_language("/tmp/some_file.cpp") == "C++"
@@ -64,9 +64,14 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.htm") == "HTML"
     assert detect_language.detect_language("/tmp/some_file.json") == "JSON"
     assert detect_language.detect_language("/tmp/some_file.java") == "Java"
+    assert detect_language.detect_language("/tmp/some_file.js") == "JavaScript"
+    assert detect_language.detect_language(
+        "/tmp/some_file.jsx") == "JavaScript"
     assert detect_language.detect_language(
         "/tmp/some_file.ipynb") == "Jupyter Notebook"
     assert detect_language.detect_language("/tmp/some_file.kv") == "Kivy"
+    assert detect_language.detect_language("/tmp/some_file.kt") == "Kotlin"
+    assert detect_language.detect_language("/tmp/some_file.kts") == "Kotlin"
     assert detect_language.detect_language("/tmp/some_file.liquid") == "Liquid"
     assert detect_language.detect_language("/tmp/some_file.lua") == "Lua"
     assert detect_language.detect_language(pwd + "/test/fixtures/matlab.m") == "MATLAB"
@@ -78,7 +83,6 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.p") == "OpenEdge ABL"
     assert detect_language.detect_language("/tmp/some_file.w") == "OpenEdge ABL"
     assert detect_language.detect_language("/tmp/some_file.i") == "OpenEdge ABL"
-    assert detect_language.detect_language("/tmp/some_file.cls") == "Apex"
     assert detect_language.detect_language("/tmp/some_file.ab") == "OpenEdge ABL"
     assert detect_language.detect_language("/tmp/some_file.pkb") == "PLSQL"
     assert detect_language.detect_language("/tmp/some_file.pks") == "PLSQL"    
@@ -97,6 +101,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.scss") == "SCSS"
     assert detect_language.detect_language("/tmp/some_file.sh") == "Shell"
     assert detect_language.detect_language("/tmp/some_file.st") == "Smalltalk"
+    assert detect_language.detect_language("/tmp/some_file.styl") == "Stylus"
     assert detect_language.detect_language("/tmp/some_file.svelte") == "Svelte"
     assert detect_language.detect_language("/tmp/some_file.swift") == "Swift"
     assert detect_language.detect_language("/tmp/some_file.ts") == "TypeScript"
