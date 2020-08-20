@@ -27,7 +27,7 @@ supported_languages = {
     'Go': ['go'],
     'Haskell': ['hs', 'lhs'],
     'HCL': ['hcl', 'tf', 'tfvars'],
-    'HTML': ['html', 'htm'],
+    'HTML': ['html', 'htm', 'xhtml'],
     'JSON': ['json'],
     'Java': ['java'],
     'JavaScript': ['js', 'jsx'],
