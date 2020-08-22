@@ -104,9 +104,12 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.styl") == "Stylus"
     assert detect_language.detect_language("/tmp/some_file.svelte") == "Svelte"
     assert detect_language.detect_language("/tmp/some_file.swift") == "Swift"
+    assert detect_language.detect_language("/tmp/some_file.toml") == "TOML"
     assert detect_language.detect_language("/tmp/some_file.ts") == "TypeScript"
     assert detect_language.detect_language(
         "/tmp/some_file.tsx") == "TypeScript"
     assert detect_language.detect_language("/tmp/some_file.vue") == "Vue"
     assert detect_language.detect_language("/tmp/some_file.xtend") == "Xtend"
     assert detect_language.detect_language("/tmp/some_file.xtext") == "Xtext"
+    assert detect_language.detect_language("/tmp/some_file.yaml") == "YAML"
+    assert detect_language.detect_language("/tmp/some_file.yml") == "YAML"
