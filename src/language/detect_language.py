@@ -57,10 +57,12 @@ supported_languages = {
     'Stylus': ['styl'],
     'Svelte': ['svelte'],
     'Swift': ['swift'],
+    'TOML': ['toml'],
     'TypeScript': ['ts', 'tsx'],
     'Vue': ['vue'],
     'Xtend': ['xtend'],
     'Xtext': ['xtext'],
+    'YAML': ['yaml', 'yml'],
 }
 
 _ext_lang = {}
