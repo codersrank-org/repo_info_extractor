@@ -62,6 +62,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.tfvars") == "HCL"
     assert detect_language.detect_language("/tmp/some_file.html") == "HTML"
     assert detect_language.detect_language("/tmp/some_file.htm") == "HTML"
+    assert detect_language.detect_language("/tmp/some_file.xhtml") == "HTML"
     assert detect_language.detect_language("/tmp/some_file.json") == "JSON"
     assert detect_language.detect_language("/tmp/some_file.java") == "Java"
     assert detect_language.detect_language("/tmp/some_file.js") == "JavaScript"
