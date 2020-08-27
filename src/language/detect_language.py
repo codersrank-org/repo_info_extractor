@@ -41,7 +41,7 @@ supported_languages = {
     'Nix': ['nix'],
     'Objective-C': ['mm'],
     'OpenEdge ABL': ['p', 'ab', 'w', 'i', 'x'],
-    'Perl': ['pl', 'pm'],
+    'Perl': ['pl', 'pm', 't'],
     'PHP': ['php'],
     'PLSQL': ['pks', 'pkb'],
     'Protocol Buffer': ['proto'],
