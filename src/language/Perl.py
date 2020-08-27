@@ -27,5 +27,4 @@ def extract_libraries(files):
 
         if matches:
             res.extend(matches)
-            print(res)
     return {"Perl": res}
