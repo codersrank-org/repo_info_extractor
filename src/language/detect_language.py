@@ -30,7 +30,7 @@ supported_languages = {
     'HTML': ['html', 'htm', 'xhtml'],
     'JSON': ['json'],
     'Java': ['java'],
-    'JavaScript': ['js', 'jsx'],
+    'JavaScript': ['js', 'jsx', 'mjs', 'cjs'],
     'Jupyter Notebook': ['ipynb'],
     'Kivy': ['kv'],
     'Kotlin': ['kt', 'kts'],
