@@ -66,6 +66,8 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.json") == "JSON"
     assert detect_language.detect_language("/tmp/some_file.java") == "Java"
     assert detect_language.detect_language("/tmp/some_file.js") == "JavaScript"
+    assert detect_language.detect_language("/tmp/some_file.mjs") == "JavaScript"
+    assert detect_language.detect_language("/tmp/some_file.cjs") == "JavaScript"
     assert detect_language.detect_language(
         "/tmp/some_file.jsx") == "JavaScript"
     assert detect_language.detect_language(
