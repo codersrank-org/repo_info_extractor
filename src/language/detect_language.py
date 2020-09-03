@@ -7,7 +7,7 @@ supported_languages = {
     'Assembly': ['asm'],
     'Batchfile': ['bat', 'cmd', 'btm'],
     'C': ['c', 'h'],
-    'C++': ['cpp', 'cxx', 'hpp'],
+    'C++': ['cpp', 'cxx', 'hpp', 'cc', 'hh', 'hxx'],
     'C#': ['cs'],
     'CSS': ['css'],
     'Clojure': ['clj'],
