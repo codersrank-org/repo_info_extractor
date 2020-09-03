@@ -47,7 +47,7 @@ supported_languages = {
     'Protocol Buffer': ['proto'],
     'Python': ['py'],
     'R': ['r'],
-    'Raku': ['p6','pm6','rk','raku','pod6','rakumod','rakudoc'],
+    'Raku': ['p6','pl6','pm6','rk','raku','pod6','rakumod','rakudoc'],
     'Ruby': ['rb'],
     'Rust': ['rs'],
     'Scala': ['scala'],
