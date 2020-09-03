@@ -47,6 +47,7 @@ supported_languages = {
     'Protocol Buffer': ['proto'],
     'Python': ['py'],
     'R': ['r'],
+    'Raku': ['p6','pl6','pm6','rk','raku','pod6','rakumod','rakudoc'],
     'Robot': ['robot'],
     'Ruby': ['rb'],
     'Rust': ['rs'],
@@ -60,7 +61,6 @@ supported_languages = {
     'Swift': ['swift'],
     'TypeScript': ['ts', 'tsx'],
     'Vue': ['vue'],
-    'XML': ['xml'],
     'Xtend': ['xtend'],
     'Xtext': ['xtext'],
 }

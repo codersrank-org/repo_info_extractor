@@ -26,6 +26,9 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.cpp") == "C++"
     assert detect_language.detect_language("/tmp/some_file.cxx") == "C++"
     assert detect_language.detect_language("/tmp/some_file.hpp") == "C++"
+    assert detect_language.detect_language("/tmp/some_file.cc") == "C++"
+    assert detect_language.detect_language("/tmp/some_file.hxx") == "C++"
+    assert detect_language.detect_language("/tmp/some_file.hh") == "C++"
     assert detect_language.detect_language("/tmp/some_file.cs") == "C#"
     assert detect_language.detect_language("/tmp/some_file.clj") == "Clojure"
     assert detect_language.detect_language(
@@ -99,6 +102,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.pkb") == "PLSQL"
     assert detect_language.detect_language("/tmp/some_file.py") == "Python"
     assert detect_language.detect_language("/tmp/some_file.r") == "R"
+    assert detect_language.detect_language("/tmp/some_file.robot") == "Robot"
     assert detect_language.detect_language("/tmp/some_file.rb") == "Ruby"
     assert detect_language.detect_language("/tmp/some_file.rs") == "Rust"
     assert detect_language.detect_language("/tmp/some_file.scala") == "Scala"
