@@ -173,7 +173,7 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
                 emails_v2 = match_emails(directory, seed)
                 r.emails_v2 = emails_v2["emails"]
             except Exception as err:
-                r.emails_v2 = list()
+                r.emails_v2 = list(seed.emails)
                 print("Error extracting emailv2. Error: {0}".format(err))
 
         if not skip_obfuscation:
