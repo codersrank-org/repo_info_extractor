@@ -41,12 +41,31 @@ class AnalyzeLibraries:
             tmp_repo_path = self.basedir
             repo = git.Repo(tmp_repo_path)
         else:
-            # Before we do anything, copy the repo to
-            # a temporary location so that we don't mess with the original repo
+            # Before we do anything, copy the repo to a temporary location so that we don't mess with the original repo
             tmp_repo_path = _get_temp_repo_path()
-            repo = self._initialize_repository(tmp_repo_path)
 
-        # Initialise the next tmp directory as a repo and hard reset, just in case
+            _log_info("Copying the repository to a temporary location, this can take a while...")
+            try:
+                shutil.copytree("%s/.git" % self.basedir,
+                                "%s/.git" % tmp_repo_path,
+                                symlinks=True)
+
+            except shutil.Error as e:
+                module_logger.debug("Shutil error messages: {}.".format(str(e)))
+            _log_info("Finished copying the repository to", tmp_repo_path)
+
+            # Initialise the next tmp directory as a repo and hard reset, just in case
+            repo = git.Repo(tmp_repo_path)
+            repo.git.clean('-fd')
+            try:
+                repo.git.checkout('master')
+            except git.exc.GitCommandError as err:
+                _log_info("Cannot checkout master on repository: ", err)
+
+            try:
+                repo.git.reset('--hard')
+            except git.exc.GitCommandError as err:
+                _log_info("Cannot reset repository: ", err)
 
         prog = 0
         total = len(commits)
@@ -151,41 +170,41 @@ class AnalyzeLibraries:
 
         return res
 
-    def _initialize_repository(self, tmp_repo_path):
-        """
-        Copy the repository to a new temporary location and create a new git.repo object from
-        the new path.
-        """
-
-        _log_info("Copying the repository to a temporary location, this can take a while...")
-        try:
-            shutil.copytree(self.basedir, tmp_repo_path, symlinks=True, ignore=_ignore_gitignore(self.basedir))
-        except shutil.Error as e:
-            module_logger.debug("Shutil error messages: {}.".format(str(e)))
-
-        # Make sure that the .git folder gets copied, even if it's in .gitignore
-        if not os.path.exists(os.path.join(tmp_repo_path, ".git")):
-            try:
-                shutil.copytree(os.path.join(self.basedir, ".git"),
-                                os.path.join(tmp_repo_path, ".git"), symlinks=True)
-            except shutil.Error as e:
-                module_logger.debug("Shutil error when copying .git; {}".format(str(e)))
-
-        _log_info("Finished copying the repository to", tmp_repo_path)
-
-        repo = git.Repo(tmp_repo_path)
-        repo.git.clean('-fd')
-        try:
-            repo.git.checkout('master')
-        except git.exc.GitCommandError as err:
-            _log_info("Cannot checkout master on repository: ", err)
-
-        try:
-            repo.git.reset('--hard')
-        except git.exc.GitCommandError as err:
-            _log_info("Cannot reset repository: ", err)
-
-        return repo
+    # def _initialize_repository(self, tmp_repo_path):
+    #     """
+    #     Copy the repository to a new temporary location and create a new git.repo object from
+    #     the new path.
+    #     """
+    #
+    #     _log_info("Copying the repository to a temporary location, this can take a while...")
+    #     try:
+    #         shutil.copytree(self.basedir, tmp_repo_path, symlinks=True, ignore=_ignore_gitignore(self.basedir))
+    #     except shutil.Error as e:
+    #         module_logger.debug("Shutil error messages: {}.".format(str(e)))
+    #
+    #     # Make sure that the .git folder gets copied, even if it's in .gitignore
+    #     if not os.path.exists(os.path.join(tmp_repo_path, ".git")):
+    #         try:
+    #             shutil.copytree(os.path.join(self.basedir, ".git"),
+    #                             os.path.join(tmp_repo_path, ".git"), symlinks=True)
+    #         except shutil.Error as e:
+    #             module_logger.debug("Shutil error when copying .git; {}".format(str(e)))
+    #
+    #     _log_info("Finished copying the repository to", tmp_repo_path)
+    #
+    #     repo = git.Repo(tmp_repo_path)
+    #     repo.git.clean('-fd')
+    #     try:
+    #         repo.git.checkout('master')
+    #     except git.exc.GitCommandError as err:
+    #         _log_info("Cannot checkout master on repository: ", err)
+    #
+    #     try:
+    #         repo.git.reset('--hard')
+    #     except git.exc.GitCommandError as err:
+    #         _log_info("Cannot reset repository: ", err)
+    #
+    #     return repo
 
 
 def _should_we_check_out(file_list):
@@ -238,27 +257,27 @@ def _log_info(message, *argv):
     print(timed_message, *argv)
 
 
-def _ignore_gitignore(basedir):
-    """
-    Function that can be used as copytree() ignore parameter using a glob style parameter.
-    Reads the .gitignore (if exists) and adding it to an ignore array.
-    """
-    if os.path.isfile(basedir+'/.gitignore'):
-        with open(basedir+'/.gitignore') as f:
-            gitignores = f.readlines()
-    else:
-        gitignores = []
-
-    gitignores = [x.strip() for x in gitignores]
-    filtered = []
-    for pattern in gitignores:
-        if (pattern != "" and pattern[0] != "#"): # Strip comments and linebreaks
-            filtered.append(pattern.rstrip('/').lstrip('/')) # Remove first and last char slashes to comply w/ glob
-    gitignores = filtered
-
-    def _ignore_gitignore(path, names):
-        ignored_names = []
-        for pattern in gitignores:
-            ignored_names.extend(fnmatch.filter(names, pattern))
-        return set(ignored_names)
-    return _ignore_gitignore
+# def _ignore_gitignore(basedir):
+#     """
+#     Function that can be used as copytree() ignore parameter using a glob style parameter.
+#     Reads the .gitignore (if exists) and adding it to an ignore array.
+#     """
+#     if os.path.isfile(basedir+'/.gitignore'):
+#         with open(basedir+'/.gitignore') as f:
+#             gitignores = f.readlines()
+#     else:
+#         gitignores = []
+#
+#     gitignores = [x.strip() for x in gitignores]
+#     filtered = []
+#     for pattern in gitignores:
+#         if (pattern != "" and pattern[0] != "#"): # Strip comments and linebreaks
+#             filtered.append(pattern.rstrip('/').lstrip('/')) # Remove first and last char slashes to comply w/ glob
+#     gitignores = filtered
+#
+#     def _ignore_gitignore(path, names):
+#         ignored_names = []
+#         for pattern in gitignores:
+#             ignored_names.extend(fnmatch.filter(names, pattern))
+#         return set(ignored_names)
+#     return _ignore_gitignore
