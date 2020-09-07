@@ -20,7 +20,10 @@ def extract_libraries(files):
     regex_import = re.compile(r'import ((?!java)[a-zA-Z0-9]*\.[a-zA-Z0-9]*)', re.IGNORECASE)
     # regex to find imports like org.springframework.boot
     regex_import_long = re.compile(r'import ((?!java)[a-zA-Z0-9]*\.[a-zA-Z0-9]*\.[a-zA-Z0-9]*)', re.IGNORECASE)
-
+    # regex to find static imports like org.springframework (exlude standart java libraries)
+    regex_static_import = re.compile(r'import static ((?!java)[a-zA-Z0-9]*\.[a-zA-Z0-9]*)', re.IGNORECASE)
+    # regex to find static imports like org.springframework.boot
+    regex_static_import_long = re.compile(r'import static ((?!java)[a-zA-Z0-9]*\.[a-zA-Z0-9]*\.[a-zA-Z0-9]*)', re.IGNORECASE)
 
     for f in files:
         with open(file=f, mode='r', errors='ignore') as fr:
@@ -28,6 +31,8 @@ def extract_libraries(files):
             contents = ' '.join(fr.readlines())
             matches = regex_import.findall(contents)
             matches.extend(regex_import_long.findall(contents))
+            matches.extend(regex_static_import.findall(contents))
+            matches.extend(regex_static_import_long.findall(contents))
 
         if matches:
             res.extend(matches)
