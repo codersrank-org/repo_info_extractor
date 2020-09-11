@@ -10,9 +10,9 @@ def main():
     parser.add_argument(
         'directory', help='Path to the repository. Example usage: run.sh path/to/directory')
     parser.add_argument('--output', default='./repo_data.json', dest='output',
-                        help='Path to the JSON file that will contain the result')
+                        help='Path to the JSON file that will contain the result. Use .json extension otherwise it cannot be recognized.')
     parser.add_argument('--skip_obfuscation', default=False, dest='skip_obfuscation', action='store_true',
-                        help='If true it won\'t obfuscate the sensitive data such as emails and file names. Mostly for testing purpuse')
+                        help='If true it won\'t obfuscate the sensitive data such as emails and file names. Mostly for testing purpose')
     parser.add_argument('--parse_libraries',  default=True, action='store_true',
                         dest='parse_libraries', help='If true, used libraries will be parsed')
     parser.add_argument('--email', default='',
