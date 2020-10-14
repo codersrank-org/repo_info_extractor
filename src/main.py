@@ -46,9 +46,10 @@ def main():
 
         else:
             if args.headless:
-                seed = SimpleNamespace(emails=[args.email], user_name="", names=[])
+                emails = args.email.split(",")
+                seed = SimpleNamespace(emails=emails, user_name="", names=[])
                 init_headless(args.directory, args.skip_obfuscation, args.output,
-                        args.parse_libraries, [args.email], args.debug_mode, [], args.directory, args.skip,
+                        args.parse_libraries, emails, args.debug_mode, [], args.directory, args.skip,
                         args.commit_size_limit, args.file_size_limit, seed)
             else:
                 initialize(args.directory, args.skip_obfuscation, args.output,
