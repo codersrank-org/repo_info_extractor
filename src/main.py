@@ -1,8 +1,9 @@
 import argparse
-from init import initialize
+from init import initialize, init_headless
 from pprint import pprint
 import os
 from ui.questions import Questions
+from types import SimpleNamespace
 
 
 def main():
@@ -27,6 +28,7 @@ def main():
                         help='If the estimated size of the changed files is bigger than this, we skip the commit')
     parser.add_argument('--file_size_limit', default=2, type=int,
                         help='The library analyzer skips files bigger than this limit')
+    parser.add_argument('--headless', default=False, action='store_true', help="Run in headless mode.")    
     try:
         args = parser.parse_args()
         folders=args.directory.split('|,|')
@@ -43,9 +45,15 @@ def main():
                 print('Finished analyzing %s ' % (repo_name))
 
         else:
-            initialize(args.directory, args.skip_obfuscation, args.output,
-                       args.parse_libraries, args.email, args.skip_upload, args.debug_mode, args.skip,
-                       args.commit_size_limit, args.file_size_limit)
+            if args.headless:
+                seed = SimpleNamespace(emails=[args.email], user_name="", names=[])
+                init_headless(args.directory, args.skip_obfuscation, args.output,
+                        args.parse_libraries, [args.email], args.debug_mode, [], args.directory, args.skip,
+                        args.commit_size_limit, args.file_size_limit, seed)
+            else:
+                initialize(args.directory, args.skip_obfuscation, args.output,
+                        args.parse_libraries, args.email, args.skip_upload, args.debug_mode, args.skip,
+                        args.commit_size_limit, args.file_size_limit)
 
     except KeyboardInterrupt:
         print("Cancelled by user")

@@ -33,7 +33,6 @@ other_args=''
 
 trap "exitfn" INT
 
-
 local_projects() {
   number_of_repos=0
   concatenated_repos=()
@@ -63,10 +62,9 @@ local_projects() {
   #repostring=`printf "%s➕" "${concatenated_repos[@]}" | sed -e 's/➕$//g' `
   repostring=`printf "%s|,|" "${concatenated_repos[@]}" | sed -e 's/|,|$//g' `
 
-  python src/main.py $other_args "$repostring" ;\
+  python src/main.py "$repostring" $other_args ;\
   wait ;\
   return
- 
 }
 
 while getopts "$optspec" optchar; do
