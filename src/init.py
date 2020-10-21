@@ -133,7 +133,7 @@ def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, 
     try:
         print('Initialization...')
         for branch in repo.branches:
-            ar.create_commits_entity_from_branch(branch.name)
+            ar.create_commits_entity_from_branch(branch.name, emails)
         ar.flag_duplicated_commits()
         ar.get_commit_stats()
         print('Analysing the master branch..')

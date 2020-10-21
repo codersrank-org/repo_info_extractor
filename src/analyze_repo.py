@@ -20,7 +20,7 @@ class AnalyzeRepo:
         self.user_commits = {}
 
 
-    def create_commits_entity_from_branch(self, branch):
+    def create_commits_entity_from_branch(self, branch, emails=[]):
         '''
         Extract the commits from a given branch
         '''
@@ -34,8 +34,11 @@ class AnalyzeRepo:
                     break
                 # Try to solve decoding special characters problems
                 try:
-                    self.commit_list[commit.hexsha] = Commit(
-                        commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
+                    # Only consider commit if it is actually from author
+                    # If emails is empty, run it anyway (for non-headless mode)
+                    if commit.author.email in emails or len(emails) == 0:
+                        self.commit_list[commit.hexsha] = Commit(
+                            commit.author.name, commit.author.email, commit.committed_datetime, commit.hexsha, commit.parents, branch)
                 except:
                     print("Could not decode commit meta")
                     continue
