@@ -1,5 +1,6 @@
 import re
 
+
 def extract_libraries(files):
     """Extracts a list of imports that were used in the files
 
