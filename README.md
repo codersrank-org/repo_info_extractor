@@ -11,6 +11,15 @@ Other information such as remote URLs, file names, emails, names are hashed. So 
 
 Moreover, the output is saved to your machine and you can check what data is extracted and you can decide whether you want to share it with us or not.
 
+# How does it work?
+When a repository is analyzed two repositories are used: this and [libraries](https://github.com/codersrank-org/libraries) repository. 
+This repository is responsible to recognize the languages and export the imported libraries.
+The [libraries](https://github.com/codersrank-org/libraries) contains a list of supported libraries, imports and technologies they belong to. 
+
+## In short
+- Language recognition: [repo_info_extractor](https://github.com/codersrank-org/repo_info_extractor/).
+- Library recognition: [libraries](https://github.com/codersrank-org/libraries)
+
 # How to use it
 First of all, the script needs to be cloned.
 
