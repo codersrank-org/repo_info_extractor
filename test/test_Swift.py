@@ -1,5 +1,5 @@
 import os
-from language.Java import extract_libraries
+from language.Swift import extract_libraries
 
 
 def test_extract_libraries():
