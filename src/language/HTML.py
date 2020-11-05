@@ -5,6 +5,14 @@ class HTMLExtractor(HTMLParser):
     imports = {}
 
     def handle_starttag(self, tag, attrs):    
+        """
+        Handle imports.
+
+        Args:
+            self: (todo): write your description
+            tag: (str): write your description
+            attrs: (dict): write your description
+        """
         if tag == "script":
             for attr, value in attrs :
                 if attr == "src" and value.endswith("js"):

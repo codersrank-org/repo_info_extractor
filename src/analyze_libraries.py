@@ -19,6 +19,19 @@ module_logger = logging.getLogger("main.analyze_libraries")
 
 class AnalyzeLibraries:
     def __init__(self, commit_list, author_emails, basedir, skip, commit_size_limit, file_size_limit, headless=False):
+        """
+        Initialize the list.
+
+        Args:
+            self: (todo): write your description
+            commit_list: (str): write your description
+            author_emails: (str): write your description
+            basedir: (str): write your description
+            skip: (list): write your description
+            commit_size_limit: (int): write your description
+            file_size_limit: (int): write your description
+            headless: (todo): write your description
+        """
         self.commit_list = commit_list
         self.author_emails = author_emails
         self.basedir = basedir
@@ -29,6 +42,12 @@ class AnalyzeLibraries:
 
     # Return a dict of commit -> language -> list of libraries
     def get_libraries(self):
+        """
+        Returns a list of git commits.
+
+        Args:
+            self: (todo): write your description
+        """
 
         res = {}
         commits = _filter_commits_by_author_emails(self.commit_list, self.author_emails)
@@ -172,6 +191,12 @@ class AnalyzeLibraries:
 
 
 def _should_we_check_out(file_list):
+    """
+    Determine if we should be out of the language.
+
+    Args:
+        file_list: (str): write your description
+    """
 
     for lang, extensions in supported_languages.items():
         lang_files = list(filter(lambda x: (pathlib.Path(x).suffix[1:].lower() in extensions), file_list))
@@ -181,6 +206,12 @@ def _should_we_check_out(file_list):
 
 
 def _estimate_changed_file_size(file_list):
+    """
+    Calculate total size of the total size.
+
+    Args:
+        file_list: (str): write your description
+    """
     total_size = 0
     for file in file_list:
         try:
@@ -199,6 +230,12 @@ def _remove_readonly(func, path, _):
 
 
 def _cleanup(tmp_repo_path):
+    """
+    Cleanup a temporary repo.
+
+    Args:
+        tmp_repo_path: (str): write your description
+    """
     _log_info("Deleting", tmp_repo_path)
     try:
         shutil.rmtree(tmp_repo_path, onerror=_remove_readonly)
@@ -208,14 +245,33 @@ def _cleanup(tmp_repo_path):
 
 # Return only commits authored by provided obfuscated_author_emails
 def _filter_commits_by_author_emails(commit_list, author_emails):
+    """
+    Returns a list of commits by author_list.
+
+    Args:
+        commit_list: (list): write your description
+        author_emails: (str): write your description
+    """
     _log_info("Filtering commits by emails: ", author_emails)
     return list(filter(lambda x: x.author_email in author_emails, commit_list))
 
 
 def _get_temp_repo_path():
+    """
+    Returns the path to the temp file
+
+    Args:
+    """
     return os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
 
 
 def _log_info(message, *argv):
+    """
+    Log a message to the console.
+
+    Args:
+        message: (str): write your description
+        argv: (list): write your description
+    """
     timed_message = "[%s] %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), message)
     print(timed_message, *argv)

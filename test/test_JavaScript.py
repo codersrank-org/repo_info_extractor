@@ -3,6 +3,11 @@ from language.JavaScript import extract_libraries
 
 
 def test_extract_libraries():
+    """
+    Extracts all libraries ini files.
+
+    Args:
+    """
     dir_path = os.path.dirname(os.path.realpath(__file__))
     files = ['fixtures/JavaScript.js']
     fq_files = [os.path.join(dir_path, f) for f in files]

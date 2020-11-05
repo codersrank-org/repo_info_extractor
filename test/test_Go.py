@@ -3,6 +3,11 @@ from language.Go import extract_libraries
 
 
 def test_extract_libraries():
+    """
+    Extracts the libraries.
+
+    Args:
+    """
     dir_path = os.path.dirname(os.path.realpath(__file__))
     files = ['fixtures/Go.go']
     fq_files = [os.path.join(dir_path, f) for f in files]

@@ -4,6 +4,12 @@ _cache = {}
 
 
 def load(language):
+    """
+    Loads the language from the cache.
+
+    Args:
+        language: (str): write your description
+    """
     if language not in _cache.keys():
         try:
             mod = ".%s" % language

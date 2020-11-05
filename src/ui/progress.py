@@ -22,6 +22,14 @@ import os
 
 
 def progress(count, total, status=''):
+    """
+    Print a progress bar.
+
+    Args:
+        count: (int): write your description
+        total: (int): write your description
+        status: (str): write your description
+    """
     bar_len = 60
     filled_len = int(round(bar_len * count / float(total)))
 

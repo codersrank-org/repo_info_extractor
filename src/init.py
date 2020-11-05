@@ -16,6 +16,21 @@ from identity_matching.matcher import match_emails
 
 def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip_upload, debug_mode, skip,
                commit_size_limit, file_size_limit):
+    """
+    Initialize a git repo.
+
+    Args:
+        directory: (str): write your description
+        skip_obfuscation: (array): write your description
+        output: (array): write your description
+        parse_libraries: (todo): write your description
+        email: (str): write your description
+        skip_upload: (array): write your description
+        debug_mode: (str): write your description
+        skip: (array): write your description
+        commit_size_limit: (int): write your description
+        file_size_limit: (int): write your description
+    """
 
     # Initialize logger
     logger = logging.getLogger("main")
@@ -112,6 +127,25 @@ def initialize(directory, skip_obfuscation, output, parse_libraries, email, skip
 
 def init_headless(directory, skip_obfuscation, output, parse_libraries, emails, debug_mode, user_commits, reponame,
                   skip, commit_size_limit, file_size_limit, seed, timeout_seconds=600, headless=True):
+    """
+    Initialize a git repo.
+
+    Args:
+        directory: (str): write your description
+        skip_obfuscation: (todo): write your description
+        output: (todo): write your description
+        parse_libraries: (todo): write your description
+        emails: (str): write your description
+        debug_mode: (str): write your description
+        user_commits: (todo): write your description
+        reponame: (str): write your description
+        skip: (todo): write your description
+        commit_size_limit: (int): write your description
+        file_size_limit: (int): write your description
+        seed: (int): write your description
+        timeout_seconds: (int): write your description
+        headless: (str): write your description
+    """
     # Initialize logger
     logger = logging.getLogger("main")
     if debug_mode:

@@ -9,6 +9,16 @@ class IdentityMatcher:
                  model,
                  threshold=0.75,
                  debug=False):
+        """
+        Initialize the preprocessor.
+
+        Args:
+            self: (todo): write your description
+            preprocessor: (array): write your description
+            model: (todo): write your description
+            threshold: (float): write your description
+            debug: (bool): write your description
+        """
 
         self._preprocessor = preprocessor
         self._model = model
@@ -74,6 +84,14 @@ class IdentityMatcher:
         return np.max(n_scores_list + email_scores_list)
 
     def _calc_similarity(self, seed_string, input_vector):
+        """
+        Calculate the similarity.
+
+        Args:
+            self: (todo): write your description
+            seed_string: (str): write your description
+            input_vector: (todo): write your description
+        """
         seed_vector = self._preprocessor.transform(seed_string)
         score = self._model.predict((seed_vector, input_vector))
         if isinstance(score, float):

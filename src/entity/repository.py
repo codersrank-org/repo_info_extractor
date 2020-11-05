@@ -21,6 +21,16 @@ class Repository:
     # emails - merge these emails with these emails extracted from the repo
     # reponame - name of the repo
     def __init__(self, repo_name, repo, commits, user_commits):
+        """
+        Initialize the commits.
+
+        Args:
+            self: (todo): write your description
+            repo_name: (str): write your description
+            repo: (todo): write your description
+            commits: (todo): write your description
+            user_commits: (todo): write your description
+        """
         remotes = {}
         self.emails_v2 = []
         self.original_remotes = {}
@@ -74,6 +84,12 @@ class Repository:
         self.obfuscate()
 
     def obfuscate(self):
+        """
+        Perform the md5 md5 hash
+
+        Args:
+            self: (todo): write your description
+        """
         if self.primary_remote_url != '':
             md5_hash = md5.md5()
             md5_hash.update(self.primary_remote_url.encode('utf-8'))
@@ -84,6 +100,12 @@ class Repository:
             self.remotes[remote] = md5_hash.hexdigest()
 
     def json_ready(self):
+        """
+        : return : class :.
+
+        Args:
+            self: (todo): write your description
+        """
         commits = []
         for commit in self.commits:
             commits.append(commit.json_ready())

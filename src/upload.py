@@ -4,6 +4,12 @@ from ui.progress import progress
 
 
 def uploadRepo(filename):
+    """
+    Upload a file
+
+    Args:
+        filename: (str): write your description
+    """
     url = "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload"
     fin = open(filename, 'rb')
     files = {'file': fin}
@@ -22,6 +28,12 @@ def uploadRepo(filename):
 
 
 def showError(err):
+    """
+    Show the error message
+
+    Args:
+        err: (todo): write your description
+    """
     print(err)
     print('.')
     print('.')
