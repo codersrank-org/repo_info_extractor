@@ -3,6 +3,12 @@ import os
 
 
 def obfuscate(r):
+    """
+    Obfuscate the commits.
+
+    Args:
+        r: (todo): write your description
+    """
     for i in range(len(r.commits)):
         o_user, o_email = _obfuscate_user(
             r.commits[i].author_name, r.commits[i].author_email)

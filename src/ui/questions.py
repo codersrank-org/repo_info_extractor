@@ -23,6 +23,15 @@ class Questions:
         return prompt(questions)
 
     def ask_user_identity(self, authors, err, default_email=''):
+        """
+        Ask the user to choose for the user.
+
+        Args:
+            self: (todo): write your description
+            authors: (todo): write your description
+            err: (todo): write your description
+            default_email: (todo): write your description
+        """
         choices = []
         for name, email in authors:
             checked = email == default_email
@@ -48,6 +57,13 @@ class Questions:
         return prompt(questions)
 
     def ask_which_repos(self, repos):
+        """
+        Ask the user to select the repository.
+
+        Args:
+            self: (todo): write your description
+            repos: (str): write your description
+        """
         choices = []
         for repo in repos:
             choices.append({

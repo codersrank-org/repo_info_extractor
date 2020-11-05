@@ -8,9 +8,24 @@ import webbrowser
 
 class ExportResult:
     def __init__(self, data):
+        """
+        Initialize data.
+
+        Args:
+            self: (todo): write your description
+            data: (todo): write your description
+        """
         self.data = data
 
     def export_to_json_interactive(self, file_name, skip_upload=False):
+        """
+        Export the upload to a json file.
+
+        Args:
+            self: (todo): write your description
+            file_name: (str): write your description
+            skip_upload: (bool): write your description
+        """
         self.dump(file_name)
 
         q = Questions()
@@ -32,10 +47,24 @@ class ExportResult:
 
 
     def export_to_json_headless(self, file_name):
+        """
+        Export the headless json to file.
+
+        Args:
+            self: (todo): write your description
+            file_name: (str): write your description
+        """
         self.dump(file_name)
 
 
     def dump(self, file_name):
+        """
+        Dump the data to a json file.
+
+        Args:
+            self: (todo): write your description
+            file_name: (str): write your description
+        """
         f = open(file_name, 'w+')
         f.write(json.dumps(self.data.json_ready(), indent=4))
         f.close()

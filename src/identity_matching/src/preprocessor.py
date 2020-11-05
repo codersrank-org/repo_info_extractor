@@ -8,11 +8,25 @@ import numpy as np
 class Preprocessor(ABC):
 
     def __init__(self, domain_blacklist = None):
+        """
+        Initialize the domain.
+
+        Args:
+            self: (todo): write your description
+            domain_blacklist: (str): write your description
+        """
 
         self._domain_blacklist = domain_blacklist
 
     @abstractmethod
     def transform(self, input_string):
+        """
+        Apply the given input_string.
+
+        Args:
+            self: (array): write your description
+            input_string: (str): write your description
+        """
         raise NotImplementedError
 
     @staticmethod
@@ -53,6 +67,14 @@ class Preprocessor(ABC):
 class DistancePreprocessor(Preprocessor):
 
     def __init__(self, domain_blacklist=None, shortlog=None):
+        """
+        Initialize blacklist
+
+        Args:
+            self: (todo): write your description
+            domain_blacklist: (str): write your description
+            shortlog: (todo): write your description
+        """
         super().__init__(domain_blacklist)
         self._domain_blacklist = domain_blacklist
         self.shortlog = shortlog
@@ -66,6 +88,13 @@ class DistancePreprocessor(Preprocessor):
         return
 
     def transform(self, input_string):
+        """
+        Transform text_string.
+
+        Args:
+            self: (todo): write your description
+            input_string: (str): write your description
+        """
         if self._blacklist_regex:
             res = self._blacklist_regex.sub("", input_string)
         else:
@@ -74,6 +103,12 @@ class DistancePreprocessor(Preprocessor):
 
     @staticmethod
     def __extract_domain(email):
+        """
+        Extract the domain from an email address.
+
+        Args:
+            email: (str): write your description
+        """
         try:
             return email.split(sep="@")[1]
         except IndexError:
@@ -83,6 +118,12 @@ class DistancePreprocessor(Preprocessor):
 
     @staticmethod
     def __calc_bound(domain_counts):
+        """
+        Calculate the bounding box.
+
+        Args:
+            domain_counts: (int): write your description
+        """
         unique_domain_count = domain_counts.shape[0]
         if unique_domain_count <= 5:
             return 1
@@ -92,6 +133,12 @@ class DistancePreprocessor(Preprocessor):
             return int(np.ceil(0.01*unique_domain_count))
 
     def update_blacklist(self):
+        """
+        Add blacklist to the blacklist.
+
+        Args:
+            self: (todo): write your description
+        """
 
         additional_domains = self.shortlog["email"].apply(self.__extract_domain)
         srs = additional_domains.value_counts()

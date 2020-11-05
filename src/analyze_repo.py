@@ -11,6 +11,13 @@ from ui.progress import progress
 
 class AnalyzeRepo:
     def __init__(self, repo):
+        """
+        Initialize the git commits.
+
+        Args:
+            self: (todo): write your description
+            repo: (str): write your description
+        """
         self.commit_stats = {}
         self.results = []
         self.prog = 0
@@ -48,6 +55,13 @@ class AnalyzeRepo:
                 branch, max_count=n, skip=skip))
 
     def analyse_master_user_commits(self, usercommits):
+        """
+        Analyse all commits for the commits.
+
+        Args:
+            self: (todo): write your description
+            usercommits: (todo): write your description
+        """
         for commitid in usercommits:
             try:
                 commit = self.repo.commit(commitid)
@@ -57,9 +71,22 @@ class AnalyzeRepo:
 
 
     def create_repo_entity(self, repo_dir):
+        """
+        Create a new repo entity.
+
+        Args:
+            self: (todo): write your description
+            repo_dir: (str): write your description
+        """
         return Repository(os.path.basename(repo_dir.rstrip(os.sep)), self.repo, self.commit_list, self.user_commits)
 
     def get_commit_stats(self):
+        """
+        Commit stats.
+
+        Args:
+            self: (todo): write your description
+        """
         cpu_count = mp.cpu_count()
         with mp.get_context("spawn").Pool(cpu_count) as pool:
             for h, commit in self.commit_list.items():
@@ -88,6 +115,13 @@ class AnalyzeRepo:
                     self.total -= 1
 
     def callback_func(self, data):
+        """
+        Callback to the callback
+
+        Args:
+            self: (todo): write your description
+            data: (todo): write your description
+        """
         # Sanitize filenames because they might have weird characters
         # Also cast dict.keys() to the list() so we don't get Runtime Errors
         keys = list(data["stats"].items())
@@ -103,12 +137,25 @@ class AnalyzeRepo:
 
 
 def call_set_commit_stats(h, commit):
+    """
+    Call commit_stats on the commit.
+
+    Args:
+        h: (todo): write your description
+        commit: (str): write your description
+    """
     # print('Analyze commit ' + commit.hash[:8] + ' from branch ' + commit.branch + ', date: ' + commit.created_at)
     ret = {'hash': h, 'stats': commit.stats.files}
     return ret
 
 
 def sanitize_filename(path):
+    """
+    Sanitize path.
+
+    Args:
+        path: (str): write your description
+    """
     if len(path) > 1 and not path[-1].isalnum():
         path = path[:-1] 
     return path

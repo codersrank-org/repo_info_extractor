@@ -3,6 +3,11 @@ from language.PHP import extract_libraries
 
 
 def test_extract_libraries():
+    """
+    Extract libraries from the library.
+
+    Args:
+    """
     dir_path = os.path.dirname(os.path.realpath(__file__))
     files = ['fixtures/PHP.php']
     fq_files = [os.path.join(dir_path, f) for f in files]

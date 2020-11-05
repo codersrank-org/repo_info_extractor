@@ -6,6 +6,11 @@ from identity_matching.src.matching import IdentityMatcher
 
 
 def test_preprocessor():
+    """
+    Generate a preprocessor.
+
+    Args:
+    """
 
     # Change path for Docker
     pwd = os.getcwd()
@@ -27,6 +32,11 @@ def test_preprocessor():
 
 
 def test_matching():
+    """
+    Test if the model.
+
+    Args:
+    """
 
     # Change path for docker
     pwd = os.getcwd()

@@ -5,6 +5,12 @@ import json
 from pygments.lexers import guess_lexer
 
 def detect_language_from_file(file_path):
+    """
+    Detect the language of a file.
+
+    Args:
+        file_path: (str): write your description
+    """
     if os.path.exists(file_path):
         try:
             with open(file_path, 'r') as file:

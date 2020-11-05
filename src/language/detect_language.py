@@ -80,6 +80,12 @@ def _build_ext_lang_map():
 
 
 def detect_language(file_path):
+    """
+    Detect the language of a file.
+
+    Args:
+        file_path: (str): write your description
+    """
     parts = file_path.split(os.sep)
     file_name = parts[-1]
 

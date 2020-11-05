@@ -7,6 +7,11 @@ from types import SimpleNamespace
 
 
 def main():
+    """
+    Main function.
+
+    Args:
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'directory', help='Path to the repository. Example usage: run.sh path/to/directory')

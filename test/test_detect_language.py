@@ -3,6 +3,11 @@ from language import detect_language
 
 
 def test_ext_lang_map_built():
+    """
+    Map language extensions to all extensions in the language.
+
+    Args:
+    """
     # Just some extensions to ensure the ext to lang map was populated
     extensions = ['js', 'go', 'py', 'html']
     for ext in extensions:
@@ -10,6 +15,11 @@ def test_ext_lang_map_built():
 
 
 def test_languages_recognised():
+    """
+    Test if the language of the current language.
+
+    Args:
+    """
     # In case of Docker environment
     pwd = os.getcwd()
     if pwd == "/":
