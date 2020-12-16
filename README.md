@@ -1,4 +1,4 @@
-# What is it?
+## What is it?
 This script is used to extract data from your private repo. The data is used to calculate your score on https://codersrank.io
 
 CodersRank by default only considers public repositories, however, most developers have their code in private repositories. We want to give the chance to these developers to improve their scores too by adding their private repositories.
@@ -11,16 +11,16 @@ Other information such as remote URLs, file names, emails, names are hashed. So 
 
 Moreover, the output is saved to your machine and you can check what data is extracted and you can decide whether you want to share it with us or not.
 
-# How does it work?
+## How does it work?
 When a repository is analyzed two repositories are used: this and [libraries](https://github.com/codersrank-org/libraries) repository. 
 This repository is responsible to recognize the languages and export the imported libraries.
 The [libraries](https://github.com/codersrank-org/libraries) contains a list of supported libraries, imports and technologies they belong to. 
 
-## In short
+### In short
 - Language recognition: [repo_info_extractor](https://github.com/codersrank-org/repo_info_extractor/).
 - Library recognition: [libraries](https://github.com/codersrank-org/libraries)
 
-# How to use it
+## How to use it
 First of all, the script needs to be cloned.
 
 ```
@@ -28,10 +28,10 @@ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
 ```
 
-## Docker approach (easiest)
+### Docker approach (easiest)
 If using this approach, the host machine does not need to have any tools installed apart from Docker. Generating the repository information is as easy as:
 
-### OSX / Linux
+#### OSX / Linux
 ```
 ./run-docker.sh <path to the repository>
 ```
@@ -41,13 +41,13 @@ If using this approach, the host machine does not need to have any tools install
 run-docker.bat <path to the repository>
 ```
 
-## Using Python on the host machine approach
+### Using Python on the host machine approach
 First, be sure you have Python3 and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip). We only support Python3,
 so if using pre-isntalled python, please check the version with:
 ```
 python -V
 ```
-### OSX
+#### OSX
 ```
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
@@ -55,7 +55,7 @@ $ ./install.sh
 $ ./run.sh path/to/repository
 $ ls -al ./repo_data.json.zip
 ```
-### Linux
+#### Linux
 ```
 $ git clone https://github.com/codersrankOrg/repo_info_extractor.git
 $ cd repo_info_extractor
@@ -63,7 +63,7 @@ $ ./install.sh
 $ ./run.sh path/to/repository
 $ ls -al ./repo_data.json.zip
 ```
-### Windows
+#### Windows
 ```
 git clone https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
@@ -72,10 +72,10 @@ python src\main.py path\to\repo
 dir
 ```
 
-# Extracting multiple repos
+## Extracting multiple repos
 In case you have multiple repos and you don't want to extract them one-by-one check out this solution: https://github.com/codersrank-org/multi_repo_extractor
 
-# Dockerfile
+## Dockerfile
 The provided Dockerfile builds an image that contains the Python script as well as its dependencies. To keep the final image size low, it leverages the 
 multi-stage build functionality. The first stage installs the dependencies as well as all the required build tools. The second stage, runtime,
 just copies over the installed dependencies so that they can be used by the script.
@@ -83,7 +83,7 @@ just copies over the installed dependencies so that they can be used by the scri
 In order to build a new image out of it, run `make docker` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
 `codersrank/repo_info_extractor:latest` image.
 
-# Troubleshooting
+## Troubleshooting
 
 ```
 /usr/bin/env: ‘bash\r’: No such file or directory
@@ -98,13 +98,13 @@ git reset --hard
 
 If this for some reason does not work, just remove the repository and clone it again.
 
-# How to contribute?
+## How to contribute?
 
-## Set up working environment
+### Set up working environment
 We recommend using Python virtual environments. We only support Python3, but please test your code in all major versions of Python3 starting with Python3.5.
 
 
-### Run UnitTests 
+#### Run UnitTests 
 First, you have to install nose2.
 ```
 pip3 install nose2
