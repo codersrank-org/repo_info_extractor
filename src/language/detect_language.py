@@ -45,6 +45,7 @@ supported_languages = {
     'PHP': ['php'],
     'PLSQL': ['pks', 'pkb'],
     'Protocol Buffer': ['proto'],
+    'Puppet': ['pp'],
     'Python': ['py'],
     'R': ['r'],
     'Raku': ['p6','pl6','pm6','rk','raku','pod6','rakumod','rakudoc'],
