@@ -24,7 +24,7 @@ The [libraries](https://github.com/codersrank-org/libraries) contains a list of 
 First of all, the script needs to be cloned.
 
 ```
-git clone https://github.com/codersrankOrg/repo_info_extractor.git
+git clone --depth 1 https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
 ```
 
