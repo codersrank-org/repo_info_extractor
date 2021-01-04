@@ -78,6 +78,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.kv") == "Kivy"
     assert detect_language.detect_language("/tmp/some_file.kt") == "Kotlin"
     assert detect_language.detect_language("/tmp/some_file.kts") == "Kotlin"
+    assert detect_language.detect_language("/tmp/some_file.l") == "Lex"
     assert detect_language.detect_language("/tmp/some_file.liquid") == "Liquid"
     assert detect_language.detect_language("/tmp/some_file.lua") == "Lua"
     assert detect_language.detect_language(pwd + "/test/fixtures/matlab.m") == "MATLAB"

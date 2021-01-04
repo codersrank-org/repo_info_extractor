@@ -35,6 +35,7 @@ supported_languages = {
     'Kivy': ['kv'],
     'Kotlin': ['kt', 'kts'],
     'Less': ['less'], 
+    'Lex': ['l'],
     'Liquid': ['liquid'],
     'Lua': ['lua'],
     'MATLAB': ['m'],
