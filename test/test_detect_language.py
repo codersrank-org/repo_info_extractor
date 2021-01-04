@@ -101,6 +101,7 @@ def test_languages_recognised():
         "/tmp/some_file.proto") == "Protocol Buffer"
     assert detect_language.detect_language("/tmp/some_file.pks") == "PLSQL"
     assert detect_language.detect_language("/tmp/some_file.pkb") == "PLSQL"
+    assert detect_language.detect_language("/tmp/some_file.pp") == "Puppet"
     assert detect_language.detect_language("/tmp/some_file.py") == "Python"
     assert detect_language.detect_language("/tmp/some_file.r") == "R"
     assert detect_language.detect_language("/tmp/some_file.robot") == "Robot"
