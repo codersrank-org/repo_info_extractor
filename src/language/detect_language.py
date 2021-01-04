@@ -64,6 +64,7 @@ supported_languages = {
     'Vue': ['vue'],
     'Xtend': ['xtend'],
     'Xtext': ['xtext'],
+    'Yacc': ['y'],
 }
 
 _ext_lang = {}
