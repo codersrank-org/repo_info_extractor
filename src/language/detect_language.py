@@ -35,6 +35,7 @@ supported_languages = {
     'Kivy': ['kv'],
     'Kotlin': ['kt', 'kts'],
     'Less': ['less'], 
+    'Lex': ['l'],
     'Liquid': ['liquid'],
     'Lua': ['lua'],
     'MATLAB': ['m'],
@@ -63,6 +64,7 @@ supported_languages = {
     'Vue': ['vue'],
     'Xtend': ['xtend'],
     'Xtext': ['xtext'],
+    'Yacc': ['y'],
 }
 
 _ext_lang = {}
