@@ -48,6 +48,7 @@ supported_languages = {
     'Protocol Buffer': ['proto'],
     'Puppet': ['pp'],
     'Python': ['py'],
+    'QML': ['qml'],
     'R': ['r'],
     'Raku': ['p6','pl6','pm6','rk','raku','pod6','rakumod','rakudoc'],
     'Robot': ['robot'],
