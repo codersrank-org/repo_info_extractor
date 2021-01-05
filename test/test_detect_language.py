@@ -103,6 +103,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.pkb") == "PLSQL"
     assert detect_language.detect_language("/tmp/some_file.pp") == "Puppet"
     assert detect_language.detect_language("/tmp/some_file.py") == "Python"
+    assert detect_language.detect_language("/tmp/some_file.qml") == "QML"
     assert detect_language.detect_language("/tmp/some_file.r") == "R"
     assert detect_language.detect_language("/tmp/some_file.robot") == "Robot"
     assert detect_language.detect_language("/tmp/some_file.rb") == "Ruby"
