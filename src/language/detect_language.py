@@ -20,6 +20,7 @@ supported_languages = {
     'EJS': ['ejs'],
     'Elixir': ['ex', 'exs'],
     'Elm': ['elm'],
+    'EPP': ['epp'],
     'ERB': ['erb'],
     'Erlang': ['erl', 'hrl'],
     'F#': ['fs', 'fsi', 'fsx', 'fsscript'],

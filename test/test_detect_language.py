@@ -44,6 +44,7 @@ def test_languages_recognised():
     assert detect_language.detect_language("/tmp/some_file.ex") == "Elixir"
     assert detect_language.detect_language("/tmp/some_file.exs") == "Elixir"
     assert detect_language.detect_language("/tmp/some_file.elm") == "Elm"
+    assert detect_language.detect_language("/tmp/some_file.epp") == "EPP"
     assert detect_language.detect_language("/tmp/some_file.erb") == "ERB"
     assert detect_language.detect_language("/tmp/some_file.html.erb") == "ERB"
     assert detect_language.detect_language("/tmp/some_file.erl") == "Erlang"
