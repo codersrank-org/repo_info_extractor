@@ -7,3 +7,4 @@ repo_data.json
 .pyenv/
 *.json.zip
 *.log
+/src/identity_matching/test_data/

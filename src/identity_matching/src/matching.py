@@ -1,5 +1,7 @@
 import numpy as np
 import copy
+import logging
+import sys
 
 
 class IdentityMatcher:
@@ -7,13 +9,21 @@ class IdentityMatcher:
     def __init__(self,
                  preprocessor,
                  model,
+                 logger=logging.getLogger("IdentityMatcher"),
                  threshold=0.75,
                  debug=False):
 
         self._preprocessor = preprocessor
         self._model = model
         self._threshold = threshold
+        self._logger = logger
         self._debug = debug
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        self._logger.addHandler(stdout_handler)
+        if self._debug:
+            self._logger.setLevel(logging.DEBUG)
+        else:
+            self._logger.setLevel(logging.INFO)
 
         return
 
@@ -35,11 +45,12 @@ class IdentityMatcher:
                         output_seed["names"].append(name)
                     if email not in output_seed["emails"]:
                         output_seed["emails"].append(email)
-            if self._debug:
-                print("Run done.")
-                print(output_seed)
-                print(seed)
-                print("----------------------------------------------")
+
+            self._logger.debug("----------------------------------------------")
+            self._logger.debug("Run done.")
+            self._logger.debug("The starting seed is: {}.".format(output_seed))
+            self._logger.debug("The resulting seed is: {}.".format(seed))
+            self._logger.debug("----------------------------------------------")
             if output_seed == seed:
                 return output_seed
             else:
@@ -70,6 +81,13 @@ class IdentityMatcher:
         n_scores, email_scores = self._get_sim_score_lists(seed, commit_stats)
         n_scores_list = list(n_scores.values())
         email_scores_list = list(email_scores.values())
+        self._logger.debug(
+            "Name: {}, Formatted name: {}, E-mail: {}, Formatted email: {}, Score: {:.4f}".format(
+                commit_stats[1],
+                self._preprocessor.transform(commit_stats[1]),
+                self._preprocessor.transform(commit_stats[2]),
+                commit_stats[2],
+                np.max(n_scores_list + email_scores_list)))
 
         return np.max(n_scores_list + email_scores_list)
 
