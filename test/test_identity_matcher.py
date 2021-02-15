@@ -1,8 +1,12 @@
 import os
 
-from identity_matching.src.preprocessor import DistancePreprocessor
-from identity_matching.src.model import DistanceModel
-from identity_matching.src.matching import IdentityMatcher
+import sys
+# insert at 1, 0 is the script path (or '' in REPL)
+sys.path.append('./')
+
+from src.identity_matching.src.preprocessor import DistancePreprocessor
+from src.identity_matching.src.model import DistanceModel
+from src.identity_matching.src.matching import IdentityMatcher
 
 
 def test_preprocessor():
@@ -11,6 +15,8 @@ def test_preprocessor():
     pwd = os.getcwd()
     if pwd == "/":
         pwd = "/app"
+
+    print(pwd)
     with open(pwd + "/src/identity_matching/resources/domain_blacklist.txt", "r",
               encoding="utf-8") as f:
         domain_blacklist = list()
