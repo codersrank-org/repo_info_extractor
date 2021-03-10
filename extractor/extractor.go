@@ -13,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
+
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/mholt/archiver"
 )
@@ -30,6 +32,7 @@ type RepoExtractor struct {
 	RepoPath    string
 	Headless    bool
 	UserEmails  []string
+	Seed        []string
 	repo        *repo
 	userCommits []*commit // Commits which are belong to user (from selected emails)
 }
@@ -83,6 +86,8 @@ func (r *RepoExtractor) initRepo() error {
 
 	repoName := ""
 	remoteOrigin := string(out)
+	remoteOrigin = strings.TrimRight(remoteOrigin, "\r\n")
+	remoteOrigin = strings.TrimRight(remoteOrigin, "\n")
 
 	// TODO error handling
 
@@ -101,7 +106,7 @@ func (r *RepoExtractor) initRepo() error {
 		Repo:             repoName,
 		Emails:           []string{},
 		SuggestedEmails:  []string{}, // TODO implement
-		PrimaryRemoteURL: string(out),
+		PrimaryRemoteURL: remoteOrigin,
 	}
 	return nil
 }
@@ -116,20 +121,22 @@ func (r *RepoExtractor) analyseCommits() error {
 		return err
 	}
 
+	allEmails := getAllEmails(commits)
 	selectedEmails := make(map[string]bool)
-	if len(r.UserEmails) == 0 {
-		// Ask user emails
-		// TODO sort by alphabetical order (or frequency?)
-		// TODO use seeds
-		allEmails := make([]string, 0, len(commits))
-		emails := make(map[string]bool)
-		for _, v := range commits {
-			if _, ok := emails[v.AuthorEmail]; !ok {
-				emails[v.AuthorEmail] = true
-				allEmails = append(allEmails, fmt.Sprintf("%s -> %s", v.AuthorName, v.AuthorEmail))
-			}
-		}
 
+	// If seed is provided use it in headless mode
+	if len(r.Seed) > 0 && r.Headless {
+		similarEmails := emailsimilarity.FindSimilarEmails(r.Seed, allEmails)
+		similarEmailsWithoutNames, selectedSimilarEmailsMap := getEmailsWithoutNames(similarEmails)
+		r.repo.SuggestedEmails = similarEmailsWithoutNames
+		for mail := range selectedSimilarEmailsMap {
+			selectedEmails[mail] = true
+		}
+	}
+
+	if len(r.UserEmails) == 0 {
+		// Ask user for emails
+		// TODO sort by alphabetical order (or frequency?)
 		selectedEmailsWithNames := []string{}
 		prompt := &survey.MultiSelect{
 			Message:  "Please choose your emails:",
@@ -138,20 +145,13 @@ func (r *RepoExtractor) analyseCommits() error {
 		}
 		survey.AskOne(prompt, &selectedEmailsWithNames)
 
-		selectedEmails = make(map[string]bool, len(selectedEmailsWithNames))
-		selectedEmailsArray := make([]string, len(selectedEmailsWithNames))
-		for i, selectedEmail := range selectedEmailsWithNames {
-			fields := strings.Split(selectedEmail, " -> ")
-			// TODO handle authorName being empty
-			if len(fields) > 0 {
-				selectedEmails[fields[1]] = true
-				selectedEmailsArray[i] = fields[1]
-			}
+		emails, emailsMap := getEmailsWithoutNames(selectedEmailsWithNames)
+		r.repo.Emails = append(r.repo.Emails, emails...)
+		for mail := range emailsMap {
+			selectedEmails[mail] = true
 		}
-		r.repo.Emails = selectedEmailsArray
 	} else {
-		r.repo.Emails = r.UserEmails
-		selectedEmails = make(map[string]bool, len(r.UserEmails))
+		r.repo.Emails = append(r.repo.Emails, r.UserEmails...)
 		for _, email := range r.UserEmails {
 			selectedEmails[email] = true
 		}
@@ -211,6 +211,32 @@ func (r *RepoExtractor) getCommits() ([]*commit, error) {
 	}()
 
 	return commits, nil
+}
+
+func getAllEmails(commits []*commit) []string {
+	allEmails := make([]string, 0, len(commits))
+	emails := make(map[string]bool) // To prevent duplicates
+	for _, v := range commits {
+		if _, ok := emails[v.AuthorEmail]; !ok {
+			emails[v.AuthorEmail] = true
+			allEmails = append(allEmails, fmt.Sprintf("%s -> %s", v.AuthorName, v.AuthorEmail))
+		}
+	}
+	return allEmails
+}
+
+func getEmailsWithoutNames(emails []string) ([]string, map[string]bool) {
+	emailsWithoutNames := make(map[string]bool, len(emails))
+	emailsWithoutNamesArray := make([]string, len(emails))
+	for i, selectedEmail := range emails {
+		fields := strings.Split(selectedEmail, " -> ")
+		// TODO handle authorName being empty
+		if len(fields) > 0 {
+			emailsWithoutNames[fields[1]] = true
+			emailsWithoutNamesArray[i] = fields[1]
+		}
+	}
+	return emailsWithoutNamesArray, emailsWithoutNames
 }
 
 // commitWorker get commits from git

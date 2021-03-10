@@ -15,6 +15,7 @@ func main() {
 	// But if you want, you can provide the emails yourself
 	headless := flag.String("headless", "false", "Should run on headless mode?")
 	emailString := flag.String("emails", "", "Predefined emails") // Example: "alim.giray@codersrank.io,alimgiray@gmail.com"
+	seeds := flag.String("seeds", "", "Seed")                     // Example: "alimgiray, alimgiray@codersrank.io"
 	flag.Parse()
 
 	if repoPath == nil || *repoPath == "" {
@@ -26,10 +27,16 @@ func main() {
 		emails = strings.Split(*emailString, ",")
 	}
 
+	seed := make([]string, 0)
+	if seeds != nil && len(*seeds) > 0 {
+		seed = strings.Split(*seeds, ",")
+	}
+
 	repoExtractor := extractor.RepoExtractor{
 		RepoPath:   *repoPath,
 		Headless:   *headless == "true",
 		UserEmails: emails,
+		Seed:       seed,
 	}
 
 	err := repoExtractor.Extract()
