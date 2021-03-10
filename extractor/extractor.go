@@ -22,12 +22,14 @@ import (
 const gitExecutable = "/usr/bin/git"
 
 // TODO implement seed (suggested emails)
+// TODO handle async errors correctly
 
 // RepoExtractor is responsible for all parts of repo extraction process
 // Including cloning the repo, processing the commits and uploading the results
 type RepoExtractor struct {
 	RepoPath    string
 	Headless    bool
+	UserEmails  []string
 	repo        *repo
 	userCommits []*commit // Commits which are belong to user (from selected emails)
 }
@@ -114,41 +116,49 @@ func (r *RepoExtractor) analyseCommits() error {
 		return err
 	}
 
-	// Ask user emails
-	// TODO sort by alphabetical order (or frequency?)
-	// TODO use seeds
-	allEmails := make([]string, 0, len(commits))
-	emails := make(map[string]bool)
-	for _, v := range commits {
-		if _, ok := emails[v.AuthorEmail]; !ok {
-			emails[v.AuthorEmail] = true
-			allEmails = append(allEmails, fmt.Sprintf("%s -> %s", v.AuthorName, v.AuthorEmail))
+	selectedEmails := make(map[string]bool)
+	if len(r.UserEmails) == 0 {
+		// Ask user emails
+		// TODO sort by alphabetical order (or frequency?)
+		// TODO use seeds
+		allEmails := make([]string, 0, len(commits))
+		emails := make(map[string]bool)
+		for _, v := range commits {
+			if _, ok := emails[v.AuthorEmail]; !ok {
+				emails[v.AuthorEmail] = true
+				allEmails = append(allEmails, fmt.Sprintf("%s -> %s", v.AuthorName, v.AuthorEmail))
+			}
+		}
+
+		selectedEmailsWithNames := []string{}
+		prompt := &survey.MultiSelect{
+			Message:  "Please choose your emails:",
+			Options:  allEmails,
+			PageSize: 50,
+		}
+		survey.AskOne(prompt, &selectedEmailsWithNames)
+
+		selectedEmails = make(map[string]bool, len(selectedEmailsWithNames))
+		selectedEmailsArray := make([]string, len(selectedEmailsWithNames))
+		for i, selectedEmail := range selectedEmailsWithNames {
+			fields := strings.Split(selectedEmail, " -> ")
+			// TODO handle authorName being empty
+			if len(fields) > 0 {
+				selectedEmails[fields[1]] = true
+				selectedEmailsArray[i] = fields[1]
+			}
+		}
+		r.repo.Emails = selectedEmailsArray
+	} else {
+		r.repo.Emails = r.UserEmails
+		selectedEmails = make(map[string]bool, len(r.UserEmails))
+		for _, email := range r.UserEmails {
+			selectedEmails[email] = true
 		}
 	}
-
-	selectedEmailsWithNames := []string{}
-	prompt := &survey.MultiSelect{
-		Message:  "Please choose your emails:",
-		Options:  allEmails,
-		PageSize: 50,
-	}
-	survey.AskOne(prompt, &selectedEmailsWithNames)
-
-	selectedEmails := make(map[string]bool, len(selectedEmailsWithNames))
-	selectedEmailsArray := make([]string, len(selectedEmailsWithNames))
-	for i, selectedEmail := range selectedEmailsWithNames {
-		fields := strings.Split(selectedEmail, " -> ")
-		// TODO handle authorName being empty
-		if len(fields) > 0 {
-			selectedEmails[fields[1]] = true
-			selectedEmailsArray[i] = fields[1]
-		}
-	}
-	r.repo.Emails = selectedEmailsArray
 
 	// Only consider commits for user
 	userCommits := make([]*commit, 0, len(commits))
-
 	for _, v := range commits {
 		if _, ok := selectedEmails[v.AuthorEmail]; ok {
 			userCommits = append(userCommits, v)
