@@ -1,5 +1,5 @@
 import os
-from .detect_language_from_file import detect_language_from_file 
+from .detect_language_from_file import detect_language_from_file
 
 supported_languages = {
     '1C Enterprise': ['bsl', 'os'],
@@ -35,7 +35,8 @@ supported_languages = {
     'Jupyter Notebook': ['ipynb'],
     'Kivy': ['kv'],
     'Kotlin': ['kt', 'kts'],
-    'Less': ['less'], 
+    'LabVIEW': ['vi', 'lvproj', 'lvclass', 'ctl', 'ctt', 'llb', 'lvbit', 'lvbitx', 'lvlad', 'lvlib', 'lvmodel', 'lvsc', 'lvtest', 'vidb'],
+    'Less': ['less'],
     'Lex': ['l'],
     'Liquid': ['liquid'],
     'Lua': ['lua'],
@@ -98,7 +99,7 @@ def detect_language(file_path):
         lang = detect_language_from_file(file_path)
         if lang is not None:
             return lang
-        return ''    
+        return ''
 
     if ext in _ext_lang:
         return _ext_lang[ext]
