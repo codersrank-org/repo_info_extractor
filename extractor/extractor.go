@@ -12,10 +12,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
-
-	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/mholt/archiver"
@@ -67,7 +66,10 @@ func (r *RepoExtractor) Extract() error {
 
 	// Only when user running this script locally
 	if !r.Headless {
-		r.upload()
+		err = r.upload()
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -112,7 +114,7 @@ func (r *RepoExtractor) initRepo() error {
 	}
 
 	r.repo = &repo{
-		Repo:             repoName,
+		RepoName:         repoName,
 		Emails:           []string{},
 		SuggestedEmails:  []string{}, // TODO implement
 		PrimaryRemoteURL: remoteOrigin,
@@ -487,15 +489,20 @@ func (r *RepoExtractor) export() error {
 	return nil
 }
 
-// TODO implement
 // This is for repo_info_extractor used locally and for user to
 // upload his/her results automatically to the codersrank
-func (r *RepoExtractor) upload() {
-
+func (r *RepoExtractor) upload() error {
+	fmt.Println("Uploading result to CodersRank")
+	url, err := Upload(r.OutputPath+"repo.data.zip", r.repo.RepoName)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Go to this link in the browser => %s", url)
+	return nil
 }
 
 type repo struct {
-	Repo             string   `json:"repo"`
+	RepoName         string   `json:"repo"`
 	Emails           []string `json:"emails"`
 	SuggestedEmails  []string `json:"suggestedEmails"`
 	PrimaryRemoteURL string   `json:"primaryRemoteUrl"`
