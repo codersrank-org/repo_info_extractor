@@ -13,6 +13,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/codersrank-org/repo_info_extractor/librarydetection"
+	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
+
 	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -44,6 +47,9 @@ func (r *RepoExtractor) Extract() error {
 	if err != nil {
 		return err
 	}
+
+	// For library detection
+	r.initAnalyzers()
 
 	err = r.analyseCommits()
 	if err != nil {
@@ -109,6 +115,11 @@ func (r *RepoExtractor) initRepo() error {
 		PrimaryRemoteURL: remoteOrigin,
 	}
 	return nil
+}
+
+func (r *RepoExtractor) initAnalyzers() {
+	goAnalyzer := languages.NewGoAnalyzer()
+	librarydetection.AddAnalyzer("Go", goAnalyzer)
 }
 
 // Creates commits
@@ -409,6 +420,20 @@ func (r *RepoExtractor) libraryWorker(jobs <-chan *commit, results chan<- bool) 
 				}
 				return err
 			}
+
+			analyzer, err := librarydetection.GetAnalyzer(lang)
+			if err != nil {
+				continue
+			}
+
+			libraries := analyzer.ExtractLibraries(string(out))
+			if v.ChangedFiles[n].Libraries == nil {
+				v.ChangedFiles[n].Libraries = map[string][]string{}
+			}
+			if v.ChangedFiles[n].Libraries[lang] == nil {
+				v.ChangedFiles[n].Libraries[lang] = make([]string, 0)
+			}
+			v.ChangedFiles[n].Libraries[lang] = append(v.ChangedFiles[n].Libraries[lang], libraries...)
 
 			// We shouldn't do the following (remove it)
 			// We should wrote regexes based on language and run it according to the extension
