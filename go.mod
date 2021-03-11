@@ -7,5 +7,7 @@ require (
 	github.com/iancoleman/orderedmap v0.2.0
 	github.com/mholt/archiver v3.1.1+incompatible
 	github.com/mholt/archiver/v3 v3.5.0 // indirect
+	github.com/onsi/ginkgo v1.15.1
+	github.com/onsi/gomega v1.11.0
 	github.com/pierrec/lz4 v2.6.0+incompatible // indirect
 )
