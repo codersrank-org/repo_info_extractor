@@ -8,7 +8,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -26,13 +25,13 @@ import (
 // Hint: run "which git" (does this works on Windows?)
 const gitExecutable = "/usr/bin/git"
 
-// TODO implement seed (suggested emails)
 // TODO handle async errors correctly
 
 // RepoExtractor is responsible for all parts of repo extraction process
 // Including cloning the repo, processing the commits and uploading the results
 type RepoExtractor struct {
 	RepoPath    string
+	OutputPath  string
 	Headless    bool
 	UserEmails  []string
 	Seed        []string
@@ -100,7 +99,11 @@ func (r *RepoExtractor) initRepo() error {
 	// Cloned using http
 	if strings.Contains(remoteOrigin, "http") {
 		parts := strings.Split(remoteOrigin, "/")
-		repoName = parts[len(parts)-2] + "/" + parts[len(parts)-1]
+		if r.Headless {
+			repoName = parts[len(parts)-2] + "/" + parts[len(parts)-1]
+		} else {
+			repoName = parts[len(parts)-1]
+		}
 	} else {
 		// Cloned using ssh
 		parts := strings.Split(remoteOrigin, ":")
@@ -435,24 +438,6 @@ func (r *RepoExtractor) libraryWorker(jobs <-chan *commit, results chan<- bool) 
 			}
 			v.ChangedFiles[n].Libraries[lang] = append(v.ChangedFiles[n].Libraries[lang], libraries...)
 
-			// We shouldn't do the following (remove it)
-			// We should wrote regexes based on language and run it according to the extension
-			// Like we do in old repo_info_extractor
-
-			// run some regexes
-			r1 := regexp.MustCompile("[aA-zZ]{3}\\s[0-9]{2}\\s[aA-zZ]{3}\\s[0-9]{4}")
-			r1Results := r1.FindAllString(string(out), -1)
-			if len(r1Results) > 0 {
-				// fmt.Printf("[1]Found the following in %s: %+v", fileChange.Path, r1Results)
-			}
-			r2 := regexp.MustCompile(`\[([^\[\]]*)\]`)
-			r2Results := r2.FindAllString(string(out), -1)
-			if len(r2Results) > 0 {
-				// fmt.Printf("[2]Found the following in %s: %+v", fileChange.Path, r2Results)
-			}
-			// v.ChangedFiles[n].Libraries = make([]string, len(r1Results)+len(r2Results))
-			// v.ChangedFiles[n].Libraries = append(v.ChangedFiles[n].Libraries, r1Results...)
-			// v.ChangedFiles[n].Libraries = append(v.ChangedFiles[n].Libraries, r2Results...)
 		}
 		results <- true
 	}
@@ -463,11 +448,13 @@ func (r *RepoExtractor) libraryWorker(jobs <-chan *commit, results chan<- bool) 
 func (r *RepoExtractor) export() error {
 	fmt.Println("Creating output file")
 
+	repoDataPath := r.OutputPath + "repo.data"
+	zipPath := r.OutputPath + "repo.data.zip"
 	// Remove old files
-	os.Remove("./repo.data")
-	os.Remove("./repo.data.zip")
+	os.Remove(repoDataPath)
+	os.Remove(zipPath)
 
-	file, err := os.Create("./repo.data")
+	file, err := os.Create(repoDataPath)
 	if err != nil {
 		return err
 	}
@@ -490,14 +477,13 @@ func (r *RepoExtractor) export() error {
 	w.Flush() // important
 	file.Close()
 
-	err = archiver.Archive([]string{"./repo.data"}, "./repo.data.zip")
+	err = archiver.Archive([]string{repoDataPath}, zipPath)
 	if err != nil {
 		return err
 	}
 
 	// We don't need this because we already have zip file
-	os.Remove("./repo.data")
-
+	os.Remove(repoDataPath)
 	return nil
 }
 
