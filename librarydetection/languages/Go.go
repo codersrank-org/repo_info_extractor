@@ -59,15 +59,7 @@ func (a *goAnalyzer) ExtractLibraries(contents string) []string {
 		regex4,
 	}
 
-	for _, r := range regexes {
-		matches := r.FindAllStringSubmatch(contents, -1)
-		for _, match := range matches {
-			if len(match) > 1 {
-				libs := match[1:]
-				allLibs = append(allLibs, libs...)
-			}
-		}
-	}
-	
+	allLibs = append(allLibs, executeRegexes(contents, regexes)...)
+
 	return allLibs
 }

@@ -2,7 +2,6 @@ package languages_test
 
 import (
 	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 	"io/ioutil"
 
 	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
@@ -37,10 +36,7 @@ var _ = Describe("GoLibraryDetection", func() {
 	Describe("Extract C Libraries", func() {
 		It("Should be able to extract libraries", func() {
 			libs := analyzer.ExtractLibraries(string(fixture))
-			Expect(len(libs)).Should(Equal(len(expectedLibraries)))
-			for _, v := range libs {
-				Expect(v).Should(BeElementOf(expectedLibraries))
-			}
+			assertSameUnordered(libs, expectedLibraries)
 		})
 	})
 })
