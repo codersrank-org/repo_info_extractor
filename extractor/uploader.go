@@ -16,7 +16,8 @@ import (
 // Upload result to CodersRAnk
 func Upload(path, repoName string) (string, error) {
 
-	url := "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload"
+	//url := "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload"
+	url := "http://localhost:9900/candidate/privaterepo/Upload"
 
 	// Read file
 	file, err := os.Open(path)
@@ -48,7 +49,7 @@ func Upload(path, repoName string) (string, error) {
 		return "", err
 	}
 	if response.StatusCode != http.StatusOK {
-		return "", errors.New("Server returned non 200 response")
+		return "", errors.New(fmt.Sprintf("Server returned non 200 response. Error code: %d", response.StatusCode))
 	}
 	defer response.Body.Close()
 

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -450,12 +451,16 @@ func (r *RepoExtractor) libraryWorker(jobs <-chan *commit, results chan<- bool) 
 func (r *RepoExtractor) export() error {
 	fmt.Println("Creating output file")
 
-	repoDataPath := r.OutputPath + "repo.data"
-	zipPath := r.OutputPath + "repo.data.zip"
+	repoDataPath := r.OutputPath + ".json"
+	zipPath := r.OutputPath + ".json.zip"
 	// Remove old files
 	os.Remove(repoDataPath)
 	os.Remove(zipPath)
 
+	err := os.MkdirAll(r.OutputPath, 0755)
+	if err != nil {
+		log.Println("Cannot create directory. Error:", err.Error())
+	}
 	file, err := os.Create(repoDataPath)
 	if err != nil {
 		return err
@@ -493,7 +498,7 @@ func (r *RepoExtractor) export() error {
 // upload his/her results automatically to the codersrank
 func (r *RepoExtractor) upload() error {
 	fmt.Println("Uploading result to CodersRank")
-	url, err := Upload(r.OutputPath+"repo.data.zip", r.repo.RepoName)
+	url, err := Upload(r.OutputPath+".json.zip", r.repo.RepoName)
 	if err != nil {
 		return err
 	}
