@@ -119,10 +119,30 @@ func (r *RepoExtractor) initRepo() error {
 	remoteOrigin = strings.TrimRight(remoteOrigin, "\r\n")
 	remoteOrigin = strings.TrimRight(remoteOrigin, "\n")
 
-	// TODO error handling
+	repoName = r.GetRepoName(remoteOrigin)
 
-	// Cloned using http
+	r.repo = &repo{
+		RepoName:         repoName,
+		Emails:           []string{},
+		SuggestedEmails:  []string{}, // TODO implement
+		PrimaryRemoteURL: remoteOrigin,
+	}
+	return nil
+}
+
+// GetRepoName gets the repo name in the following format:
+// in case of headless: "owner_name/repo_name"
+// in case of interactive mode: "repo_name"
+func (r *RepoExtractor) GetRepoName(remoteOrigin string) string {
+	// If remoteOrigin is empty fall back to the repos path. It can happen in interactive mode
+	if remoteOrigin == "" {
+		parts := strings.Split(r.RepoPath, "/")
+		return parts[len(parts)-1]
+	}
+	repoName := ""
+	remoteOrigin = strings.TrimRight(remoteOrigin, ".git")
 	if strings.Contains(remoteOrigin, "http") {
+		// Cloned using http
 		parts := strings.Split(remoteOrigin, "/")
 		if r.Headless {
 			repoName = parts[len(parts)-2] + "/" + parts[len(parts)-1]
@@ -133,17 +153,16 @@ func (r *RepoExtractor) initRepo() error {
 	} else {
 		// Cloned using ssh
 		parts := strings.Split(remoteOrigin, ":")
-		parts = strings.Split(parts[1], ".git")
-		repoName = parts[0]
+		repoName = parts[1]
+		parts = strings.Split(repoName, "/")
+		if r.Headless {
+			repoName = parts[len(parts)-2] + "/" + parts[len(parts)-1]
+		} else {
+			repoName = parts[len(parts)-1]
+		}
 	}
 
-	r.repo = &repo{
-		RepoName:         repoName,
-		Emails:           []string{},
-		SuggestedEmails:  []string{}, // TODO implement
-		PrimaryRemoteURL: remoteOrigin,
-	}
-	return nil
+	return repoName
 }
 
 func (r *RepoExtractor) initAnalyzers() {
