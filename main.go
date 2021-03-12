@@ -15,6 +15,7 @@ func main() {
 	// But if you want, you can provide the emails yourself
 	headless := flag.String("headless", "false", "Should run on headless mode?")
 	outputPath := flag.String("output_path", "./repo_data", "Where to put output file")
+	gitPath := flag.String("git_path", "", "Where is git binary?")
 	emailString := flag.String("emails", "", "Predefined emails") // Example: "alim.giray@codersrank.io,alimgiray@gmail.com"
 	seeds := flag.String("seeds", "", "Seed")                     // Example: "alimgiray, alimgiray@codersrank.io"
 	flag.Parse()
@@ -36,6 +37,7 @@ func main() {
 	repoExtractor := extractor.RepoExtractor{
 		RepoPath:   *repoPath,
 		OutputPath: *outputPath,
+		GitPath:    *gitPath,
 		Headless:   *headless == "true",
 		UserEmails: emails,
 		Seed:       seed,
