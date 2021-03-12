@@ -14,9 +14,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/codersrank-org/repo_info_extractor/commit"
 	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
+	"github.com/codersrank-org/repo_info_extractor/obfuscation"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/mholt/archiver"
@@ -32,10 +34,11 @@ type RepoExtractor struct {
 	OutputPath  string
 	GitPath     string
 	Headless    bool
+	Obfuscate   bool
 	UserEmails  []string
 	Seed        []string
 	repo        *repo
-	userCommits []*commit // Commits which are belong to user (from selected emails)
+	userCommits []*commit.Commit // Commits which are belong to user (from selected emails)
 }
 
 // Extract a single repo in the path
@@ -59,6 +62,10 @@ func (r *RepoExtractor) Extract() error {
 	err = r.analyseLibraries()
 	if err != nil {
 		return err
+	}
+
+	if r.Obfuscate {
+		r.obfuscate()
 	}
 
 	err = r.export()
@@ -155,7 +162,7 @@ func (r *RepoExtractor) initAnalyzers() {
 func (r *RepoExtractor) analyseCommits() error {
 	fmt.Println("Analysing commits")
 
-	var commits []*commit
+	var commits []*commit.Commit
 	commits, err := r.getCommits()
 	if err != nil {
 		return err
@@ -198,7 +205,7 @@ func (r *RepoExtractor) analyseCommits() error {
 	}
 
 	// Only consider commits for user
-	userCommits := make([]*commit, 0, len(commits))
+	userCommits := make([]*commit.Commit, 0, len(commits))
 	for _, v := range commits {
 		if _, ok := selectedEmails[v.AuthorEmail]; ok {
 			userCommits = append(userCommits, v)
@@ -209,9 +216,9 @@ func (r *RepoExtractor) analyseCommits() error {
 	return nil
 }
 
-func (r *RepoExtractor) getCommits() ([]*commit, error) {
+func (r *RepoExtractor) getCommits() ([]*commit.Commit, error) {
 	jobs := make(chan *req)
-	results := make(chan []*commit)
+	results := make(chan []*commit.Commit)
 	noMoreChan := make(chan bool)
 	for w := 0; w < runtime.NumCPU(); w++ {
 		go r.commitWorker(w, jobs, results, noMoreChan)
@@ -228,7 +235,7 @@ func (r *RepoExtractor) getCommits() ([]*commit, error) {
 		lastOffset = step * x
 	}
 
-	var commits []*commit
+	var commits []*commit.Commit
 	workersReturnedNoMore := 0
 	func() {
 		for {
@@ -253,7 +260,7 @@ func (r *RepoExtractor) getCommits() ([]*commit, error) {
 	return commits, nil
 }
 
-func getAllEmails(commits []*commit) []string {
+func getAllEmails(commits []*commit.Commit) []string {
 	allEmails := make([]string, 0, len(commits))
 	emails := make(map[string]bool) // To prevent duplicates
 	for _, v := range commits {
@@ -280,9 +287,9 @@ func getEmailsWithoutNames(emails []string) ([]string, map[string]bool) {
 }
 
 // commitWorker get commits from git
-func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*commit, noMoreChan chan<- bool) error {
+func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*commit.Commit, noMoreChan chan<- bool) error {
 	for v := range jobs {
-		var commits []*commit
+		var commits []*commit.Commit
 
 		cmd := exec.Command(r.GitPath,
 			"log",
@@ -304,7 +311,7 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 		// parse the output into stats
 		scanner := bufio.NewScanner(stdout)
 		currentLine := 0
-		var currectCommit *commit
+		var currectCommit *commit.Commit
 		for scanner.Scan() {
 			m := scanner.Text()
 			currentLine++
@@ -321,13 +328,13 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 				// and add new one commit
 				m = strings.Replace(m, "|||BEGIN|||", "", 1)
 				bits := strings.Split(m, "|||SEP|||")
-				changedFiles := []*changedFile{}
+				changedFiles := []*commit.ChangedFile{}
 				dateStr := ""
 				t, err := time.Parse("Mon Jan 2 15:04:05 2006 -0700", bits[3])
 				if err == nil {
 					dateStr = t.Format("2006-01-02 15:04:05 -0700")
 				}
-				currectCommit = &commit{
+				currectCommit = &commit.Commit{
 					Hash:         bits[0],
 					AuthorName:   bits[1],
 					AuthorEmail:  bits[2],
@@ -363,7 +370,7 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 				continue
 			}
 
-			changedFile := &changedFile{
+			changedFile := &commit.ChangedFile{
 				Path:       bits[2],
 				Insertions: insertions,
 				Deletions:  deletions,
@@ -401,7 +408,7 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 func (r *RepoExtractor) analyseLibraries() error {
 	fmt.Println("Analysing libraries")
 
-	jobs := make(chan *commit, len(r.userCommits))
+	jobs := make(chan *commit.Commit, len(r.userCommits))
 	results := make(chan bool, len(r.userCommits))
 	// Analyse libraries for every commit
 	for w := 1; w <= runtime.NumCPU(); w++ {
@@ -417,7 +424,7 @@ func (r *RepoExtractor) analyseLibraries() error {
 	return nil
 }
 
-func (r *RepoExtractor) libraryWorker(commits <-chan *commit, results chan<- bool) error {
+func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results chan<- bool) error {
 	extensionToLanguageMap := buildExtensionToLanguageMap(fileExtensionMap)
 	for commit := range commits {
 		libraries := map[string][]string{}
@@ -474,6 +481,13 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit, results chan<- boo
 		results <- true
 	}
 	return nil
+}
+
+// Obfuscate the result
+func (r *RepoExtractor) obfuscate() {
+	for _, commit := range r.userCommits {
+		commit = obfuscation.Obfuscate(commit)
+	}
 }
 
 // Writes result to the file
@@ -540,22 +554,6 @@ type repo struct {
 	Emails           []string `json:"emails"`
 	SuggestedEmails  []string `json:"suggestedEmails"`
 	PrimaryRemoteURL string   `json:"primaryRemoteUrl"`
-}
-
-type changedFile struct {
-	Path       string `json:"fileName"`
-	Insertions int    `json:"insertions"`
-	Deletions  int    `json:"deletions"`
-	Language   string `json:"language"`
-}
-
-type commit struct {
-	Hash         string              `json:"commitHash"`
-	AuthorName   string              `json:"authorName"`
-	AuthorEmail  string              `json:"authorEmail"`
-	Date         string              `json:"createdAt"`
-	ChangedFiles []*changedFile      `json:"changedFiles"`
-	Libraries    map[string][]string `json:"libraries"`
 }
 
 type req struct {
