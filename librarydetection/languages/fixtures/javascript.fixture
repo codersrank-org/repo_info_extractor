@@ -1,0 +1,4 @@
+require('lib1')
+require("lib2");
+import lib from "lib3";
+import lib from 'lib4'

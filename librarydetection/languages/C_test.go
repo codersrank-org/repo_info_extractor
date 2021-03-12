@@ -1,13 +1,14 @@
 package languages_test
 
 import (
-	. "github.com/onsi/ginkgo"
 	"io/ioutil"
+
+	. "github.com/onsi/ginkgo"
 
 	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
 )
 
-var _ = Describe("GoLibraryDetection", func() {
+var _ = Describe("CLibraryDetection", func() {
 	fixture, err := ioutil.ReadFile("./fixtures/c.fixture")
 	if err != nil {
 		panic(err)

@@ -14,6 +14,5 @@ func executeRegexes(contents string, regexes []*regexp.Regexp) []string {
 			}
 		}
 	}
-
 	return res
 }
