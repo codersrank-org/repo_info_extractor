@@ -455,8 +455,8 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit, results chan<- boo
 func (r *RepoExtractor) export() error {
 	fmt.Println("Creating output file")
 
-	repoDataPath := r.OutputPath + "repo_data.json"
-	zipPath := r.OutputPath + "repo_data.json.zip"
+	repoDataPath := r.OutputPath + ".json"
+	zipPath := r.OutputPath + ".json.zip"
 	// Remove old files
 	os.Remove(repoDataPath)
 	os.Remove(zipPath)
@@ -502,7 +502,7 @@ func (r *RepoExtractor) export() error {
 // upload his/her results automatically to the codersrank
 func (r *RepoExtractor) upload() error {
 	fmt.Println("Uploading result to CodersRank")
-	url, err := Upload(r.OutputPath+"repo_data.json.zip", r.repo.RepoName)
+	url, err := Upload(r.OutputPath+".json.zip", r.repo.RepoName)
 	if err != nil {
 		return err
 	}
