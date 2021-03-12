@@ -10,4 +10,7 @@ require (
 	github.com/onsi/ginkgo v1.15.1
 	github.com/onsi/gomega v1.11.0
 	github.com/pierrec/lz4 v2.6.0+incompatible // indirect
+	github.com/src-d/enry v1.7.3
+	github.com/src-d/enry/v2 v2.1.0
+	gopkg.in/src-d/enry.v1 v1.7.3 // indirect
 )
