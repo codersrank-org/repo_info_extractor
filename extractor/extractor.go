@@ -582,6 +582,7 @@ var fileExtensionMap = map[string][]string{
 	"Jupyter Notebook": {"ipynb"},
 	"Kivy":             {"kv"},
 	"Kotlin":           {"kt", "kts"},
+	"LabVIEW":          {"vi", "lvproj", "lvclass", "ctl", "ctt", "llb", "lvbit", "lvbitx", "lvlad", "lvlib", "lvmodel", "lvsc", "lvtest", "vidb"},
 	"Less":             {"less"},
 	"Lex":              {"l"},
 	"Liquid":           {"liquid"},
