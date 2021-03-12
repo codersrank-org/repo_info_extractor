@@ -22,10 +22,6 @@ import (
 	"github.com/mholt/archiver"
 )
 
-// TODO auto detect git
-// Hint: run "which git" (does this works on Windows?)
-const gitExecutable = "/usr/bin/git"
-
 // TODO handle async errors correctly
 
 // RepoExtractor is responsible for all parts of repo extraction process
@@ -33,6 +29,7 @@ const gitExecutable = "/usr/bin/git"
 type RepoExtractor struct {
 	RepoPath    string
 	OutputPath  string
+	GitPath     string
 	Headless    bool
 	UserEmails  []string
 	Seed        []string
@@ -42,6 +39,8 @@ type RepoExtractor struct {
 
 // Extract a single repo in the path
 func (r *RepoExtractor) Extract() error {
+
+	r.initGit()
 
 	err := r.initRepo()
 	if err != nil {
@@ -77,11 +76,32 @@ func (r *RepoExtractor) Extract() error {
 	return nil
 }
 
+func (r *RepoExtractor) initGit() {
+	// Git path already provided by user
+	if r.GitPath != "" {
+		return
+	}
+
+	cmd := exec.Command("where", "git")
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		// Try default git path
+		r.GitPath = "/usr/bin/git"
+		return
+	}
+
+	gitPath := string(out)
+	gitPath = strings.TrimRight(gitPath, "\r\n")
+	gitPath = strings.TrimRight(gitPath, "\n")
+
+	r.GitPath = gitPath
+}
+
 // Creates Repo struct
 func (r *RepoExtractor) initRepo() error {
 	fmt.Println("Initializing repository")
 
-	cmd := exec.Command(gitExecutable,
+	cmd := exec.Command(r.GitPath,
 		"config",
 		"--get",
 		"remote.origin.url",
@@ -262,7 +282,7 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 	for v := range jobs {
 		var commits []*commit
 
-		cmd := exec.Command(gitExecutable,
+		cmd := exec.Command(r.GitPath,
 			"log",
 			"--numstat",
 			fmt.Sprintf("--skip=%d", v.Offset),
@@ -417,7 +437,7 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit, results chan<- boo
 			// For example for Matlab / Objective-C
 			commit.ChangedFiles[n].Language = lang
 
-			cmd := exec.Command(gitExecutable,
+			cmd := exec.Command(r.GitPath,
 				"show",
 				fmt.Sprintf("%s:%s", commit.Hash, fileChange.Path),
 			)
