@@ -20,6 +20,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/mholt/archiver"
+	"github.com/src-d/enry/v2"
 )
 
 // TODO handle async errors correctly
@@ -126,6 +127,7 @@ func (r *RepoExtractor) initRepo() error {
 		if r.Headless {
 			repoName = parts[len(parts)-2] + "/" + parts[len(parts)-1]
 		} else {
+			// If it's a private repo, we only need last part of the name
 			repoName = parts[len(parts)-1]
 		}
 	} else {
@@ -432,9 +434,6 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit, results chan<- boo
 				continue
 			}
 
-			// Detect language
-			// TODO implement a solution for cases we can't rely on extension
-			// For example for Matlab / Objective-C
 			commit.ChangedFiles[n].Language = lang
 
 			cmd := exec.Command(r.GitPath,
@@ -442,7 +441,6 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit, results chan<- boo
 				fmt.Sprintf("%s:%s", commit.Hash, fileChange.Path),
 			)
 			cmd.Dir = r.RepoPath
-
 			out, err := cmd.CombinedOutput()
 			if err != nil {
 				searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, commit.Hash)
@@ -452,6 +450,13 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit, results chan<- boo
 					continue
 				}
 				return err
+			}
+
+			// For .m (Objective-C or Matlab) and .pl extensions we can't just use filenames
+			// We need a proper way to actually detect language, so we use enry
+			if strings.ToLower(extension) == "m" || strings.ToLower(extension) == "pl" {
+				lang, _ = enry.GetLanguageByContent(fileChange.Path, out)
+				commit.ChangedFiles[n].Language = lang
 			}
 
 			analyzer, err := librarydetection.GetAnalyzer(lang)
