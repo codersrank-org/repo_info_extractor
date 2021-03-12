@@ -14,7 +14,7 @@ func NewCAnalyzer() librarydetection.Analyzer {
 type cAnalyzer struct {}
 
 func (a *cAnalyzer) ExtractLibraries(contents string) []string {
-	regex, err := regexp.Compile(`#include\s?[<"]([/a-zA-Z0-9.-]+)[">]`)
+	regex, err := regexp.Compile(`(?i)#include\s?[<"]([/a-zA-Z0-9.-]+)[">]`)
 	if err != nil {
 		panic(err)
 	}
