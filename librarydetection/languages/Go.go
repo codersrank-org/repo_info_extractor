@@ -1,39 +1,65 @@
 package languages
 
 import (
-	"regexp"
-
 	"github.com/codersrank-org/repo_info_extractor/librarydetection"
+	"regexp"
 )
 
 // NewGoAnalyzer constructor
 func NewGoAnalyzer() librarydetection.Analyzer {
-	return &goAnalyzer{
-		Regexes: createRegexes(),
-	}
+	return &goAnalyzer{}
 }
 
 type goAnalyzer struct {
-	Regexes []*regexp.Regexp
-}
-
-func createRegexes() []*regexp.Regexp {
-	regexes := make([]*regexp.Regexp, 0, 5)
-
-	// IT'S NOT WORKING NOW, don't believe the tests
-
-	// Find things between double quotes
-	doubleQuoteRegex, err := regexp.Compile("\"(.*?)\"")
-	if err == nil {
-		regexes = append(regexes, doubleQuoteRegex)
-	}
-
-	return regexes
 }
 
 func (a *goAnalyzer) ExtractLibraries(contents string) []string {
-	allLibs := make([]string, 0, 5)
-	for _, r := range a.Regexes {
+	// regex for multiline imports
+	regex1, err := regexp.Compile(`(?msi)import\s*\(\s*(.*?)\s*\)`)
+	if err != nil {
+		panic(err)
+	}
+
+
+	// Find libraries in a multi line import
+	regex2, err := regexp.Compile(`"(.*?)"`)
+	if err != nil {
+		panic(err)
+	}
+
+	allLibs := []string{}
+
+	matches := regex1.FindAllStringSubmatch(contents, -1)
+	for _, match := range matches {
+		if len(match) > 1 {
+			subgroup := match[1]
+			for _, subgroupMatch := range regex2.FindAllStringSubmatch(subgroup, -1) {
+				if len(subgroupMatch) > 1 {
+					allLibs = append(allLibs, subgroupMatch[1:]...)
+				}
+			}
+		}
+	}
+
+
+	// regex for imports like this: import _ "github.com/user/repo/..."
+	regex3, err := regexp.Compile(`(?i)import[\t ]*(?:[_.].*)?[\t ]?\(?"(.+)"\)?;?\s`)
+	if err != nil {
+		panic(err)
+	}
+
+	//// regex for imports with alias. Like this: import alias1 "github.com/user/repo/..."
+	regex4, err := regexp.Compile(`(?i)import[\t ]*[a-z].+[\t ]?\(?"(.+)"\)?;?\s`)
+	if err != nil {
+		panic(err)
+	}
+
+	regexes := []*regexp.Regexp{
+		regex3,
+		regex4,
+	}
+
+	for _, r := range regexes {
 		matches := r.FindAllStringSubmatch(contents, -1)
 		for _, match := range matches {
 			if len(match) > 1 {
@@ -42,5 +68,6 @@ func (a *goAnalyzer) ExtractLibraries(contents string) []string {
 			}
 		}
 	}
+	
 	return allLibs
 }
