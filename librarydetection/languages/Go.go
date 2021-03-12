@@ -20,6 +20,8 @@ type goAnalyzer struct {
 func createRegexes() []*regexp.Regexp {
 	regexes := make([]*regexp.Regexp, 0, 5)
 
+	// IT'S NOT WORKING NOW, don't believe the tests
+
 	// Find things between double quotes
 	doubleQuoteRegex, err := regexp.Compile("\"(.*?)\"")
 	if err == nil {
