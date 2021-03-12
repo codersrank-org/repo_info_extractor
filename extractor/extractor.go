@@ -147,7 +147,7 @@ func (r *RepoExtractor) GetRepoName(remoteOrigin string) string {
 		return parts[len(parts)-1]
 	}
 	repoName := ""
-	remoteOrigin = strings.TrimRight(remoteOrigin, ".git")
+	remoteOrigin = strings.TrimSuffix(remoteOrigin, ".git")
 	if strings.Contains(remoteOrigin, "http") {
 		// Cloned using http
 		parts := strings.Split(remoteOrigin, "/")
