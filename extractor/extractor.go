@@ -176,6 +176,8 @@ func (r *RepoExtractor) initAnalyzers() {
 	librarydetection.AddAnalyzer("Go", languages.NewGoAnalyzer())
 	librarydetection.AddAnalyzer("C", languages.NewCAnalyzer())
 	librarydetection.AddAnalyzer("C#", languages.NewCSharpAnalyzer())
+	librarydetection.AddAnalyzer("JavaScript", languages.NewJavaScriptAnalyzer())
+	librarydetection.AddAnalyzer("TypeScript", languages.NewTypeScriptAnalyzer())
 }
 
 // Creates commits
