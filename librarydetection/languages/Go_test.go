@@ -38,7 +38,7 @@ var _ = Describe("GoLibraryDetection", func() {
 
 	analyzer := languages.NewGoAnalyzer()
 
-	Describe("ExtractLibraries", func() {
+	Describe("Extract Go sLibraries", func() {
 		It("Should be able to extract libraries", func() {
 			libs := analyzer.ExtractLibraries(string(fixture))
 			Expect(len(libs)).Should(Equal(len(expectedLibraries)))
