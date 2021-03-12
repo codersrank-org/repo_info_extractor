@@ -18,15 +18,6 @@ func (a *cAnalyzer) ExtractLibraries(contents string) []string {
 	if err != nil {
 		panic(err)
 	}
-	matches := regex.FindAllStringSubmatch(contents, -1)
 
-	var allLibs []string
-	for _, match := range matches {
-		if len(match) > 1 {
-			allLibs = append(allLibs, match[1:]...)
-		}
-	}
-
-
-	return allLibs
+	return executeRegexes(contents, []*regexp.Regexp{regex})
 }
