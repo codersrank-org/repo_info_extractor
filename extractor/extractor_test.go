@@ -16,6 +16,7 @@ var _ = Describe("Extractor", func() {
 			}
 			Expect(re.GetRepoName("git@github.com:alimgiray/repo_info_extractor.git")).To(Equal("alimgiray/repo_info_extractor"))
 			Expect(re.GetRepoName("https://github.com/alimgiray/repo_info_extractor.git")).To(Equal("alimgiray/repo_info_extractor"))
+			Expect(re.GetRepoName("https://github.com/peti2001-test/second-project.git")).To(Equal("peti2001-test/second-project"))
 		})
 	})
 
