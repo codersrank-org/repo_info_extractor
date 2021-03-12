@@ -12,6 +12,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection"
@@ -299,11 +300,16 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 				m = strings.Replace(m, "|||BEGIN|||", "", 1)
 				bits := strings.Split(m, "|||SEP|||")
 				changedFiles := []*changedFile{}
+				dateStr := ""
+				t, err := time.Parse("Mon Jan 2 15:04:05 2006 -0700", bits[3])
+				if err == nil {
+					dateStr = t.Format("2006-01-02 15:04:05 -0700")
+				}
 				currectCommit = &commit{
 					Hash:         bits[0],
 					AuthorName:   bits[1],
 					AuthorEmail:  bits[2],
-					Date:         bits[3],
+					Date:         dateStr,
 					ChangedFiles: changedFiles,
 				}
 				continue
