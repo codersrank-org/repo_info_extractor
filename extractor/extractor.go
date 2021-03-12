@@ -389,10 +389,11 @@ func (r *RepoExtractor) analyseLibraries() error {
 	return nil
 }
 
-func (r *RepoExtractor) libraryWorker(jobs <-chan *commit, results chan<- bool) error {
+func (r *RepoExtractor) libraryWorker(commits <-chan *commit, results chan<- bool) error {
 	extensionToLanguageMap := buildExtensionToLanguageMap(fileExtensionMap)
-	for v := range jobs {
-		for n, fileChange := range v.ChangedFiles {
+	for commit := range commits {
+		libraries := map[string][]string{}
+		for n, fileChange := range commit.ChangedFiles {
 			extension := filepath.Ext(fileChange.Path)
 			if extension == "" {
 				continue
@@ -408,18 +409,18 @@ func (r *RepoExtractor) libraryWorker(jobs <-chan *commit, results chan<- bool) 
 			// Detect language
 			// TODO implement a solution for cases we can't rely on extension
 			// For example for Matlab / Objective-C
-			v.ChangedFiles[n].Language = lang
+			commit.ChangedFiles[n].Language = lang
 
 			cmd := exec.Command(gitExecutable,
 				"show",
-				fmt.Sprintf("%s:%s", v.Hash, fileChange.Path),
+				fmt.Sprintf("%s:%s", commit.Hash, fileChange.Path),
 			)
 			cmd.Dir = r.RepoPath
 
 			out, err := cmd.CombinedOutput()
 			if err != nil {
-				searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, v.Hash)
-				searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", fileChange.Path, v.Hash)
+				searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, commit.Hash)
+				searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", fileChange.Path, commit.Hash)
 				// means the file was deleted, skip
 				if strings.Contains(string(out), searchString1) || strings.Contains(string(out), searchString2) {
 					continue
@@ -432,16 +433,13 @@ func (r *RepoExtractor) libraryWorker(jobs <-chan *commit, results chan<- bool) 
 				continue
 			}
 
-			libraries := analyzer.ExtractLibraries(string(out))
-			if v.ChangedFiles[n].Libraries == nil {
-				v.ChangedFiles[n].Libraries = map[string][]string{}
+			fileLibraries := analyzer.ExtractLibraries(string(out))
+			if libraries[lang] == nil {
+				libraries[lang] = make([]string, 0)
 			}
-			if v.ChangedFiles[n].Libraries[lang] == nil {
-				v.ChangedFiles[n].Libraries[lang] = make([]string, 0)
-			}
-			v.ChangedFiles[n].Libraries[lang] = append(v.ChangedFiles[n].Libraries[lang], libraries...)
-
+			libraries[lang] = append(libraries[lang], fileLibraries...)
 		}
+		commit.Libraries = libraries
 		results <- true
 	}
 	return nil
@@ -451,8 +449,8 @@ func (r *RepoExtractor) libraryWorker(jobs <-chan *commit, results chan<- bool) 
 func (r *RepoExtractor) export() error {
 	fmt.Println("Creating output file")
 
-	repoDataPath := r.OutputPath + ".json"
-	zipPath := r.OutputPath + ".json.zip"
+	repoDataPath := r.OutputPath + "repo_data.json"
+	zipPath := r.OutputPath + "repo_data.json.zip"
 	// Remove old files
 	os.Remove(repoDataPath)
 	os.Remove(zipPath)
@@ -498,7 +496,7 @@ func (r *RepoExtractor) export() error {
 // upload his/her results automatically to the codersrank
 func (r *RepoExtractor) upload() error {
 	fmt.Println("Uploading result to CodersRank")
-	url, err := Upload(r.OutputPath+".json.zip", r.repo.RepoName)
+	url, err := Upload(r.OutputPath+"repo_data.json.zip", r.repo.RepoName)
 	if err != nil {
 		return err
 	}
@@ -514,19 +512,19 @@ type repo struct {
 }
 
 type changedFile struct {
-	Path       string              `json:"fileName"`
-	Insertions int                 `json:"insertions"`
-	Deletions  int                 `json:"deletions"`
-	Language   string              `json:"language"`
-	Libraries  map[string][]string `json:"libraries"`
+	Path       string `json:"fileName"`
+	Insertions int    `json:"insertions"`
+	Deletions  int    `json:"deletions"`
+	Language   string `json:"language"`
 }
 
 type commit struct {
-	Hash         string         `json:"commitHash"`
-	AuthorName   string         `json:"authorName"`
-	AuthorEmail  string         `json:"authorEmail"`
-	Date         string         `json:"createdAt"`
-	ChangedFiles []*changedFile `json:"changedFiles"`
+	Hash         string              `json:"commitHash"`
+	AuthorName   string              `json:"authorName"`
+	AuthorEmail  string              `json:"authorEmail"`
+	Date         string              `json:"createdAt"`
+	ChangedFiles []*changedFile      `json:"changedFiles"`
+	Libraries    map[string][]string `json:"libraries"`
 }
 
 type req struct {
