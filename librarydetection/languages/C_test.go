@@ -36,7 +36,10 @@ var _ = Describe("CLibraryDetection", func() {
 
 	Describe("Extract C Libraries", func() {
 		It("Should be able to extract libraries", func() {
-			libs := analyzer.ExtractLibraries(string(fixture))
+			libs, err := analyzer.ExtractLibraries(string(fixture))
+			if err != nil {
+				panic(err)
+			}
 			assertSameUnordered(libs, expectedLibraries)
 		})
 	})

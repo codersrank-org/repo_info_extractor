@@ -7,7 +7,7 @@ import (
 // Analyzer is an interface for extracting various features from files
 // Language specific implementations are at ./languages folder
 type Analyzer interface {
-	ExtractLibraries(contents string) []string
+	ExtractLibraries(contents string) ([]string, error)
 }
 
 // Analyzers is the map for all analyzers

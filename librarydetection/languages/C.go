@@ -13,11 +13,11 @@ func NewCAnalyzer() librarydetection.Analyzer {
 
 type cAnalyzer struct {}
 
-func (a *cAnalyzer) ExtractLibraries(contents string) []string {
+func (a *cAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	regex, err := regexp.Compile(`(?i)#include\s?[<"]([/a-zA-Z0-9.-]+)[">]`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return executeRegexes(contents, []*regexp.Regexp{regex})
+	return executeRegexes(contents, []*regexp.Regexp{regex}), nil
 }

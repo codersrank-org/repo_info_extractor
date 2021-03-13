@@ -13,7 +13,7 @@ func NewJavaAnalyzer() librarydetection.Analyzer {
 
 type javaAnalyzer struct{}
 
-func (a *javaAnalyzer) ExtractLibraries(contents string) []string {
+func (a *javaAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	// regex to find imports like org.springframework (excluding standart java libraries)
 	regex1, err := regexp.Compile(`import ([^java][a-zA-Z0-9]*\.[a-zA-Z0-9]*)`)
 	// regex to find imports like org.springframework.boot
@@ -23,8 +23,8 @@ func (a *javaAnalyzer) ExtractLibraries(contents string) []string {
 	// regex to find static imports like org.springframework.boot
 	regex4, err := regexp.Compile(`import static ([^java][a-zA-Z0-9]*\.[a-zA-Z0-9]*\.[a-zA-Z0-9]*)`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return executeRegexes(contents, []*regexp.Regexp{regex1, regex2, regex3, regex4})
+	return executeRegexes(contents, []*regexp.Regexp{regex1, regex2, regex3, regex4}), nil
 }
