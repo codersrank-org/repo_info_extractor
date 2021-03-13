@@ -13,15 +13,15 @@ func NewCSharpAnalyzer() librarydetection.Analyzer {
 
 type cSparpAnalyzer struct {}
 
-func (a *cSparpAnalyzer) ExtractLibraries(contents string) []string {
+func (a *cSparpAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	regex1, err := regexp.Compile(`(?i)using\s?([/a-zA-z0-9.]+);`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	regex2, err := regexp.Compile(`(?i)using [/a-zA-z0-9.]+ = ([/a-zA-z0-9.]+);`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	regexes := []*regexp.Regexp{
@@ -29,5 +29,5 @@ func (a *cSparpAnalyzer) ExtractLibraries(contents string) []string {
 		regex2,
 	}
 
-	return executeRegexes(contents, regexes)
+	return executeRegexes(contents, regexes), nil
 }

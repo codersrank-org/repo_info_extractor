@@ -13,12 +13,12 @@ func NewTypeScriptAnalyzer() librarydetection.Analyzer {
 
 type typeScriptAnalyzer struct{}
 
-func (a *typeScriptAnalyzer) ExtractLibraries(contents string) []string {
+func (a *typeScriptAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	require, err := regexp.Compile(`require\(["\'](.+)["\']\);?\s`)
 	importRegex, err := regexp.Compile(`import\s*(?:.+ from)?\s?\(?[\'"](.+)[\'"]\)?;?\s`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return executeRegexes(contents, []*regexp.Regexp{require, importRegex})
+	return executeRegexes(contents, []*regexp.Regexp{require, importRegex}), nil
 }

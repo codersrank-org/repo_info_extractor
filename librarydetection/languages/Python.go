@@ -13,12 +13,12 @@ func NewPythonScriptAnalyzer() librarydetection.Analyzer {
 
 type pythonScriptAnalyzer struct{}
 
-func (a *pythonScriptAnalyzer) ExtractLibraries(contents string) []string {
+func (a *pythonScriptAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	fromRegex, err := regexp.Compile(`from (.+) import`)
 	importRegex, err := regexp.Compile(`import ([a-zA-Z0-9_-]+)(?:\s| as)`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return executeRegexes(contents, []*regexp.Regexp{fromRegex, importRegex})
+	return executeRegexes(contents, []*regexp.Regexp{fromRegex, importRegex}), nil
 }

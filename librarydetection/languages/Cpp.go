@@ -13,11 +13,11 @@ func NewCppAnalyzer() librarydetection.Analyzer {
 
 type cppAnalyzer struct {}
 
-func (a *cppAnalyzer) ExtractLibraries(contents string) []string {
+func (a *cppAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	regex, err := regexp.Compile(`(?i)#include\s?[<"]([/a-zA-Z0-9.-]+)[">]`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return executeRegexes(contents, []*regexp.Regexp{regex})
+	return executeRegexes(contents, []*regexp.Regexp{regex}), nil
 }

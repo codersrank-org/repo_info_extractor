@@ -495,7 +495,10 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results cha
 				continue
 			}
 
-			fileLibraries := analyzer.ExtractLibraries(string(out))
+			fileLibraries, err := analyzer.ExtractLibraries(string(out))
+			if err != nil {
+				fmt.Println("error extracting libraries for %s: %s \n", lang, err.Error())
+			}
 			if libraries[lang] == nil {
 				libraries[lang] = make([]string, 0)
 			}

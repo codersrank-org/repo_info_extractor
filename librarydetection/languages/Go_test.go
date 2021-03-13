@@ -39,7 +39,10 @@ var _ = Describe("GoLibraryDetection", func() {
 
 	Describe("Extract Go sLibraries", func() {
 		It("Should be able to extract libraries", func() {
-			libs := analyzer.ExtractLibraries(string(fixture))
+			libs, err := analyzer.ExtractLibraries(string(fixture))
+			if err != nil {
+				panic(err)
+			}
 			assertSameUnordered(libs, expectedLibraries)
 		})
 	})

@@ -14,11 +14,11 @@ func NewKotlinAnalyzer() librarydetection.Analyzer {
 
 type kotlinAnalyzer struct {}
 
-func (a *kotlinAnalyzer) ExtractLibraries(contents string) []string {
+func (a *kotlinAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	// regex to find imports like org.example (exclude standard java kotlin libraries)
 	regex1, err := regexp.Compile(`(?i)import ([a-zA-Z0-9.]*[^.*\n])`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	ret := executeRegexes(contents, []*regexp.Regexp{regex1})
@@ -32,5 +32,5 @@ func (a *kotlinAnalyzer) ExtractLibraries(contents string) []string {
 		res = append(res, v)
 	}
 
-	return res
+	return res, nil
 }

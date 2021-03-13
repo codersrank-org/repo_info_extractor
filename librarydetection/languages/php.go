@@ -14,7 +14,7 @@ func NewPHPAnalyzer() librarydetection.Analyzer {
 
 type phpAnalyzer struct {}
 
-func (a *phpAnalyzer) ExtractLibraries(contents string) []string {
+func (a *phpAnalyzer) ExtractLibraries(contents string) ([]string , error){
 	// matches
 	// require('lib1');
 	// require 'lib2';
@@ -30,13 +30,13 @@ func (a *phpAnalyzer) ExtractLibraries(contents string) []string {
 	// require_once "lib12";
 	regex1, err := regexp.Compile(`(?i)(?:require|require_once|include)[( ]{1}['"]([a-zA-Z0-9]+)["'][)]?;`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	// match all `use` imports
 	regex2, err := regexp.Compile(`(?i)use ([a-zA-Z]+\\)[^;]*`)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	ret := executeRegexes(contents, []*regexp.Regexp{regex1, regex2})
@@ -48,5 +48,5 @@ func (a *phpAnalyzer) ExtractLibraries(contents string) []string {
 		}
 	}
 
-	return res
+	return res, nil
 }
