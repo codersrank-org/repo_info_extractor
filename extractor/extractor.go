@@ -175,11 +175,15 @@ func (r *RepoExtractor) GetRepoName(remoteOrigin string) string {
 func (r *RepoExtractor) initAnalyzers() {
 	librarydetection.AddAnalyzer("Go", languages.NewGoAnalyzer())
 	librarydetection.AddAnalyzer("C", languages.NewCAnalyzer())
+	librarydetection.AddAnalyzer("C++", languages.NewCppAnalyzer())
 	librarydetection.AddAnalyzer("C#", languages.NewCSharpAnalyzer())
 	librarydetection.AddAnalyzer("Java", languages.NewJavaAnalyzer())
 	librarydetection.AddAnalyzer("JavaScript", languages.NewJavaScriptAnalyzer())
+	librarydetection.AddAnalyzer("Kotlin", languages.NewKotlinAnalyzer())
 	librarydetection.AddAnalyzer("TypeScript", languages.NewTypeScriptAnalyzer())
+	librarydetection.AddAnalyzer("PHP", languages.NewPHPAnalyzer())
 	librarydetection.AddAnalyzer("Python", languages.NewPythonScriptAnalyzer())
+	librarydetection.AddAnalyzer("Swift", languages.NewSwiftAnalyzer())
 }
 
 // Creates commits
