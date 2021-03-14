@@ -181,6 +181,7 @@ func (r *RepoExtractor) initAnalyzers() {
 	librarydetection.AddAnalyzer("JavaScript", languages.NewJavaScriptAnalyzer())
 	librarydetection.AddAnalyzer("Kotlin", languages.NewKotlinAnalyzer())
 	librarydetection.AddAnalyzer("TypeScript", languages.NewTypeScriptAnalyzer())
+	librarydetection.AddAnalyzer("Perl", languages.NewPerlAnalyzer())
 	librarydetection.AddAnalyzer("PHP", languages.NewPHPAnalyzer())
 	librarydetection.AddAnalyzer("Python", languages.NewPythonScriptAnalyzer())
 	librarydetection.AddAnalyzer("Swift", languages.NewSwiftAnalyzer())
@@ -501,7 +502,7 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results cha
 
 			fileLibraries, err := analyzer.ExtractLibraries(string(out))
 			if err != nil {
-				fmt.Println("error extracting libraries for %s: %s \n", lang, err.Error())
+				fmt.Printf("error extracting libraries for %s: %s \n", lang, err.Error())
 			}
 			if libraries[lang] == nil {
 				libraries[lang] = make([]string, 0)
