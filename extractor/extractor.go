@@ -21,6 +21,7 @@ import (
 	"github.com/codersrank-org/repo_info_extractor/obfuscation"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/AlecAivazis/survey/v2/terminal"
 	"github.com/mholt/archiver"
 	"github.com/src-d/enry/v2"
 )
@@ -210,16 +211,28 @@ func (r *RepoExtractor) analyseCommits() error {
 		}
 	}
 
-	if len(r.UserEmails) == 0 {
+	if len(r.UserEmails) == 0 && !r.Headless {
 		// Ask user for emails
+	askForEmails:
 		// TODO sort by alphabetical order (or frequency?)
 		selectedEmailsWithNames := []string{}
 		prompt := &survey.MultiSelect{
 			Message:  "Please choose your emails:",
 			Options:  allEmails,
-			PageSize: 50,
+			PageSize: len(allEmails),
+			Filter: func(filterValue string, optValue string, optIndex int) bool {
+				return strings.Contains(optValue, filterValue)
+			},
 		}
-		survey.AskOne(prompt, &selectedEmailsWithNames)
+		err := survey.AskOne(prompt, &selectedEmailsWithNames, survey.WithKeepFilter(true))
+		if err == terminal.InterruptErr {
+			os.Exit(0)
+		}
+
+		if len(selectedEmailsWithNames) == 0 {
+			fmt.Println("Please choose at least one email!")
+			goto askForEmails
+		}
 
 		emails, emailsMap := getEmailsWithoutNames(selectedEmailsWithNames)
 		r.repo.Emails = append(r.repo.Emails, emails...)
@@ -532,10 +545,14 @@ func (r *RepoExtractor) export() error {
 	os.Remove(repoDataPath)
 	os.Remove(zipPath)
 
-	err := os.MkdirAll(r.OutputPath, 0755)
-	if err != nil {
-		log.Println("Cannot create directory. Error:", err.Error())
+	// Only do this when not using default value
+	if r.OutputPath != "./repo_data_v2" {
+		err := os.MkdirAll(r.OutputPath, 0755)
+		if err != nil {
+			log.Println("Cannot create directory. Error:", err.Error())
+		}
 	}
+
 	file, err := os.Create(repoDataPath)
 	if err != nil {
 		return err
