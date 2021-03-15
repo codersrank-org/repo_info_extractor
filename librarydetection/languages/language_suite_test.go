@@ -1,7 +1,6 @@
 package languages_test
 
 import (
-	"fmt"
 	"testing"
 
 	. "github.com/onsi/ginkgo"
@@ -15,8 +14,6 @@ func TestAccount(t *testing.T) {
 
 // assertSameUnordered asserts that two slices of strings are the same, regardless of order
 func assertSameUnordered(result, expected []string) {
-	fmt.Printf("%+v \n", result)
-	fmt.Printf("%+v \n", expected)
 	Expect(len(result)).Should(Equal(len(expected)))
 	for _, v := range result {
 		Expect(v).Should(BeElementOf(expected))
