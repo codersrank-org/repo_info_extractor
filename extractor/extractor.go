@@ -19,6 +19,8 @@ import (
 	"github.com/codersrank-org/repo_info_extractor/librarydetection"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
 	"github.com/codersrank-org/repo_info_extractor/obfuscation"
+	"golang.org/x/text/language"
+	"golang.org/x/text/search"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/AlecAivazis/survey/v2/terminal"
@@ -217,9 +219,8 @@ func (r *RepoExtractor) analyseCommits() error {
 		// TODO sort by alphabetical order (or frequency?)
 		selectedEmailsWithNames := []string{}
 		prompt := &survey.MultiSelect{
-			Message:  "Please choose your emails:",
-			Options:  allEmails,
-			PageSize: len(allEmails),
+			Message: "Please choose your emails:",
+			Options: allEmails,
 			Filter: func(filterValue string, optValue string, optIndex int) bool {
 				return strings.Contains(optValue, filterValue)
 			},
@@ -494,8 +495,15 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results cha
 			if err != nil {
 				searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, commit.Hash)
 				searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", fileChange.Path, commit.Hash)
+				// Ignore case is needed because on windows error message starts with lowercase letter, in other systems it starts with uppercase letter
+				stringSearcher := search.New(language.English, search.IgnoreCase)
 				// means the file was deleted, skip
-				if strings.Contains(string(out), searchString1) || strings.Contains(string(out), searchString2) {
+				start, end := stringSearcher.IndexString(string(out), searchString1)
+				if start != -1 && end != -1 {
+					continue
+				}
+				start, end = stringSearcher.IndexString(string(out), searchString2)
+				if start != -1 && end != -1 {
 					continue
 				}
 				return err
