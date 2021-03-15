@@ -1,4 +1,4 @@
-We are plannig a big refactoring of the repo_info_extractor. See more about it here and share your thoughts [#160](https://github.com/codersrank-org/repo_info_extractor/issues/160)
+⚠️⚠️⚠️ We are rolling out a new version of the `repo_info_extractor` the documentation will be updated soon. See more about it here and share your thoughts [#160](https://github.com/codersrank-org/repo_info_extractor/issues/160)
 ## What is it?
 This script is used to extract data from your private repo. The data is used to calculate your score on https://codersrank.io
 
