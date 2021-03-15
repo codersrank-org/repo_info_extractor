@@ -217,9 +217,8 @@ func (r *RepoExtractor) analyseCommits() error {
 		// TODO sort by alphabetical order (or frequency?)
 		selectedEmailsWithNames := []string{}
 		prompt := &survey.MultiSelect{
-			Message:  "Please choose your emails:",
-			Options:  allEmails,
-			PageSize: len(allEmails),
+			Message: "Please choose your emails:",
+			Options: allEmails,
 			Filter: func(filterValue string, optValue string, optIndex int) bool {
 				return strings.Contains(optValue, filterValue)
 			},
