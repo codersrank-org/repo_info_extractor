@@ -16,8 +16,7 @@ import (
 // Upload result to CodersRAnk
 func Upload(path, repoName string) (string, error) {
 
-	//url := "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload"
-	url := "http://localhost:9900/candidate/privaterepo/Upload"
+	url := "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload"
 
 	// Read file
 	file, err := os.Open(path)
