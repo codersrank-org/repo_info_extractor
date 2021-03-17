@@ -22,96 +22,44 @@ The [libraries](https://github.com/codersrank-org/libraries) contains a list of 
 - Library recognition: [libraries](https://github.com/codersrank-org/libraries)
 
 ## How to use it
-First of all, the script needs to be cloned.
+We are using go for repo_info_extractor, so you can either clone the repo and compile the program or just download the binary and start using it.
 
 ```
 git clone --depth 1 https://github.com/codersrankOrg/repo_info_extractor.git
 cd repo_info_extractor
+go run . --repo_path ./path_to_repo
 ```
 
-### Docker approach (easiest)
-If using this approach, the host machine does not need to have any tools installed apart from Docker. Generating the repository information is as easy as:
+### Binary approach (easiest)
+If using this approach, download the binary from releases and run it.
 
-#### OSX / Linux
 ```
-./run-docker.sh <path to the repository>
-```
-
-### Windows
-```
-run-docker.bat <path to the repository>
+./repo_info_extractor --repo_path ./path_to_repo
 ```
 
-### Using Python on the host machine approach
-First, be sure you have Python3 and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip). We only support Python3,
-so if using pre-isntalled python, please check the version with:
-```
-python -V
-```
-#### OSX
-```
-$ git clone https://github.com/codersrankOrg/repo_info_extractor.git
-$ cd repo_info_extractor
-$ ./install.sh
-$ ./run.sh path/to/repository
-$ ls -al ./repo_data.json.zip
-```
-#### Linux
-```
-$ git clone https://github.com/codersrankOrg/repo_info_extractor.git
-$ cd repo_info_extractor
-$ ./install.sh
-$ ./run.sh path/to/repository
-$ ls -al ./repo_data.json.zip
-```
-#### Windows
-```
-git clone https://github.com/codersrankOrg/repo_info_extractor.git
-cd repo_info_extractor
-install.bat
-python src\main.py path\to\repo
-dir
-```
+### Available Flags
+
+`--repo_path` string: Mandatory. Path of the repo which will be analyzed.
+
+`--emails` string array: Optional. By default repo_info_extractor will ask you to choose your emails from all the emails found in commits. But if you know which emails you've used, you can provide them as a comma separated list,  (e.g. "one@mail.com,two@email.com")
+
+`--gitPath` string: Optional. By default repo_info_extractor will try to find your git, but if you see an error related to "git not found", you can manually provide your git path.
 
 ## Extracting multiple repos
 In case you have multiple repos and you don't want to extract them one-by-one check out this solution: https://github.com/codersrank-org/multi_repo_extractor
 
-## Dockerfile
-The provided Dockerfile builds an image that contains the Python script as well as its dependencies. To keep the final image size low, it leverages the 
-multi-stage build functionality. The first stage installs the dependencies as well as all the required build tools. The second stage, runtime,
-just copies over the installed dependencies so that they can be used by the script.
-
-In order to build a new image out of it, run `make docker` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
-`codersrank/repo_info_extractor:latest` image.
 
 ## Troubleshooting
 
-```
-/usr/bin/env: ‘bash\r’: No such file or directory
-```
-
-If you see the following error on a Windows machine, this is due to git converting the line endings automatically. A repository level configuration has
-been added to stop this from happening, but the repo needs to be hard reset:
-
-```
-git reset --hard
-```
-
-If this for some reason does not work, just remove the repository and clone it again.
-
+...
 ## How to contribute?
 
 ### Set up working environment
-We recommend using Python virtual environments. We only support Python3, but please test your code in all major versions of Python3 starting with Python3.5.
+We recommend using latest go version.
 
+### Run UnitTests 
+In the root directory of the repo, run the following command:
 
-#### Run UnitTests 
-First, you have to install nose2.
 ```
-pip3 install nose2
-```
-
-After that use the make file to run the tests
-```
-make test
+go test ./...
 ```
