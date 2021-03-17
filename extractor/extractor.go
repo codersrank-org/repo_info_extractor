@@ -14,6 +14,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/codersrank-org/repo_info_extractor/languagedetection"
+
 	"github.com/codersrank-org/repo_info_extractor/commit"
 	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection"
@@ -25,7 +27,6 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/AlecAivazis/survey/v2/terminal"
 	"github.com/mholt/archiver"
-	"github.com/src-d/enry/v2"
 )
 
 // TODO handle async errors correctly
@@ -468,60 +469,62 @@ func (r *RepoExtractor) analyseLibraries() error {
 }
 
 func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results chan<- bool) error {
-	extensionToLanguageMap := buildExtensionToLanguageMap(fileExtensionMap)
+	languageAnalyzer := languagedetection.NewLanguageAnalyzer()
 	for commit := range commits {
 		libraries := map[string][]string{}
 		for n, fileChange := range commit.ChangedFiles {
+
+			lang := ""
+			fileContents := []byte{}
+
 			extension := filepath.Ext(fileChange.Path)
 			if extension == "" {
 				continue
 			}
 			// remove the trailing dot
 			extension = extension[1:]
-			lang, ok := extensionToLanguageMap[extension]
+
+			if languageAnalyzer.ShouldUseFile(extension) {
+				cmd := exec.Command(r.GitPath,
+					"show",
+					fmt.Sprintf("%s:%s", commit.Hash, fileChange.Path),
+				)
+				cmd.Dir = r.RepoPath
+				var err error
+				fileContents, err = cmd.CombinedOutput()
+				if err != nil {
+					searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, commit.Hash)
+					searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", fileChange.Path, commit.Hash)
+					// Ignore case is needed because on windows error message starts with lowercase letter, in other systems it starts with uppercase letter
+					stringSearcher := search.New(language.English, search.IgnoreCase)
+					// means the file was deleted, skip
+					start, end := stringSearcher.IndexString(string(fileContents), searchString1)
+					if start != -1 && end != -1 {
+						continue
+					}
+					start, end = stringSearcher.IndexString(string(fileContents), searchString2)
+					if start != -1 && end != -1 {
+						continue
+					}
+					return err
+				}
+				lang = languageAnalyzer.DetectLanguageFromFile(fileChange.Path, fileContents)
+			} else {
+				lang = languageAnalyzer.DetectLanguageFromExtension(extension)
+			}
+
 			// We don't know extension, nothing to do
-			if !ok {
+			if lang == "" {
 				continue
 			}
 
 			commit.ChangedFiles[n].Language = lang
-
-			cmd := exec.Command(r.GitPath,
-				"show",
-				fmt.Sprintf("%s:%s", commit.Hash, fileChange.Path),
-			)
-			cmd.Dir = r.RepoPath
-			out, err := cmd.CombinedOutput()
-			if err != nil {
-				searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, commit.Hash)
-				searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", fileChange.Path, commit.Hash)
-				// Ignore case is needed because on windows error message starts with lowercase letter, in other systems it starts with uppercase letter
-				stringSearcher := search.New(language.English, search.IgnoreCase)
-				// means the file was deleted, skip
-				start, end := stringSearcher.IndexString(string(out), searchString1)
-				if start != -1 && end != -1 {
-					continue
-				}
-				start, end = stringSearcher.IndexString(string(out), searchString2)
-				if start != -1 && end != -1 {
-					continue
-				}
-				return err
-			}
-
-			// For .m (Objective-C or Matlab) and .pl extensions we can't just use filenames
-			// We need a proper way to actually detect language, so we use enry
-			if strings.ToLower(extension) == "m" || strings.ToLower(extension) == "pl" {
-				lang, _ = enry.GetLanguageByContent(fileChange.Path, out)
-				commit.ChangedFiles[n].Language = lang
-			}
-
 			analyzer, err := librarydetection.GetAnalyzer(lang)
 			if err != nil {
 				continue
 			}
 
-			fileLibraries, err := analyzer.ExtractLibraries(string(out))
+			fileLibraries, err := analyzer.ExtractLibraries(string(fileContents))
 			if err != nil {
 				fmt.Printf("error extracting libraries for %s: %s \n", lang, err.Error())
 			}
@@ -616,84 +619,4 @@ type repo struct {
 type req struct {
 	Limit  int
 	Offset int
-}
-
-func buildExtensionToLanguageMap(input map[string][]string) map[string]string {
-	extensionMap := map[string]string{}
-	for lang, extensions := range input {
-		for _, extension := range extensions {
-			extensionMap[extension] = lang
-		}
-	}
-	return extensionMap
-}
-
-var fileExtensionMap = map[string][]string{
-	"1C Enterprise":    {"bsl", "os"},
-	"Apex":             {"cls"},
-	"Assembly":         {"asm"},
-	"Batchfile":        {"bat", "cmd", "btm"},
-	"C":                {"c", "h"},
-	"C++":              {"cpp", "cxx", "hpp", "cc", "hh", "hxx"},
-	"C#":               {"cs"},
-	"CSS":              {"css"},
-	"Clojure":          {"clj"},
-	"COBOL":            {"cbl", "cob", "cpy"},
-	"CoffeeScript":     {"coffee"},
-	"Crystal":          {"cr"},
-	"Dart":             {"dart"},
-	"Groovy":           {"groovy", "gvy", "gy", "gsh"},
-	"HTML+Razor":       {"cshtml"},
-	"EJS":              {"ejs"},
-	"Elixir":           {"ex", "exs"},
-	"Elm":              {"elm"},
-	"EPP":              {"epp"},
-	"ERB":              {"erb"},
-	"Erlang":           {"erl", "hrl"},
-	"F#":               {"fs", "fsi", "fsx", "fsscript"},
-	"Fortran":          {"f90", "f95", "f03", "f08", "for"},
-	"Go":               {"go"},
-	"Haskell":          {"hs", "lhs"},
-	"HCL":              {"hcl", "tf", "tfvars"},
-	"HTML":             {"html", "htm", "xhtml"},
-	"JSON":             {"json"},
-	"Java":             {"java"},
-	"JavaScript":       {"js", "jsx", "mjs", "cjs"},
-	"Jupyter Notebook": {"ipynb"},
-	"Kivy":             {"kv"},
-	"Kotlin":           {"kt", "kts"},
-	"LabVIEW":          {"vi", "lvproj", "lvclass", "ctl", "ctt", "llb", "lvbit", "lvbitx", "lvlad", "lvlib", "lvmodel", "lvsc", "lvtest", "vidb"},
-	"Less":             {"less"},
-	"Lex":              {"l"},
-	"Liquid":           {"liquid"},
-	"Lua":              {"lua"},
-	"MATLAB":           {"m"},
-	"Nix":              {"nix"},
-	"Objective-C":      {"mm"},
-	"OpenEdge ABL":     {"p", "ab", "w", "i", "x"},
-	"Perl":             {"pl", "pm", "t"},
-	"PHP":              {"php"},
-	"PLSQL":            {"pks", "pkb"},
-	"Protocol Buffer":  {"proto"},
-	"Puppet":           {"pp"},
-	"Python":           {"py"},
-	"QML":              {"qml"},
-	"R":                {"r"},
-	"Raku":             {"p6", "pl6", "pm6", "rk", "raku", "pod6", "rakumod", "rakudoc"},
-	"Robot":            {"robot"},
-	"Ruby":             {"rb"},
-	"Rust":             {"rs"},
-	"Scala":            {"scala"},
-	"SASS":             {"sass"},
-	"SCSS":             {"scss"},
-	"Shell":            {"sh"},
-	"Smalltalk":        {"st"},
-	"Stylus":           {"styl"},
-	"Svelte":           {"svelte"},
-	"Swift":            {"swift"},
-	"TypeScript":       {"ts", "tsx"},
-	"Vue":              {"vue"},
-	"Xtend":            {"xtend"},
-	"Xtext":            {"xtext"},
-	"Yacc":             {"y"},
 }
