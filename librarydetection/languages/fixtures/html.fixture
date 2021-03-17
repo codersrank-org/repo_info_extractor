@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Title of the document
+        </title>
+        <link rel="stylesheet" type="text/css" href="styles/style.css">
+        <link rel="stylesheet" type="text/css" href="3rdparty/bootstrap.css">
+        <script type="text/javascript" src="3rdparty/jquery.min.js"></script>
+    </head>
+    <body>
+        body content 
+        <p>more content</p>
+        <img src="some-image" />
+        <img src="some-image2">
+        <b>Some text</b>
+        <!-- </div> -->
+    </body>
+    <script type="text/javascript" src="hello.js"></script>
+</html>

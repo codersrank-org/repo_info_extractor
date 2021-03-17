@@ -550,8 +550,8 @@ func (r *RepoExtractor) obfuscate() {
 func (r *RepoExtractor) export() error {
 	fmt.Println("Creating output file")
 
-	repoDataPath := r.OutputPath + ".json"
-	zipPath := r.OutputPath + ".json.zip"
+	repoDataPath := r.OutputPath + "_v2.json"
+	zipPath := r.OutputPath + "_v2.json.zip"
 	// Remove old files
 	os.Remove(repoDataPath)
 	os.Remove(zipPath)
@@ -601,7 +601,7 @@ func (r *RepoExtractor) export() error {
 // upload his/her results automatically to the codersrank
 func (r *RepoExtractor) upload() error {
 	fmt.Println("Uploading result to CodersRank")
-	url, err := Upload(r.OutputPath+".json.zip", r.repo.RepoName)
+	url, err := Upload(r.OutputPath+"_v2.json.zip", r.repo.RepoName)
 	if err != nil {
 		return err
 	}
