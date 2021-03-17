@@ -7,5 +7,5 @@ repo_data.json
 .pyenv/
 *.json.zip
 *.log
-repo.json
-repo.json.zip
+repo_data_v2.json
+repo_data_v2.json.zip
