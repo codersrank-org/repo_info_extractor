@@ -14,7 +14,7 @@ func main() {
 	// Program is going to ask you to choose your emails
 	// But if you want, you can provide the emails yourself
 	headless := flag.String("headless", "false", "Should run on headless mode?")
-	obfuscate := flag.String("obfuscate", "false", "Should obfuscate the result?")
+	obfuscate := flag.String("obfuscate", "true", "Should obfuscate the result?")
 	outputPath := flag.String("output_path", "./repo_data_v2", "Where to put output file")
 	gitPath := flag.String("git_path", "", "Where is git binary?")
 	emailString := flag.String("emails", "", "Predefined emails") // Example: "alim.giray@codersrank.io,alimgiray@gmail.com"
