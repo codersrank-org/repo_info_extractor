@@ -15,6 +15,9 @@ type pythonScriptAnalyzer struct{}
 
 func (a *pythonScriptAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	fromRegex, err := regexp.Compile(`from (.+) import`)
+	if err != nil {
+		return nil, err
+	}
 	importRegex, err := regexp.Compile(`import ([a-zA-Z0-9_-]+)(?:\s| as)`)
 	if err != nil {
 		return nil, err

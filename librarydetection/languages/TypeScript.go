@@ -15,6 +15,9 @@ type typeScriptAnalyzer struct{}
 
 func (a *typeScriptAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	require, err := regexp.Compile(`require\(["\'](.+)["\']\);?\s`)
+	if err != nil {
+		return nil, err
+	}
 	importRegex, err := regexp.Compile(`import\s*(?:.+ from)?\s?\(?[\'"](.+)[\'"]\)?;?\s`)
 	if err != nil {
 		return nil, err
