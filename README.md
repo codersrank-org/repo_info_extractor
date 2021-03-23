@@ -30,7 +30,7 @@ go run . --repo_path ./path_to_repo
 ```
 
 ### Binary approach (easiest)
-If using this approach, download the binary from releases and run it.
+If using this approach, download the binary from [releases](https://github.com/codersrank-org/repo_info_extractor/releases) and run it.
 
 ```
 ./repo_info_extractor --repo_path ./path_to_repo
