@@ -338,6 +338,7 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 		cmd := exec.Command(r.GitPath,
 			"log",
 			"--numstat",
+			"--all",
 			fmt.Sprintf("--skip=%d", v.Offset),
 			fmt.Sprintf("--max-count=%d", v.Limit),
 			"--pretty=format:|||BEGIN|||%H|||SEP|||%an|||SEP|||%ae|||SEP|||%ad",
