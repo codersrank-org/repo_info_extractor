@@ -52,6 +52,7 @@ func (r *RepoExtractor) Extract() error {
 
 	err := r.initRepo()
 	if err != nil {
+		fmt.Println("Cannot init repo_info_extractor. Error: ", err.Error())
 		return err
 	}
 
@@ -122,7 +123,7 @@ func (r *RepoExtractor) initRepo() error {
 
 	out, err := cmd.CombinedOutput()
 	if err != nil {
-		return err
+		fmt.Println("Cannot get remote.origin.url. Use directory path to get repo name.")
 	}
 
 	repoName := ""
@@ -196,7 +197,11 @@ func (r *RepoExtractor) analyseCommits() error {
 	fmt.Println("Analysing commits")
 
 	var commits []*commit.Commit
+	userCommits := make([]*commit.Commit, 0, len(commits))
 	commits, err := r.getCommits()
+	if len(commits) == 0 {
+		return nil
+	}
 	if err != nil {
 		return err
 	}
@@ -249,7 +254,6 @@ func (r *RepoExtractor) analyseCommits() error {
 	}
 
 	// Only consider commits for user
-	userCommits := make([]*commit.Commit, 0, len(commits))
 	for _, v := range commits {
 		if _, ok := selectedEmails[v.AuthorEmail]; ok {
 			userCommits = append(userCommits, v)
