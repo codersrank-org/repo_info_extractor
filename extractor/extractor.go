@@ -134,10 +134,9 @@ func (r *RepoExtractor) initRepo() error {
 	repoName = r.GetRepoName(remoteOrigin)
 
 	r.repo = &repo{
-		RepoName:         repoName,
-		Emails:           []string{},
-		SuggestedEmails:  []string{}, // TODO implement
-		PrimaryRemoteURL: remoteOrigin,
+		RepoName:        repoName,
+		Emails:          []string{},
+		SuggestedEmails: []string{}, // TODO implement
 	}
 	return nil
 }
@@ -615,10 +614,9 @@ func (r *RepoExtractor) upload() error {
 }
 
 type repo struct {
-	RepoName         string   `json:"repo"`
-	Emails           []string `json:"emails"`
-	SuggestedEmails  []string `json:"suggestedEmails"`
-	PrimaryRemoteURL string   `json:"primaryRemoteUrl"`
+	RepoName        string   `json:"repo"`
+	Emails          []string `json:"emails"`
+	SuggestedEmails []string `json:"suggestedEmails"`
 }
 
 type req struct {
