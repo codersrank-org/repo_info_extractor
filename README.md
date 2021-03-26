@@ -33,7 +33,8 @@ go run . --repo_path ./path_to_repo
 If using this approach, download the binary from [releases](https://github.com/codersrank-org/repo_info_extractor/releases) and run it.
 
 ```
-./repo_info_extractor --repo_path ./path_to_repo
+chmod +x repo_info_extractor_osx                       # in case of Linux, OSX first make it executable
+./repo_info_extractor_osx --repo_path ./path_to_repo
 ```
 
 ### Available Flags
