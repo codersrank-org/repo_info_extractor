@@ -7,7 +7,7 @@ import (
 	"github.com/iancoleman/orderedmap"
 )
 
-var filterDomains = []string{"@gmail.com", ".local"}
+var filterDomains = []string{"@gmail.com", ".local", "@users.noreply.github.com"}
 
 // FindSimilarEmails returns similar emails to seed, from a given email list
 func FindSimilarEmails(seeds, emails []string) []string {
