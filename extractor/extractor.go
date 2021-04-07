@@ -479,7 +479,7 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results cha
 		for n, fileChange := range commit.ChangedFiles {
 
 			lang := ""
-			fileContents := []byte{}
+			fileContents := make([]byte, 0)
 
 			extension := filepath.Ext(fileChange.Path)
 			if extension == "" {
@@ -488,30 +488,31 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results cha
 			// remove the trailing dot
 			extension = extension[1:]
 
-			if languageAnalyzer.ShouldUseFile(extension) {
-				cmd := exec.Command(r.GitPath,
-					"show",
-					fmt.Sprintf("%s:%s", commit.Hash, fileChange.Path),
-				)
-				cmd.Dir = r.RepoPath
-				var err error
-				fileContents, err = cmd.CombinedOutput()
-				if err != nil {
-					searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, commit.Hash)
-					searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", fileChange.Path, commit.Hash)
-					// Ignore case is needed because on windows error message starts with lowercase letter, in other systems it starts with uppercase letter
-					stringSearcher := search.New(language.English, search.IgnoreCase)
-					// means the file was deleted, skip
-					start, end := stringSearcher.IndexString(string(fileContents), searchString1)
-					if start != -1 && end != -1 {
-						continue
-					}
-					start, end = stringSearcher.IndexString(string(fileContents), searchString2)
-					if start != -1 && end != -1 {
-						continue
-					}
-					return err
+			cmd := exec.Command(r.GitPath,
+				"--no-pager",
+				"show",
+				fmt.Sprintf("%s:%s", commit.Hash, fileChange.Path),
+			)
+			cmd.Dir = r.RepoPath
+			var err error
+			fileContents, err = cmd.CombinedOutput()
+			if err != nil {
+				searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, commit.Hash)
+				searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", fileChange.Path, commit.Hash)
+				// Ignore case is needed because on windows error message starts with lowercase letter, in other systems it starts with uppercase letter
+				stringSearcher := search.New(language.English, search.IgnoreCase)
+				// means the file was deleted, skip
+				start, end := stringSearcher.IndexString(string(fileContents), searchString1)
+				if start != -1 && end != -1 {
+					continue
 				}
+				start, end = stringSearcher.IndexString(string(fileContents), searchString2)
+				if start != -1 && end != -1 {
+					continue
+				}
+				return err
+			}
+			if languageAnalyzer.ShouldUseFile(extension) {
 				lang = languageAnalyzer.DetectLanguageFromFile(fileChange.Path, fileContents)
 			} else {
 				lang = languageAnalyzer.DetectLanguageFromExtension(extension)
