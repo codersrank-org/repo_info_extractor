@@ -164,7 +164,7 @@ func (r *RepoExtractor) GetRepoName(remoteOrigin string) string {
 	} else {
 		// Cloned using ssh
 		parts := strings.Split(remoteOrigin, ":")
-		repoName = parts[1]
+		repoName = parts[len(parts)-1]
 		parts = strings.Split(repoName, "/")
 		if r.Headless {
 			repoName = parts[len(parts)-2] + "/" + parts[len(parts)-1]
