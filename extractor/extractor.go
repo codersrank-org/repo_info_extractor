@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/text/language"
+	"golang.org/x/text/search"
 	"log"
 	"os"
 	"os/exec"
@@ -14,18 +16,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/codersrank-org/repo_info_extractor/languagedetection"
-
+	"github.com/AlecAivazis/survey/v2"
+	"github.com/AlecAivazis/survey/v2/terminal"
 	"github.com/codersrank-org/repo_info_extractor/commit"
 	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
+	"github.com/codersrank-org/repo_info_extractor/languagedetection"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
 	"github.com/codersrank-org/repo_info_extractor/obfuscation"
-	"golang.org/x/text/language"
-	"golang.org/x/text/search"
-
-	"github.com/AlecAivazis/survey/v2"
-	"github.com/AlecAivazis/survey/v2/terminal"
 	"github.com/mholt/archiver"
 )
 
