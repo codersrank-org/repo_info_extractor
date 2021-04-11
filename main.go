@@ -43,13 +43,14 @@ func main() {
 	}
 
 	repoExtractor := extractor.RepoExtractor{
-		RepoPath:   *repoPath,
-		OutputPath: *outputPath,
-		GitPath:    *gitPath,
-		Headless:   *headless == "true",
-		Obfuscate:  *obfuscate == "true",
-		UserEmails: emails,
-		Seed:       seed,
+		RepoPath:        *repoPath,
+		OutputPath:      *outputPath,
+		GitPath:         *gitPath,
+		Headless:        *headless == "true",
+		Obfuscate:       *obfuscate == "true",
+		UserEmails:      emails,
+		Seed:            seed,
+		ShowProgressBar: *headless != "true", // Show progress bar only if running in interactive mode
 	}
 
 	err := repoExtractor.Extract()

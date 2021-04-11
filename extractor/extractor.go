@@ -16,14 +16,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AlecAivazis/survey/v2"
-	"github.com/AlecAivazis/survey/v2/terminal"
 	"github.com/codersrank-org/repo_info_extractor/commit"
 	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
 	"github.com/codersrank-org/repo_info_extractor/languagedetection"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection"
 	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
 	"github.com/codersrank-org/repo_info_extractor/obfuscation"
+	"github.com/codersrank-org/repo_info_extractor/ui"
 	"github.com/mholt/archiver"
 )
 
@@ -32,15 +31,16 @@ import (
 // RepoExtractor is responsible for all parts of repo extraction process
 // Including cloning the repo, processing the commits and uploading the results
 type RepoExtractor struct {
-	RepoPath    string
-	OutputPath  string
-	GitPath     string
-	Headless    bool
-	Obfuscate   bool
-	UserEmails  []string
-	Seed        []string
-	repo        *repo
-	userCommits []*commit.Commit // Commits which are belong to user (from selected emails)
+	RepoPath        string
+	OutputPath      string
+	GitPath         string
+	Headless        bool
+	Obfuscate       bool
+	ShowProgressBar bool // If it is false there is no progress bar.
+	UserEmails      []string
+	Seed            []string
+	repo            *repo
+	userCommits     []*commit.Commit // Commits which are belong to user (from selected emails)
 }
 
 // Extract a single repo in the path
@@ -217,27 +217,7 @@ func (r *RepoExtractor) analyseCommits() error {
 	}
 
 	if len(r.UserEmails) == 0 && !r.Headless {
-		// Ask user for emails
-	askForEmails:
-		// TODO sort by alphabetical order (or frequency?)
-		selectedEmailsWithNames := []string{}
-		prompt := &survey.MultiSelect{
-			Message: "Please choose your emails:",
-			Options: allEmails,
-			Filter: func(filterValue string, optValue string, optIndex int) bool {
-				return strings.Contains(optValue, filterValue)
-			},
-		}
-		err := survey.AskOne(prompt, &selectedEmailsWithNames, survey.WithKeepFilter(true))
-		if err == terminal.InterruptErr {
-			os.Exit(0)
-		}
-
-		if len(selectedEmailsWithNames) == 0 {
-			fmt.Println("Please choose at least one email!")
-			goto askForEmails
-		}
-
+		selectedEmailsWithNames := ui.SelectEmail(allEmails)
 		emails, emailsMap := getEmailsWithoutNames(selectedEmailsWithNames)
 		r.repo.Emails = append(r.repo.Emails, emails...)
 		for mail := range emailsMap {
@@ -287,6 +267,15 @@ func (r *RepoExtractor) getCommits() ([]*commit.Commit, error) {
 
 	var commits []*commit.Commit
 	workersReturnedNoMore := 0
+
+	var pb ui.ProgressBar
+	numberOfCommits := r.getNumberOfCommits()
+	if r.ShowProgressBar && numberOfCommits > 0 {
+		pb = ui.NewProgressBar(numberOfCommits)
+	} else {
+		pb = ui.NilProgressBar()
+	}
+
 	func() {
 		for {
 			select {
@@ -297,6 +286,7 @@ func (r *RepoExtractor) getCommits() ([]*commit.Commit, error) {
 					Offset: lastOffset,
 				}
 				commits = append(commits, res...)
+				pb.SetCurrent(len(commits))
 			case <-noMoreChan:
 				workersReturnedNoMore++
 				if workersReturnedNoMore == runtime.NumCPU() {
@@ -306,6 +296,7 @@ func (r *RepoExtractor) getCommits() ([]*commit.Commit, error) {
 			}
 		}
 	}()
+	pb.Finish()
 
 	return commits, nil
 }
@@ -334,6 +325,23 @@ func getEmailsWithoutNames(emails []string) ([]string, map[string]bool) {
 		}
 	}
 	return emailsWithoutNamesArray, emailsWithoutNames
+}
+
+func (r *RepoExtractor) getNumberOfCommits() int {
+	cmd := exec.Command(r.GitPath,
+		"--no-pager",
+		"log",
+		"--all",
+		"--no-merges",
+		"--pretty=oneline",
+	)
+	cmd.Dir = r.RepoPath
+	stdout, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println("Cannot get number of commits. Cannot show progress bar. Error: " + err.Error())
+		return 0
+	}
+	return strings.Count(string(stdout), "\n")
 }
 
 // commitWorker get commits from git
@@ -475,9 +483,17 @@ func (r *RepoExtractor) analyseLibraries() error {
 		jobs <- v
 	}
 	close(jobs)
+	var pb ui.ProgressBar
+	if r.ShowProgressBar {
+		pb = ui.NewProgressBar(len(r.userCommits))
+	} else {
+		pb = ui.NilProgressBar()
+	}
 	for a := 1; a <= len(r.userCommits); a++ {
 		<-results
+		pb.Inc()
 	}
+	pb.Finish()
 	return nil
 }
 
