@@ -353,9 +353,11 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 		cmd.Dir = r.RepoPath
 		stdout, err := cmd.StdoutPipe()
 		if nil != err {
+			fmt.Println("Cannot create pipe.")
 			return err
 		}
 		if err := cmd.Start(); err != nil {
+			fmt.Println("Error during execution of Git command.")
 			return err
 		}
 
@@ -384,6 +386,8 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 				t, err := time.Parse("Mon Jan 2 15:04:05 2006 -0700", bits[3])
 				if err == nil {
 					dateStr = t.Format("2006-01-02 15:04:05 -0700")
+				} else {
+					fmt.Println("Cannot convert date. Expected date format: Mon Jan 2 15:04:05 2006 -0700. Got: " + bits[3])
 				}
 				currectCommit = &commit.Commit{
 					Hash:         bits[0],
@@ -403,6 +407,7 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 			}
 			insertions, err := strconv.Atoi(insertionsString)
 			if err != nil {
+				fmt.Println("Cannot convert the following into integer: " + insertionsString)
 				return err
 			}
 
@@ -412,6 +417,7 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 			}
 			deletions, err := strconv.Atoi(deletionsString)
 			if err != nil {
+				fmt.Println("Cannot convert the following into integer: " + deletionsString)
 				return err
 			}
 
@@ -429,12 +435,12 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 
 			if currectCommit == nil {
 				// TODO maybe skip? does this break anything?
-				return errors.New("did not expect currect commit to be null")
+				return errors.New("did not expect current commit to be null")
 			}
 
 			if currectCommit.ChangedFiles == nil {
 				// TODO maybe skip? does this break anything?
-				return errors.New("did not expect currect commit changed files to be null")
+				return errors.New("did not expect current commit changed files to be null")
 			}
 
 			currectCommit.ChangedFiles = append(currectCommit.ChangedFiles, changedFile)
