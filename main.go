@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	version string // Version of the file. E.g v0.9.6. This is set during build time.
+	version = "v9.9.9" // Version of the file. E.g v0.9.6. This is set during build time.
 )
 
 func main() {

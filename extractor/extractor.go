@@ -266,7 +266,12 @@ func (r *RepoExtractor) getCommits() ([]*commit.Commit, error) {
 	results := make(chan []*commit.Commit)
 	noMoreChan := make(chan bool)
 	for w := 0; w < runtime.NumCPU(); w++ {
-		go r.commitWorker(w, jobs, results, noMoreChan)
+		go func() {
+			err := r.commitWorker(w, jobs, results, noMoreChan)
+			if err != nil {
+				fmt.Println("Error during getting commits. Error: " + err.Error())
+			}
+		}()
 	}
 
 	// launch initial jobs
