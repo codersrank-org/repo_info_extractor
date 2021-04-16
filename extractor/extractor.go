@@ -31,16 +31,17 @@ import (
 // RepoExtractor is responsible for all parts of repo extraction process
 // Including cloning the repo, processing the commits and uploading the results
 type RepoExtractor struct {
-	RepoPath        string
-	OutputPath      string
-	GitPath         string
-	Headless        bool
-	Obfuscate       bool
-	ShowProgressBar bool // If it is false there is no progress bar.
-	UserEmails      []string
-	Seed            []string
-	repo            *repo
-	userCommits     []*commit.Commit // Commits which are belong to user (from selected emails)
+	RepoPath            string
+	OutputPath          string
+	GitPath             string
+	Headless            bool
+	Obfuscate           bool
+	ShowProgressBar     bool // If it is false there is no progress bar.
+	UserEmails          []string
+	OverwrittenRepoName string // If set this will be used instead of the
+	Seed                []string
+	repo                *repo
+	userCommits         []*commit.Commit // Commits which are belong to user (from selected emails)
 }
 
 // Extract a single repo in the path
@@ -600,6 +601,7 @@ func (r *RepoExtractor) export() error {
 	}
 
 	w := bufio.NewWriter(file)
+	r.repo.RepoName = r.OverwrittenRepoName
 	repoMetaData, err := json.Marshal(r.repo)
 	if err != nil {
 		return err

@@ -26,6 +26,7 @@ func main() {
 	gitPath := flag.String("git_path", "", "Where is git binary?")
 	emailString := flag.String("emails", "", "Predefined emails. Example: \"alim.giray@codersrank.io,alimgiray@gmail.com\"")
 	seeds := flag.String("seeds", "", "The seed is used to find similar emails. Example: \"alimgiray, alimgiray@codersrank.io\"")
+	repoName := flag.String("repo_name", "", "You can overwrite the default repo name. This name will be shown on the profile page.")
 	flag.Parse()
 
 	if repoPath == nil || *repoPath == "" {
@@ -43,14 +44,15 @@ func main() {
 	}
 
 	repoExtractor := extractor.RepoExtractor{
-		RepoPath:        *repoPath,
-		OutputPath:      *outputPath,
-		GitPath:         *gitPath,
-		Headless:        *headless == "true",
-		Obfuscate:       *obfuscate == "true",
-		UserEmails:      emails,
-		Seed:            seed,
-		ShowProgressBar: *headless != "true", // Show progress bar only if running in interactive mode
+		RepoPath:            *repoPath,
+		OutputPath:          *outputPath,
+		GitPath:             *gitPath,
+		Headless:            *headless == "true",
+		Obfuscate:           *obfuscate == "true",
+		UserEmails:          emails,
+		Seed:                seed,
+		ShowProgressBar:     *headless != "true", // Show progress bar only if running in interactive mode
+		OverwrittenRepoName: *repoName,
 	}
 
 	err := repoExtractor.Extract()
