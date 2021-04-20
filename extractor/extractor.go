@@ -601,7 +601,9 @@ func (r *RepoExtractor) export() error {
 	}
 
 	w := bufio.NewWriter(file)
-	r.repo.RepoName = r.OverwrittenRepoName
+	if r.OverwrittenRepoName != "" {
+		r.repo.RepoName = r.OverwrittenRepoName
+	}
 	repoMetaData, err := json.Marshal(r.repo)
 	if err != nil {
 		return err
