@@ -5,18 +5,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/text/language"
+	"golang.org/x/text/search"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
 	"time"
-
-	"golang.org/x/text/language"
-	"golang.org/x/text/search"
 
 	"github.com/codersrank-org/repo_info_extractor/commit"
 	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
@@ -105,11 +103,8 @@ func (r *RepoExtractor) initGit() {
 	}
 
 	gitPath := string(out)
-
-	regexPath, _ := regexp.Compile("\n.*")
-
-	gitPath = regexPath.ReplaceAllString(gitPath, "")
-	gitPath = strings.TrimRight(gitPath, "\r")
+	gitPath = strings.TrimRight(gitPath, "\r\n")
+	gitPath = strings.TrimRight(gitPath, "\n")
 
 	r.GitPath = gitPath
 }
