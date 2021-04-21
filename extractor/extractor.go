@@ -94,15 +94,14 @@ func (r *RepoExtractor) initGit() {
 		return
 	}
 
-	cmd := exec.Command("where", "git")
-	out, err := cmd.CombinedOutput()
+	gitPath, err := exec.LookPath("git")
 	if err != nil {
+		defaultGitPath := "/usr/bin/git"
+		fmt.Printf("Couldn't find git path. Fall back to default (%s). Error: %s.\n", defaultGitPath, err.Error())
 		// Try default git path
-		r.GitPath = "/usr/bin/git"
+		r.GitPath = defaultGitPath
 		return
 	}
-
-	gitPath := string(out)
 	gitPath = strings.TrimRight(gitPath, "\r\n")
 	gitPath = strings.TrimRight(gitPath, "\n")
 
