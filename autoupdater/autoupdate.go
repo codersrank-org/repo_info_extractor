@@ -44,7 +44,7 @@ func NewAutoUpdater(version string) autoUpdater {
 
 // CheckUpdates checks github to see if there is a new version and if there is one, downloads it.
 func (au autoUpdater) CheckUpdates() {
-	fmt.Println("Checking for new versions")
+	fmt.Println("Checking for new versions. Current version: " + au.version)
 	release, err := au.getRelease()
 	if err != nil {
 		fmt.Printf("Couldn't get latest release from Github, skipping update. Error: %s\n", err.Error())
@@ -65,7 +65,7 @@ func (au autoUpdater) CheckUpdates() {
 			os.Exit(0)
 		}
 	} else {
-		fmt.Printf("You already have latest version %s, skipping update\n", au.version)
+		fmt.Printf("You already have latest version, skipping update\n")
 	}
 }
 
