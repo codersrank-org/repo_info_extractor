@@ -27,6 +27,7 @@ func main() {
 	emailString := flag.String("emails", "", "Predefined emails. Example: \"alim.giray@codersrank.io,alimgiray@gmail.com\"")
 	seeds := flag.String("seeds", "", "The seed is used to find similar emails. Example: \"alimgiray, alimgiray@codersrank.io\"")
 	repoName := flag.String("repo_name", "", "You can overwrite the default repo name. This name will be shown on the profile page.")
+	skipLibraries := flag.Bool("skip_libraries", false, "Turns off the library detection in order to reduce the execution time.")
 	flag.Parse()
 
 	if repoPath == nil || *repoPath == "" {
@@ -53,6 +54,7 @@ func main() {
 		Seed:                seed,
 		ShowProgressBar:     *headless != "true", // Show progress bar only if running in interactive mode
 		OverwrittenRepoName: *repoName,
+		SkipLibraries:       *skipLibraries,
 	}
 
 	err := repoExtractor.Extract()

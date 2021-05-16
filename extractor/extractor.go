@@ -26,8 +26,6 @@ import (
 	"github.com/mholt/archiver"
 )
 
-// TODO handle async errors correctly
-
 // RepoExtractor is responsible for all parts of repo extraction process
 // Including cloning the repo, processing the commits and uploading the results
 type RepoExtractor struct {
@@ -37,6 +35,7 @@ type RepoExtractor struct {
 	Headless            bool
 	Obfuscate           bool
 	ShowProgressBar     bool // If it is false there is no progress bar.
+	SkipLibraries       bool // If it is false there is no library detection.
 	UserEmails          []string
 	OverwrittenRepoName string // If set this will be used instead of the
 	Seed                []string
@@ -63,9 +62,11 @@ func (r *RepoExtractor) Extract() error {
 		return err
 	}
 
-	err = r.analyseLibraries()
-	if err != nil {
-		return err
+	if !r.SkipLibraries {
+		err = r.analyseLibraries()
+		if err != nil {
+			return err
+		}
 	}
 
 	if r.Obfuscate {
@@ -638,7 +639,7 @@ func (r *RepoExtractor) upload() error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Go to this link in the browser => %s", url)
+	fmt.Println("Go to this link in the browser =>", url)
 	return nil
 }
 
