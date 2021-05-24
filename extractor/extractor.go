@@ -76,14 +76,6 @@ func (r *RepoExtractor) Extract() error {
 		return err
 	}
 
-	// Only when user running this script locally
-	if !r.Headless {
-		//err = r.upload()
-		//if err != nil {
-		//	return err
-		//}
-	}
-
 	return nil
 }
 
@@ -565,12 +557,11 @@ func (r *RepoExtractor) export() error {
 	os.Remove(repoDataPath)
 	os.Remove(zipPath)
 
-	// Only do this when not using default value
-	if r.OutputPath != "./repo_data_v2" {
-		err := os.MkdirAll(r.OutputPath, 0755)
-		if err != nil {
-			log.Println("Cannot create directory. Error:", err.Error())
-		}
+	// Create directory
+	directories := strings.Split(r.OutputPath, string(os.PathSeparator))
+	err := os.MkdirAll(strings.Join(directories[:len(directories)-1], string(os.PathSeparator)), 0755)
+	if err != nil {
+		log.Println("Cannot create directory. Error:", err.Error())
 	}
 
 	file, err := os.Create(repoDataPath)

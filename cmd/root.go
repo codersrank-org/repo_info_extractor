@@ -48,7 +48,7 @@ func init() {
 	emailString = rootCmd.PersistentFlags().String("emails", "", "Predefined emails. Example: \"alim.giray@codersrank.io,alimgiray@gmail.com\"")
 	seedsString = rootCmd.PersistentFlags().String("seeds", "", "The seed is used to find similar emails. Example: \"alimgiray, alimgiray@codersrank.io\"")
 	RootConfig.GitPath = rootCmd.PersistentFlags().String("git_path", "", "where the Git binary is")
-	RootConfig.OutPutPath = rootCmd.PersistentFlags().String("output_path", "./artifacts", "Where to put output file")
+	RootConfig.OutPutPath = rootCmd.PersistentFlags().String("output_path", "./artifacts", "Where to put output file. Existing artifacts will be overwritten.")
 	RootConfig.Obfuscate = rootCmd.PersistentFlags().Bool("obfuscate", true, "File names and emails won't be hashed. Set it to true for debug purposes.")
 	RootConfig.Headless = rootCmd.PersistentFlags().Bool("headless", false, "Headless mode is used on CodersRank's backend system.")
 }
@@ -82,6 +82,4 @@ func initConfig() {
 
 		*RootConfig.GitPath = gitPath
 	}
-
-	fmt.Println("DEBUG git path", *RootConfig.GitPath)
 }

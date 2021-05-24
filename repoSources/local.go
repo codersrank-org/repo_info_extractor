@@ -35,6 +35,7 @@ func (dp *directoryPath) GetRepos() []*entities.Repository {
 	repo := &entities.Repository{
 		ID:       "",
 		FullName: fullName,
+		Name:     fullName,
 	}
 	return []*entities.Repository{repo}
 }

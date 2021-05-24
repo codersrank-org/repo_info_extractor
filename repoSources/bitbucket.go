@@ -53,8 +53,6 @@ func (p *BitbucketProvider) cloneRepository(url string) (string, error) {
 		return "", fmt.Errorf("couldn't create temp dir. Error: %s", err.Error())
 	}
 
-	fmt.Println("DEBUG clone", p.GitExecutable, url, tmpDir)
-
 	cmd := exec.Command(p.GitExecutable,
 		"clone",
 		url,

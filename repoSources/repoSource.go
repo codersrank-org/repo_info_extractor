@@ -2,9 +2,10 @@ package repoSource
 
 import (
 	"fmt"
+	"io/ioutil"
+
 	"github.com/codersrank-org/repo_info_extractor/entities"
 	"github.com/codersrank-org/repo_info_extractor/extractor"
-	"io/ioutil"
 )
 
 type ExtractConfig struct {
@@ -46,7 +47,6 @@ func ExtractFromSource(source RepoSource, config ExtractConfig) error {
 		if err != nil {
 			fmt.Println("Couldn't clone repository. Error:", err.Error())
 		}
-		fmt.Println("DEBUG3", path)
 
 		repoExtractor := extractor.RepoExtractor{
 			RepoPath:            path,

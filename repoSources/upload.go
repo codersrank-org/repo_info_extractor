@@ -26,19 +26,24 @@ type ArtifactUploader interface {
 }
 
 type artifactUploader struct {
+	// UploadRepoURL the API end pont where the artifacts will be uploaded
 	UploadRepoURL   string
 	UploadResultURL string
 	ProcessURL      string
-	OutputPath      string
+	// OutputPath contains the artifacts that need to be uploaded
+	OutputPath string
 }
 
 // NewArtifactUploader constructor
 func NewArtifactUploader(outputPath string) ArtifactUploader {
 	return &artifactUploader{
-		UploadRepoURL:   "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload",
-		UploadResultURL: "https://grpcgateway.codersrank.io/multi/repo/results",
-		ProcessURL:      "https://profile.codersrank.io/repo?multiToken=",
-		OutputPath:      outputPath,
+		//UploadRepoURL:   "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload",
+		UploadRepoURL: "http://localhost:9900/candidate/privaterepo/Upload",
+		//UploadResultURL: "https://grpcgateway.codersrank.io/multi/repo/results",
+		UploadResultURL: "http://localhost:9900/multi/repo/results",
+		//ProcessURL:      "https://profile.codersrank.io/repo?multiToken=",
+		ProcessURL: "http://localhost:8080/repo?multiToken=",
+		OutputPath: outputPath,
 	}
 }
 
