@@ -46,8 +46,6 @@ type RepoExtractor struct {
 // Extract a single repo in the path
 func (r *RepoExtractor) Extract() error {
 
-	r.initGit()
-
 	err := r.initRepo()
 	if err != nil {
 		fmt.Println("Cannot init repo_info_extractor. Error: ", err.Error())
@@ -80,33 +78,13 @@ func (r *RepoExtractor) Extract() error {
 
 	// Only when user running this script locally
 	if !r.Headless {
-		err = r.upload()
-		if err != nil {
-			return err
-		}
+		//err = r.upload()
+		//if err != nil {
+		//	return err
+		//}
 	}
 
 	return nil
-}
-
-func (r *RepoExtractor) initGit() {
-	// Git path already provided by user
-	if r.GitPath != "" {
-		return
-	}
-
-	gitPath, err := exec.LookPath("git")
-	if err != nil {
-		defaultGitPath := "/usr/bin/git"
-		fmt.Printf("Couldn't find git path. Fall back to default (%s). Error: %s.\n", defaultGitPath, err.Error())
-		// Try default git path
-		r.GitPath = defaultGitPath
-		return
-	}
-	gitPath = strings.TrimRight(gitPath, "\r\n")
-	gitPath = strings.TrimRight(gitPath, "\n")
-
-	r.GitPath = gitPath
 }
 
 // Creates Repo struct
