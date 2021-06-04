@@ -1,6 +1,7 @@
 FROM golang:1.15-alpine
-WORKDIR /go/src/app
+WORKDIR /usr/src/repo_info_extractor
 COPY . .
 RUN apk add make g++
 RUN make build
-ENTRYPOINT /go/src/app/repo_info_extractor_linux
+RUN make install
+ENTRYPOINT /usr/bin/repo_info_extractor
