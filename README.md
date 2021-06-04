@@ -29,7 +29,9 @@ cd repo_info_extractor
 go run . --repo_path ./path_to_repo
 ```
 
-You can find a short video about the usage: https://www.youtube.com/watch?v=9IqgmYl8l2Y
+You can find a short video about the usage
+
+[![How to use repo_info_extractor](https://img.youtube.com/vi/9IqgmYl8l2Y/0.jpg)](https://www.youtube.com/watch?v=9IqgmYl8l2Y)
 
 ### Binary approach (easiest)
 If using this approach, download the binary from [releases](https://github.com/codersrank-org/repo_info_extractor/releases) and run it.
