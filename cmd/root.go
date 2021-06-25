@@ -11,6 +11,7 @@ import (
 
 type rootConfig struct {
 	SkipLibraries *bool
+	SkipUpdate    *bool
 	Seeds         *[]string
 	Emails        *[]string
 	GitPath       *string
@@ -44,7 +45,8 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	RootConfig.SkipLibraries = rootCmd.PersistentFlags().Bool("skip_libraries", false, "Turns off the library detection in order to reduce the execution time.")
+	RootConfig.SkipLibraries = rootCmd.PersistentFlags().Bool("skip_libraries", false, "Turns off the library detection in order to reduce the execution time")
+	RootConfig.SkipUpdate = rootCmd.PersistentFlags().Bool("skip_update", false, "If set the auto-update is skipped")
 	emailString = rootCmd.PersistentFlags().String("emails", "", "Predefined emails. Example: \"alim.giray@codersrank.io,alimgiray@gmail.com\"")
 	seedsString = rootCmd.PersistentFlags().String("seeds", "", "The seed is used to find similar emails. Example: \"alimgiray, alimgiray@codersrank.io\"")
 	RootConfig.GitPath = rootCmd.PersistentFlags().String("git_path", "", "where the Git binary is")

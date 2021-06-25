@@ -37,7 +37,7 @@ type RepoExtractor struct {
 	ShowProgressBar     bool // If it is false there is no progress bar.
 	SkipLibraries       bool // If it is false there is no library detection.
 	UserEmails          []string
-	OverwrittenRepoName string // If set this will be used instead of the
+	OverwrittenRepoName string // If set this will be used instead of the original repo name
 	Seed                []string
 	repo                *repo
 	userCommits         []*commit.Commit // Commits which are belong to user (from selected emails)
@@ -60,11 +60,9 @@ func (r *RepoExtractor) Extract() error {
 		return err
 	}
 
-	if !r.SkipLibraries {
-		err = r.analyseLibraries()
-		if err != nil {
-			return err
-		}
+	err = r.analyseLibraries()
+	if err != nil {
+		return err
 	}
 
 	if r.Obfuscate {
@@ -468,6 +466,35 @@ func (r *RepoExtractor) analyseLibraries() error {
 	return nil
 }
 
+func (r *RepoExtractor) getFileContent(commitHash, filePath string) ([]byte, error) {
+	cmd := exec.Command(r.GitPath,
+		"--no-pager",
+		"show",
+		fmt.Sprintf("%s:%s", commitHash, filePath),
+	)
+	cmd.Dir = r.RepoPath
+	var err error
+	fileContents, err := cmd.CombinedOutput()
+	if err != nil {
+		searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", filePath, commitHash)
+		searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", filePath, commitHash)
+		// Ignore case is needed because on windows error message starts with lowercase letter, in other systems it starts with uppercase letter
+		stringSearcher := search.New(language.English, search.IgnoreCase)
+		// means the file was deleted, skip
+		start, end := stringSearcher.IndexString(string(fileContents), searchString1)
+		if start != -1 && end != -1 {
+			return []byte{}, nil
+		}
+		start, end = stringSearcher.IndexString(string(fileContents), searchString2)
+		if start != -1 && end != -1 {
+			return []byte{}, nil
+		}
+		return nil, err
+	}
+
+	return fileContents, nil
+}
+
 func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results chan<- bool) error {
 	languageAnalyzer := languagedetection.NewLanguageAnalyzer()
 	for commit := range commits {
@@ -475,7 +502,8 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results cha
 		for n, fileChange := range commit.ChangedFiles {
 
 			lang := ""
-			fileContents := make([]byte, 0)
+			var fileContents []byte
+			fileContents = nil
 
 			extension := filepath.Ext(fileChange.Path)
 			if extension == "" {
@@ -484,31 +512,14 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results cha
 			// remove the trailing dot
 			extension = extension[1:]
 
-			cmd := exec.Command(r.GitPath,
-				"--no-pager",
-				"show",
-				fmt.Sprintf("%s:%s", commit.Hash, fileChange.Path),
-			)
-			cmd.Dir = r.RepoPath
-			var err error
-			fileContents, err = cmd.CombinedOutput()
-			if err != nil {
-				searchString1 := fmt.Sprintf("Path '%s' does not exist in '%s'", fileChange.Path, commit.Hash)
-				searchString2 := fmt.Sprintf("Path '%s' exists on disk, but not in '%s'", fileChange.Path, commit.Hash)
-				// Ignore case is needed because on windows error message starts with lowercase letter, in other systems it starts with uppercase letter
-				stringSearcher := search.New(language.English, search.IgnoreCase)
-				// means the file was deleted, skip
-				start, end := stringSearcher.IndexString(string(fileContents), searchString1)
-				if start != -1 && end != -1 {
-					continue
-				}
-				start, end = stringSearcher.IndexString(string(fileContents), searchString2)
-				if start != -1 && end != -1 {
-					continue
-				}
-				return err
-			}
 			if languageAnalyzer.ShouldUseFile(extension) {
+				var err error
+				if fileContents == nil {
+					fileContents, err = r.getFileContent(commit.Hash, fileChange.Path)
+					if err != nil {
+						return err
+					}
+				}
 				lang = languageAnalyzer.DetectLanguageFromFile(fileChange.Path, fileContents)
 			} else {
 				lang = languageAnalyzer.DetectLanguageFromExtension(extension)
@@ -518,21 +529,27 @@ func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results cha
 			if lang == "" {
 				continue
 			}
-
 			commit.ChangedFiles[n].Language = lang
-			analyzer, err := librarydetection.GetAnalyzer(lang)
-			if err != nil {
-				continue
+			if !r.SkipLibraries {
+				analyzer, err := librarydetection.GetAnalyzer(lang)
+				if err != nil {
+					continue
+				}
+				if fileContents == nil {
+					fileContents, err = r.getFileContent(commit.Hash, fileChange.Path)
+					if err != nil {
+						return err
+					}
+				}
+				fileLibraries, err := analyzer.ExtractLibraries(string(fileContents))
+				if err != nil {
+					fmt.Printf("error extracting libraries for %s: %s \n", lang, err.Error())
+				}
+				if libraries[lang] == nil {
+					libraries[lang] = make([]string, 0)
+				}
+				libraries[lang] = append(libraries[lang], fileLibraries...)
 			}
-
-			fileLibraries, err := analyzer.ExtractLibraries(string(fileContents))
-			if err != nil {
-				fmt.Printf("error extracting libraries for %s: %s \n", lang, err.Error())
-			}
-			if libraries[lang] == nil {
-				libraries[lang] = make([]string, 0)
-			}
-			libraries[lang] = append(libraries[lang], fileLibraries...)
 		}
 		commit.Libraries = libraries
 		results <- true
@@ -549,7 +566,7 @@ func (r *RepoExtractor) obfuscate() {
 
 // Writes result to the file
 func (r *RepoExtractor) export() error {
-	fmt.Println("Creating output file")
+	fmt.Println("Creating artifact at: " + r.OutputPath)
 
 	repoDataPath := r.OutputPath + "_v2.json"
 	zipPath := r.OutputPath + "_v2.json.zip"

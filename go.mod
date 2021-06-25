@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.2.8
+	github.com/buger/goterm v1.0.0
 	github.com/cheggaaa/pb/v3 v3.0.8
 	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/golang/snappy v0.0.1 // indirect

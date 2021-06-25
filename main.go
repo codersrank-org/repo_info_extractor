@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/codersrank-org/repo_info_extractor/autoupdater"
 	"github.com/codersrank-org/repo_info_extractor/cmd"
 )
@@ -11,8 +13,19 @@ var (
 
 func main() {
 	cmd.Version = version
-	au := autoupdater.NewAutoUpdater(version)
-	au.CheckUpdates()
+
+	// Auto update
+	skipUpdate := false
+	for _, arg := range os.Args {
+		if arg == "--skip_update" {
+			skipUpdate = true
+			break
+		}
+	}
+	if !skipUpdate {
+		au := autoupdater.NewAutoUpdater(version)
+		au.CheckUpdates()
+	}
 
 	cmd.Execute()
 }

@@ -93,7 +93,7 @@ func (p *BitbucketProvider) GetRepos() []*entities.Repository {
 
 	request, err := http.NewRequest(http.MethodGet, requestURL.String(), nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Couldn't create request. Error: " + err.Error())
 	}
 
 	request.SetBasicAuth(p.Username, p.Password)
@@ -101,16 +101,22 @@ func (p *BitbucketProvider) GetRepos() []*entities.Repository {
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Couldn't make HTTP request to the BitBucket API. Error: " + err.Error())
+	}
+	if response.StatusCode != 200 {
+		log.Fatalf("Couldn't make HTTP request to the BitBucket API. Status: %s (Code: %d)", response.Status, response.StatusCode)
 	}
 
 	defer response.Body.Close()
 	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal("Couldn't read response body. Error: " + err.Error())
+	}
 
 	var bitbucketRepos *bitbucketRepository
 	err = json.Unmarshal(body, &bitbucketRepos)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Couldn't parse JSON. Error: " + err.Error() + "\nJSON content: " + string(body))
 	}
 
 	repos := make([]*entities.Repository, len(bitbucketRepos.Values))

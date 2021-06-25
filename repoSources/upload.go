@@ -1,7 +1,6 @@
 package repoSource
 
 import (
-	"bufio"
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -13,11 +12,10 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
-
-	"github.com/pkg/browser"
 
 	"github.com/codersrank-org/repo_info_extractor/entities"
+	"github.com/codersrank-org/repo_info_extractor/ui"
+	"github.com/pkg/browser"
 )
 
 // ArtifactUploader uploads and merge results with codersrank
@@ -158,33 +156,14 @@ func (c *artifactUploader) uploadResults(results map[string]string) string {
 
 func (c *artifactUploader) processResults(resultToken string) {
 	browserURL := c.ProcessURL + resultToken
-	ok := confirm(fmt.Sprintf("You are being navigated to '%s'. Do you wish to proceed?", browserURL))
+	ok := ui.Confirm(fmt.Sprintf("You are being navigated to '%s'. Do you wish to proceed?", browserURL))
 	if ok {
 		browser.OpenURL(browserURL)
 	} else {
 		fmt.Println("Finished")
 	}
 }
-func confirm(s string) bool {
-	reader := bufio.NewReader(os.Stdin)
 
-	for {
-		fmt.Printf("%s [Y/n]: ", s)
-
-		response, err := reader.ReadString('\n')
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		response = strings.ToLower(strings.TrimSpace(response))
-
-		if response == "y" || response == "yes" {
-			return true
-		} else if response == "n" || response == "no" {
-			return false
-		}
-	}
-}
 func (c *artifactUploader) getSaveResultPath() string {
 	resultPath := c.OutputPath
 	if _, err := os.Stat(resultPath); os.IsNotExist(err) {
