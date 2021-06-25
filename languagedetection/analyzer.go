@@ -97,6 +97,7 @@ var fileExtensionMap = map[string][]string{
 	"Apex":             {"cls"},
 	"Assembly":         {"asm"},
 	"Batchfile":        {"bat", "cmd", "btm"},
+	"Blazor":           {"razor"},
 	"C":                {"c", "h"},
 	"C++":              {"cpp", "cxx", "hpp", "cc", "hh", "hxx"},
 	"C#":               {"cs"},

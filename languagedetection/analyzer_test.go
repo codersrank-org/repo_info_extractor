@@ -12,10 +12,12 @@ var _ = Describe("Analyzer", func() {
 			// Act
 			l1 := a.Detect("/home/something/index.php", []byte{})
 			l2 := a.Detect("/home/something/index.Php", []byte{})
+			l3 := a.Detect("/home/something/index.razor", []byte{})
 
 			// Assert
 			Expect(l1).To(Equal("PHP"))
 			Expect(l2).To(Equal("PHP"))
+			Expect(l3).To(Equal("Blazor"))
 		})
 	})
 
