@@ -3,7 +3,7 @@ package languages
 import (
 	"regexp"
 
-	"github.com/codersrank-org/repo_info_extractor/librarydetection"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection"
 )
 
 // NewSwiftAnalyzer constructor

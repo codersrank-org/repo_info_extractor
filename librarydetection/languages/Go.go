@@ -1,7 +1,7 @@
 package languages
 
 import (
-	"github.com/codersrank-org/repo_info_extractor/librarydetection"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection"
 	"regexp"
 )
 
@@ -19,7 +19,6 @@ func (a *goAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-
 
 	// Find libraries in a multi line import
 	regex2, err := regexp.Compile(`"(.*?)"`)
@@ -40,7 +39,6 @@ func (a *goAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 			}
 		}
 	}
-
 
 	// regex for imports like this: import _ "github.com/user/repo/..."
 	regex3, err := regexp.Compile(`(?i)import[\t ]*(?:[_.].*)?[\t ]?\(?"(.+)"\)?;?\s`)

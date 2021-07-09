@@ -3,7 +3,7 @@ package languages
 import (
 	"regexp"
 
-	"github.com/codersrank-org/repo_info_extractor/librarydetection"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection"
 )
 
 // NewCAnalyzer constructor
@@ -11,7 +11,7 @@ func NewCSharpAnalyzer() librarydetection.Analyzer {
 	return &cSparpAnalyzer{}
 }
 
-type cSparpAnalyzer struct {}
+type cSparpAnalyzer struct{}
 
 func (a *cSparpAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	regex1, err := regexp.Compile(`(?i)using\s?([/a-zA-z0-9.]+);`)

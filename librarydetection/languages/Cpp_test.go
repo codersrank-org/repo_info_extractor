@@ -5,7 +5,7 @@ import (
 
 	. "github.com/onsi/ginkgo"
 
-	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection/languages"
 )
 
 var _ = Describe("CLibraryDetection", func() {

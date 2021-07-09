@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"github.com/codersrank-org/repo_info_extractor/extractor"
+	"github.com/codersrank-org/repo_info_extractor/v2/extractor"
 )
 
 var _ = Describe("GetRepoName", func() {

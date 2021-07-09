@@ -1,7 +1,7 @@
 package languages
 
 import (
-	"github.com/codersrank-org/repo_info_extractor/librarydetection"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection"
 	"golang.org/x/net/html"
 	"strings"
 )

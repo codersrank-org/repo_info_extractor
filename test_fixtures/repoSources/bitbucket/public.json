@@ -1,0 +1,1228 @@
+{
+  "pagelen": 10,
+  "values": [
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{3f630668-75f1-4903-ae5e-8ea37437e09e}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/opensymphony/xwork.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:opensymphony/xwork.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/opensymphony/xwork"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B3f630668-75f1-4903-ae5e-8ea37437e09e%7D?ts=java"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/xwork/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "opensymphony/xwork",
+      "name": "xwork",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/opensymphony/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/opensymphony/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/opensymphony/projects/PROJ/avatar/32?ts=1543460518"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{57fac509-0df2-47ce-ad8e-27be013523fa}"
+      },
+      "language": "java",
+      "created_on": "2011-06-06T03:40:09.505792+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "opensymphony",
+        "type": "workspace",
+        "name": "opensymphony",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/opensymphony"
+          },
+          "html": {
+            "href": "https://bitbucket.org/opensymphony/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/opensymphony/avatar/?ts=1543460518"
+          }
+        },
+        "uuid": "{cedfd0d1-899f-49de-acf7-a2fa8e924b6f}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "opensymphony",
+        "uuid": "{cedfd0d1-899f-49de-acf7-a2fa8e924b6f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7Bcedfd0d1-899f-49de-acf7-a2fa8e924b6f%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Bcedfd0d1-899f-49de-acf7-a2fa8e924b6f%7D/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/opensymphony/avatar/"
+          }
+        },
+        "nickname": "opensymphony",
+        "type": "user",
+        "account_id": null
+      },
+      "updated_on": "2014-11-16T23:19:16.674082+00:00",
+      "size": 22877949,
+      "type": "repository",
+      "slug": "xwork",
+      "is_private": false,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{ee2b6927-24b9-4b8d-a22a-e68d24e49dec}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/opensymphony/webwork.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:opensymphony/webwork.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/opensymphony/webwork"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7Bee2b6927-24b9-4b8d-a22a-e68d24e49dec%7D?ts=java"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/webwork/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "opensymphony/webwork",
+      "name": "webwork",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/opensymphony/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/opensymphony/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/opensymphony/projects/PROJ/avatar/32?ts=1543460518"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{57fac509-0df2-47ce-ad8e-27be013523fa}"
+      },
+      "language": "java",
+      "created_on": "2011-06-07T02:25:57.515877+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "opensymphony",
+        "type": "workspace",
+        "name": "opensymphony",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/opensymphony"
+          },
+          "html": {
+            "href": "https://bitbucket.org/opensymphony/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/opensymphony/avatar/?ts=1543460518"
+          }
+        },
+        "uuid": "{cedfd0d1-899f-49de-acf7-a2fa8e924b6f}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "opensymphony",
+        "uuid": "{cedfd0d1-899f-49de-acf7-a2fa8e924b6f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7Bcedfd0d1-899f-49de-acf7-a2fa8e924b6f%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Bcedfd0d1-899f-49de-acf7-a2fa8e924b6f%7D/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/opensymphony/avatar/"
+          }
+        },
+        "nickname": "opensymphony",
+        "type": "user",
+        "account_id": null
+      },
+      "updated_on": "2013-08-16T05:17:12.385393+00:00",
+      "size": 106935051,
+      "type": "repository",
+      "slug": "webwork",
+      "is_private": false,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{1d497238-48c8-4016-8c0d-15c8a12fa9ed}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/opensymphony/propertyset.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:opensymphony/propertyset.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/opensymphony/propertyset"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B1d497238-48c8-4016-8c0d-15c8a12fa9ed%7D?ts=java"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/propertyset/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "opensymphony/propertyset",
+      "name": "propertyset",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/opensymphony/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/opensymphony/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/opensymphony/projects/PROJ/avatar/32?ts=1543460518"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{57fac509-0df2-47ce-ad8e-27be013523fa}"
+      },
+      "language": "java",
+      "created_on": "2011-06-07T04:13:28.097554+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "opensymphony",
+        "type": "workspace",
+        "name": "opensymphony",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/opensymphony"
+          },
+          "html": {
+            "href": "https://bitbucket.org/opensymphony/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/opensymphony/avatar/?ts=1543460518"
+          }
+        },
+        "uuid": "{cedfd0d1-899f-49de-acf7-a2fa8e924b6f}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "opensymphony",
+        "uuid": "{cedfd0d1-899f-49de-acf7-a2fa8e924b6f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7Bcedfd0d1-899f-49de-acf7-a2fa8e924b6f%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Bcedfd0d1-899f-49de-acf7-a2fa8e924b6f%7D/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/opensymphony/avatar/"
+          }
+        },
+        "nickname": "opensymphony",
+        "type": "user",
+        "account_id": null
+      },
+      "updated_on": "2017-02-05T20:25:16.398281+00:00",
+      "size": 25747672,
+      "type": "repository",
+      "slug": "propertyset",
+      "is_private": false,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{5aa7a0c5-73ae-4d2c-9c09-276866c16059}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/opensymphony/quartz.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:opensymphony/quartz.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/opensymphony/quartz"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B5aa7a0c5-73ae-4d2c-9c09-276866c16059%7D?ts=java"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/opensymphony/quartz/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "opensymphony/quartz",
+      "name": "quartz",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/opensymphony/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/opensymphony/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/opensymphony/projects/PROJ/avatar/32?ts=1543460518"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{57fac509-0df2-47ce-ad8e-27be013523fa}"
+      },
+      "language": "java",
+      "created_on": "2011-06-07T04:15:47.909191+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "opensymphony",
+        "type": "workspace",
+        "name": "opensymphony",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/opensymphony"
+          },
+          "html": {
+            "href": "https://bitbucket.org/opensymphony/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/opensymphony/avatar/?ts=1543460518"
+          }
+        },
+        "uuid": "{cedfd0d1-899f-49de-acf7-a2fa8e924b6f}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "opensymphony",
+        "uuid": "{cedfd0d1-899f-49de-acf7-a2fa8e924b6f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7Bcedfd0d1-899f-49de-acf7-a2fa8e924b6f%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Bcedfd0d1-899f-49de-acf7-a2fa8e924b6f%7D/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/opensymphony/avatar/"
+          }
+        },
+        "nickname": "opensymphony",
+        "type": "user",
+        "account_id": null
+      },
+      "updated_on": "2012-07-06T23:05:13.437602+00:00",
+      "size": 12845056,
+      "type": "repository",
+      "slug": "quartz",
+      "is_private": false,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{7e35bde1-67e7-4d8f-ae29-05dd10424072}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/jwalton/opup.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:jwalton/opup.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/jwalton/opup"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B7e35bde1-67e7-4d8f-ae29-05dd10424072%7D?ts=java"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/opup/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "jwalton/opup",
+      "name": "opup",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/jwalton/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/jwalton/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/jwalton/projects/PROJ/avatar/32?ts=1543459298"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{6eed76e0-e831-48d0-83ac-cbbd8ee04173}"
+      },
+      "language": "java",
+      "created_on": "2011-06-16T09:16:27.957216+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "jwalton",
+        "type": "workspace",
+        "name": "Joseph Walton",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/jwalton"
+          },
+          "html": {
+            "href": "https://bitbucket.org/jwalton/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/jwalton/avatar/?ts=1543459298"
+          }
+        },
+        "uuid": "{c040300f-f69e-4a65-87a6-5a8f3ef1bbf1}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "Joseph Walton",
+        "uuid": "{c040300f-f69e-4a65-87a6-5a8f3ef1bbf1}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7Bc040300f-f69e-4a65-87a6-5a8f3ef1bbf1%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Bc040300f-f69e-4a65-87a6-5a8f3ef1bbf1%7D/"
+          },
+          "avatar": {
+            "href": "https://secure.gravatar.com/avatar/cbed2f56195ed90bdebd4feec31ac054?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJW-1.png"
+          }
+        },
+        "nickname": "jwalton",
+        "type": "user",
+        "account_id": "557058:8679ff30-e82d-47b5-90f0-94127260782a"
+      },
+      "updated_on": "2018-02-06T04:36:52.369420+00:00",
+      "size": 1529686,
+      "type": "repository",
+      "slug": "opup",
+      "is_private": false,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{9a355a32-dad9-4efd-9828-ccce80dd3109}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/jwalton/git-scripts.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:jwalton/git-scripts.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/jwalton/git-scripts"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B9a355a32-dad9-4efd-9828-ccce80dd3109%7D?ts=default"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/jwalton/git-scripts/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "jwalton/git-scripts",
+      "name": "git-scripts",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/jwalton/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/jwalton/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/jwalton/projects/PROJ/avatar/32?ts=1543459298"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{6eed76e0-e831-48d0-83ac-cbbd8ee04173}"
+      },
+      "language": "shell",
+      "created_on": "2011-07-08T08:59:53.298617+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "jwalton",
+        "type": "workspace",
+        "name": "Joseph Walton",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/jwalton"
+          },
+          "html": {
+            "href": "https://bitbucket.org/jwalton/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/jwalton/avatar/?ts=1543459298"
+          }
+        },
+        "uuid": "{c040300f-f69e-4a65-87a6-5a8f3ef1bbf1}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "Joseph Walton",
+        "uuid": "{c040300f-f69e-4a65-87a6-5a8f3ef1bbf1}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7Bc040300f-f69e-4a65-87a6-5a8f3ef1bbf1%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Bc040300f-f69e-4a65-87a6-5a8f3ef1bbf1%7D/"
+          },
+          "avatar": {
+            "href": "https://secure.gravatar.com/avatar/cbed2f56195ed90bdebd4feec31ac054?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJW-1.png"
+          }
+        },
+        "nickname": "jwalton",
+        "type": "user",
+        "account_id": "557058:8679ff30-e82d-47b5-90f0-94127260782a"
+      },
+      "updated_on": "2017-03-19T16:09:30.336053+00:00",
+      "size": 394778,
+      "type": "repository",
+      "slug": "git-scripts",
+      "is_private": false,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{08725752-2ec2-41f8-ba6f-a7e4a9a55d07}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/evzijst/git-tests.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:evzijst/git-tests.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/evzijst/git-tests"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B08725752-2ec2-41f8-ba6f-a7e4a9a55d07%7D?ts=default"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "evzijst/git-tests",
+      "name": "git-tests",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/evzijst/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/evzijst/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/evzijst/projects/PROJ/avatar/32?ts=1543458574"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{920e7a86-80d7-4310-828e-2ef2a486ba92}"
+      },
+      "language": "",
+      "created_on": "2011-08-10T00:42:35.509559+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "evzijst",
+        "type": "workspace",
+        "name": "Erik van Zijst",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/evzijst"
+          },
+          "html": {
+            "href": "https://bitbucket.org/evzijst/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/evzijst/avatar/?ts=1543458574"
+          }
+        },
+        "uuid": "{a288a0ab-e13b-43f0-a689-c4ef0a249875}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "Erik van Zijst",
+        "uuid": "{a288a0ab-e13b-43f0-a689-c4ef0a249875}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7Ba288a0ab-e13b-43f0-a689-c4ef0a249875%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Ba288a0ab-e13b-43f0-a689-c4ef0a249875%7D/"
+          },
+          "avatar": {
+            "href": "https://secure.gravatar.com/avatar/f6bcbb4e3f665e74455bd8c0b4b3afba?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FEZ-4.png"
+          }
+        },
+        "nickname": "evzijst",
+        "type": "user",
+        "account_id": "557058:c0b72ad0-1cb5-4018-9cdc-0cde8492c443"
+      },
+      "updated_on": "2015-10-15T17:35:06.978690+00:00",
+      "size": 324796,
+      "type": "repository",
+      "slug": "git-tests",
+      "is_private": false,
+      "description": "Git repo used for testing with pull requests and difficult merge scenarios."
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{3cfaf49c-d6e8-4d09-80cc-a4ec9feebace}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/brodie/libgit2.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:brodie/libgit2.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/brodie/libgit2"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B3cfaf49c-d6e8-4d09-80cc-a4ec9feebace%7D?ts=c"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/brodie/libgit2/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "brodie/libgit2",
+      "name": "libgit2",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/brodie/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/brodie/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/brodie/projects/PROJ/avatar/32?ts=1543457344"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{635ae7e0-a73c-4de5-884b-29fcd7f2b7b9}"
+      },
+      "language": "c",
+      "created_on": "2011-08-10T03:48:05.820933+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "brodie",
+        "type": "workspace",
+        "name": "Brodie Rao",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/brodie"
+          },
+          "html": {
+            "href": "https://bitbucket.org/brodie/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/brodie/avatar/?ts=1543457344"
+          }
+        },
+        "uuid": "{9484702e-c663-4afd-aefb-c93a8cd31c28}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "Brodie Rao",
+        "uuid": "{9484702e-c663-4afd-aefb-c93a8cd31c28}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7B9484702e-c663-4afd-aefb-c93a8cd31c28%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7B9484702e-c663-4afd-aefb-c93a8cd31c28%7D/"
+          },
+          "avatar": {
+            "href": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/557058:3aae1e05-702a-41e5-81c8-f36f29afb6ca/613070db-28b0-421f-8dba-ae8a87e2a5c7/128"
+          }
+        },
+        "nickname": "brodie",
+        "type": "user",
+        "account_id": "557058:3aae1e05-702a-41e5-81c8-f36f29afb6ca"
+      },
+      "updated_on": "2013-07-17T23:08:05.997544+00:00",
+      "size": 4520824,
+      "type": "repository",
+      "slug": "libgit2",
+      "is_private": false,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": false,
+      "uuid": "{e2c4ca61-b444-4af5-892a-da8afa64671d}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/evzijst/git.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:evzijst/git.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/evzijst/git"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7Be2c4ca61-b444-4af5-892a-da8afa64671d%7D?ts=default"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/downloads"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/evzijst/git/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "evzijst/git",
+      "name": "git",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/evzijst/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/evzijst/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/evzijst/projects/PROJ/avatar/32?ts=1543458574"
+          }
+        },
+        "type": "project",
+        "name": "Untitled project",
+        "key": "PROJ",
+        "uuid": "{920e7a86-80d7-4310-828e-2ef2a486ba92}"
+      },
+      "language": "",
+      "created_on": "2011-08-15T05:19:11.022316+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "evzijst",
+        "type": "workspace",
+        "name": "Erik van Zijst",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/evzijst"
+          },
+          "html": {
+            "href": "https://bitbucket.org/evzijst/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/evzijst/avatar/?ts=1543458574"
+          }
+        },
+        "uuid": "{a288a0ab-e13b-43f0-a689-c4ef0a249875}"
+      },
+      "has_issues": false,
+      "owner": {
+        "display_name": "Erik van Zijst",
+        "uuid": "{a288a0ab-e13b-43f0-a689-c4ef0a249875}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/users/%7Ba288a0ab-e13b-43f0-a689-c4ef0a249875%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Ba288a0ab-e13b-43f0-a689-c4ef0a249875%7D/"
+          },
+          "avatar": {
+            "href": "https://secure.gravatar.com/avatar/f6bcbb4e3f665e74455bd8c0b4b3afba?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FEZ-4.png"
+          }
+        },
+        "nickname": "evzijst",
+        "type": "user",
+        "account_id": "557058:c0b72ad0-1cb5-4018-9cdc-0cde8492c443"
+      },
+      "updated_on": "2013-10-10T23:43:15.183665+00:00",
+      "size": 36467762,
+      "type": "repository",
+      "slug": "git",
+      "is_private": false,
+      "description": ""
+    },
+    {
+      "scm": "git",
+      "website": "",
+      "has_wiki": true,
+      "uuid": "{e1ff0acd-5fe0-4722-8d6f-0d9e7bb69436}",
+      "links": {
+        "watchers": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/watchers"
+        },
+        "branches": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/refs/branches"
+        },
+        "tags": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/refs/tags"
+        },
+        "commits": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/commits"
+        },
+        "clone": [
+          {
+            "href": "https://bitbucket.org/atlassian_tutorial/streams-jira-delete-issue-plugin.git",
+            "name": "https"
+          },
+          {
+            "href": "git@bitbucket.org:atlassian_tutorial/streams-jira-delete-issue-plugin.git",
+            "name": "ssh"
+          }
+        ],
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin"
+        },
+        "source": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/src"
+        },
+        "html": {
+          "href": "https://bitbucket.org/atlassian_tutorial/streams-jira-delete-issue-plugin"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7Be1ff0acd-5fe0-4722-8d6f-0d9e7bb69436%7D?ts=java"
+        },
+        "hooks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/hooks"
+        },
+        "forks": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/forks"
+        },
+        "downloads": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/downloads"
+        },
+        "issues": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/issues"
+        },
+        "pullrequests": {
+          "href": "https://api.bitbucket.org/2.0/repositories/atlassian_tutorial/streams-jira-delete-issue-plugin/pullrequests"
+        }
+      },
+      "fork_policy": "allow_forks",
+      "full_name": "atlassian_tutorial/streams-jira-delete-issue-plugin",
+      "name": "streams-jira-delete-issue-plugin",
+      "project": {
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/atlassian_tutorial/projects/PROJ"
+          },
+          "html": {
+            "href": "https://bitbucket.org/atlassian_tutorial/workspace/projects/PROJ"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/user/atlassian_tutorial/projects/PROJ/avatar/32?ts=1568941536"
+          }
+        },
+        "type": "project",
+        "name": "Tutorials",
+        "key": "PROJ",
+        "uuid": "{1605e801-929d-4a5a-8653-835b5778c315}"
+      },
+      "language": "java",
+      "created_on": "2011-08-18T00:17:00.862842+00:00",
+      "mainbranch": {
+        "type": "branch",
+        "name": "master"
+      },
+      "workspace": {
+        "slug": "atlassian_tutorial",
+        "type": "workspace",
+        "name": "Atlassian Tutorials",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/workspaces/atlassian_tutorial"
+          },
+          "html": {
+            "href": "https://bitbucket.org/atlassian_tutorial/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/workspaces/atlassian_tutorial/avatar/?ts=1543462696"
+          }
+        },
+        "uuid": "{38d7ea9c-d213-4366-bd21-3417324c520f}"
+      },
+      "has_issues": true,
+      "owner": {
+        "username": "atlassian_tutorial",
+        "display_name": "Atlassian Tutorials",
+        "type": "team",
+        "uuid": "{38d7ea9c-d213-4366-bd21-3417324c520f}",
+        "links": {
+          "self": {
+            "href": "https://api.bitbucket.org/2.0/teams/%7B38d7ea9c-d213-4366-bd21-3417324c520f%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7B38d7ea9c-d213-4366-bd21-3417324c520f%7D/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/atlassian_tutorial/avatar/"
+          }
+        }
+      },
+      "updated_on": "2013-06-12T22:42:52.654728+00:00",
+      "size": 37629,
+      "type": "repository",
+      "slug": "streams-jira-delete-issue-plugin",
+      "is_private": false,
+      "description": ""
+    }
+  ],
+  "next": "https://api.bitbucket.org/2.0/repositories?after=2011-09-03T12%3A33%3A16.028393%2B00%3A00"
+}

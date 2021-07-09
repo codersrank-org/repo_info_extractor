@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"strings"
 
-	"github.com/codersrank-org/repo_info_extractor/commit"
+	"github.com/codersrank-org/repo_info_extractor/v2/commit"
 )
 
 // Obfuscate private info, like filename, username and emails

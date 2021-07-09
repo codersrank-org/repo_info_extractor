@@ -2,6 +2,7 @@ package languagedetection
 
 import (
 	"path/filepath"
+	"strings"
 
 	"github.com/src-d/enry/v2"
 )
@@ -18,9 +19,38 @@ func NewLanguageAnalyzer() *LanguageAnalyzer {
 	}
 }
 
+// Detect returns with the detected language
+// If no language could be detected it will return with an empty string.
+// The filePath is the path to the file.
+// For some file types it reads the content of the file.
+func (l *LanguageAnalyzer) Detect(filePath string, fileContent []byte) string {
+	extension := filepath.Ext(filePath)
+	if extension == "" {
+		fileName := filepath.Base(filePath)
+
+		if fileName == "Dockerfile" {
+			return "Dockerfile"
+		}
+
+		if fileName == "Makefile" {
+			return "Makefile"
+		}
+
+		return ""
+	}
+	// remove the trailing dot
+	extension = extension[1:]
+	if l.ShouldUseFile(extension) {
+		return l.DetectLanguageFromFile(filePath, fileContent)
+	} else {
+		return l.DetectLanguageFromExtension(extension)
+	}
+}
+
 // DetectLanguageFromExtension returns programming language based on files extension
 // Works for most cases, but for some cases we have to use DetectLanguageFromFile
 func (l *LanguageAnalyzer) DetectLanguageFromExtension(extension string) string {
+	extension = strings.ToLower(extension)
 	if val, ok := l.FileExtensionMap[extension]; ok {
 		return val
 	}
@@ -67,6 +97,7 @@ var fileExtensionMap = map[string][]string{
 	"Apex":             {"cls"},
 	"Assembly":         {"asm"},
 	"Batchfile":        {"bat", "cmd", "btm"},
+	"Blazor":           {"razor"},
 	"C":                {"c", "h"},
 	"C++":              {"cpp", "cxx", "hpp", "cc", "hh", "hxx"},
 	"C#":               {"cs"},

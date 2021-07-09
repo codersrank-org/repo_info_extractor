@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	"io/ioutil"
 
-	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection/languages"
 )
 
 var _ = Describe("GoLibraryDetection", func() {
