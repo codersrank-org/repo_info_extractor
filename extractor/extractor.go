@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/text/language"
-	"golang.org/x/text/search"
 	"log"
 	"os"
 	"os/exec"
@@ -15,6 +13,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/net/context"
+	"golang.org/x/text/language"
+	"golang.org/x/text/search"
 
 	"github.com/codersrank-org/repo_info_extractor/v2/commit"
 	"github.com/codersrank-org/repo_info_extractor/v2/emailsimilarity"
@@ -37,7 +39,8 @@ type RepoExtractor struct {
 	ShowProgressBar     bool // If it is false there is no progress bar.
 	SkipLibraries       bool // If it is false there is no library detection.
 	UserEmails          []string
-	OverwrittenRepoName string // If set this will be used instead of the original repo name
+	OverwrittenRepoName string        // If set this will be used instead of the original repo name
+	TimeLimit           time.Duration // If set the extraction will be stopped after the given time limit and the partial result will be uploaded
 	Seed                []string
 	repo                *repo
 	userCommits         []*commit.Commit // Commits which are belong to user (from selected emails)
@@ -45,6 +48,15 @@ type RepoExtractor struct {
 
 // Extract a single repo in the path
 func (r *RepoExtractor) Extract() error {
+	var ctx context.Context
+	var cancel context.CancelFunc
+
+	if r.TimeLimit.Seconds() != 0.0 {
+		ctx, cancel = context.WithTimeout(context.Background(), r.TimeLimit)
+		defer cancel()
+	} else {
+		ctx = context.Background()
+	}
 
 	err := r.initRepo()
 	if err != nil {
@@ -55,12 +67,12 @@ func (r *RepoExtractor) Extract() error {
 	// For library detection
 	r.initAnalyzers()
 
-	err = r.analyseCommits()
+	err = r.analyseCommits(ctx)
 	if err != nil {
 		return err
 	}
 
-	err = r.analyseLibraries()
+	err = r.analyseLibraries(ctx)
 	if err != nil {
 		return err
 	}
@@ -159,12 +171,12 @@ func (r *RepoExtractor) initAnalyzers() {
 }
 
 // Creates commits
-func (r *RepoExtractor) analyseCommits() error {
+func (r *RepoExtractor) analyseCommits(ctx context.Context) error {
 	fmt.Println("Analysing commits")
 
 	var commits []*commit.Commit
+	commits, err := r.getCommits(ctx)
 	userCommits := make([]*commit.Commit, 0, len(commits))
-	commits, err := r.getCommits()
 	if len(commits) == 0 {
 		return nil
 	}
@@ -210,7 +222,7 @@ func (r *RepoExtractor) analyseCommits() error {
 	return nil
 }
 
-func (r *RepoExtractor) getCommits() ([]*commit.Commit, error) {
+func (r *RepoExtractor) getCommits(ctx context.Context) ([]*commit.Commit, error) {
 	jobs := make(chan *req)
 	results := make(chan []*commit.Commit)
 	noMoreChan := make(chan bool)
@@ -262,6 +274,10 @@ func (r *RepoExtractor) getCommits() ([]*commit.Commit, error) {
 					close(jobs)
 					return
 				}
+			case <-ctx.Done():
+				fmt.Println("Time limit exceeded. Couldn't get all the commits.")
+				close(jobs)
+				return
 			}
 		}
 	}()
@@ -439,14 +455,14 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 }
 
 // TODO This is not ready yet (can't find libraries based on language -> look at libraryWorker)
-func (r *RepoExtractor) analyseLibraries() error {
+func (r *RepoExtractor) analyseLibraries(ctx context.Context) error {
 	fmt.Println("Analysing libraries")
 
 	jobs := make(chan *commit.Commit, len(r.userCommits))
 	results := make(chan bool, len(r.userCommits))
 	// Analyse libraries for every commit
 	for w := 1; w <= runtime.NumCPU(); w++ {
-		go r.libraryWorker(jobs, results)
+		go r.libraryWorker(ctx, jobs, results)
 	}
 	for _, v := range r.userCommits {
 		jobs <- v
@@ -495,11 +511,23 @@ func (r *RepoExtractor) getFileContent(commitHash, filePath string) ([]byte, err
 	return fileContents, nil
 }
 
-func (r *RepoExtractor) libraryWorker(commits <-chan *commit.Commit, results chan<- bool) error {
+func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commit.Commit, results chan<- bool) error {
 	languageAnalyzer := languagedetection.NewLanguageAnalyzer()
+	hasTimeout := false
 	for commit := range commits {
 		libraries := map[string][]string{}
 		for n, fileChange := range commit.ChangedFiles {
+			select {
+			case <-ctx.Done():
+				if !hasTimeout {
+					hasTimeout = true
+					fmt.Println("Time limit exceeded. Couldn't analyze all the commits.")
+				}
+				commit.Libraries = libraries
+				results <- true
+				continue
+			default:
+			}
 
 			lang := ""
 			var fileContents []byte
