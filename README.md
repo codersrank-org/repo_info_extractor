@@ -28,8 +28,6 @@ cd repo_info_extractor
 go run . local --repo_path ./path/to/repo
 ```
 
-You can find a short video about the usage
-
 ### Binary approach (easiest)
 If using this approach, download the binary from [releases](https://github.com/codersrank-org/repo_info_extractor/releases) and run it.
 
@@ -38,6 +36,8 @@ wget https://github.com/codersrank-org/repo_info_extractor/releases/download/vx.
 chmod +x repo_info_extractor_osx                                                                            # in case of Linux, OSX first make it executable
 ./repo_info_extractor_osx --repo_path ./path_to_repo
 ```
+You can find a short video about the usage
+
 [![How to use repo_info_extractor](https://img.youtube.com/vi/9IqgmYl8l2Y/0.jpg)](https://www.youtube.com/watch?v=9IqgmYl8l2Y)
 
 ### Available commands
