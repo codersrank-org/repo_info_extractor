@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/codersrank-org/repo_info_extractor/librarydetection"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection"
 )
 
 // NewCAnalyzer constructor
@@ -12,9 +12,9 @@ func NewPHPAnalyzer() librarydetection.Analyzer {
 	return &phpAnalyzer{}
 }
 
-type phpAnalyzer struct {}
+type phpAnalyzer struct{}
 
-func (a *phpAnalyzer) ExtractLibraries(contents string) ([]string , error){
+func (a *phpAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	// matches
 	// require('lib1');
 	// require 'lib2';

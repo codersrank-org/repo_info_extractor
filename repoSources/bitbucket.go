@@ -10,7 +10,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/codersrank-org/repo_info_extractor/entities"
+	"github.com/codersrank-org/repo_info_extractor/v2/entities"
 	"github.com/pkg/errors"
 )
 

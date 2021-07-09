@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/codersrank-org/repo_info_extractor/autoupdater"
-	"github.com/codersrank-org/repo_info_extractor/cmd"
+	"github.com/codersrank-org/repo_info_extractor/v2/autoupdater"
+	"github.com/codersrank-org/repo_info_extractor/v2/cmd"
 )
 
 var (

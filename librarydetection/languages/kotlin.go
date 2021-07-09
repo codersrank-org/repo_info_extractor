@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/codersrank-org/repo_info_extractor/librarydetection"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection"
 )
 
 // NewCAnalyzer constructor
@@ -12,7 +12,7 @@ func NewKotlinAnalyzer() librarydetection.Analyzer {
 	return &kotlinAnalyzer{}
 }
 
-type kotlinAnalyzer struct {}
+type kotlinAnalyzer struct{}
 
 func (a *kotlinAnalyzer) ExtractLibraries(contents string) ([]string, error) {
 	// regex to find imports like org.example (exclude standard java kotlin libraries)

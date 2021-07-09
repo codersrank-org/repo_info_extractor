@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	repoSource "github.com/codersrank-org/repo_info_extractor/repoSources"
+	repoSource "github.com/codersrank-org/repo_info_extractor/v2/repoSources"
 	"github.com/spf13/cobra"
 )
 

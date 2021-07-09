@@ -13,8 +13,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/codersrank-org/repo_info_extractor/entities"
-	"github.com/codersrank-org/repo_info_extractor/ui"
+	"github.com/codersrank-org/repo_info_extractor/v2/entities"
+	"github.com/codersrank-org/repo_info_extractor/v2/ui"
 	"github.com/pkg/browser"
 )
 
@@ -35,12 +35,12 @@ type artifactUploader struct {
 // NewArtifactUploader constructor
 func NewArtifactUploader(outputPath string) ArtifactUploader {
 	return &artifactUploader{
-		//UploadRepoURL:   "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload",
-		UploadRepoURL: "http://localhost:9900/candidate/privaterepo/Upload",
-		//UploadResultURL: "https://grpcgateway.codersrank.io/multi/repo/results",
-		UploadResultURL: "http://localhost:9900/multi/repo/results",
-		//ProcessURL:      "https://profile.codersrank.io/repo?multiToken=",
-		ProcessURL: "http://localhost:8080/repo?multiToken=",
+		UploadRepoURL: "https://grpcgateway.codersrank.io/candidate/privaterepo/Upload",
+		//UploadRepoURL: "http://localhost:9900/candidate/privaterepo/Upload",
+		UploadResultURL: "https://grpcgateway.codersrank.io/multi/repo/results",
+		//UploadResultURL: "http://localhost:9900/multi/repo/results",
+		ProcessURL: "https://profile.codersrank.io/repo?multiToken=",
+		//ProcessURL: "http://localhost:8080/repo?multiToken=",
 		OutputPath: outputPath,
 	}
 }

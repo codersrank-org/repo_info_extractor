@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/codersrank-org/repo_info_extractor/entities"
-	"github.com/codersrank-org/repo_info_extractor/extractor"
+	"github.com/codersrank-org/repo_info_extractor/v2/entities"
+	"github.com/codersrank-org/repo_info_extractor/v2/extractor"
 )
 
 type ExtractConfig struct {

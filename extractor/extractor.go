@@ -16,13 +16,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/codersrank-org/repo_info_extractor/commit"
-	"github.com/codersrank-org/repo_info_extractor/emailsimilarity"
-	"github.com/codersrank-org/repo_info_extractor/languagedetection"
-	"github.com/codersrank-org/repo_info_extractor/librarydetection"
-	"github.com/codersrank-org/repo_info_extractor/librarydetection/languages"
-	"github.com/codersrank-org/repo_info_extractor/obfuscation"
-	"github.com/codersrank-org/repo_info_extractor/ui"
+	"github.com/codersrank-org/repo_info_extractor/v2/commit"
+	"github.com/codersrank-org/repo_info_extractor/v2/emailsimilarity"
+	"github.com/codersrank-org/repo_info_extractor/v2/languagedetection"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection"
+	"github.com/codersrank-org/repo_info_extractor/v2/librarydetection/languages"
+	"github.com/codersrank-org/repo_info_extractor/v2/obfuscation"
+	"github.com/codersrank-org/repo_info_extractor/v2/ui"
 	"github.com/mholt/archiver"
 )
 
