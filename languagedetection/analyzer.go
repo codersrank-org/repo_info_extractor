@@ -124,6 +124,7 @@ var fileExtensionMap = map[string][]string{
 	"JSON":             {"json"},
 	"Java":             {"java"},
 	"JavaScript":       {"js", "jsx", "mjs", "cjs"},
+	"Julia":            {"jl"},
 	"Jupyter Notebook": {"ipynb"},
 	"Kivy":             {"kv"},
 	"Kotlin":           {"kt", "kts"},
