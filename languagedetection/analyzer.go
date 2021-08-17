@@ -96,6 +96,7 @@ var fileExtensionMap = map[string][]string{
 	"1C Enterprise":    {"bsl", "os"},
 	"Apex":             {"cls"},
 	"Assembly":         {"asm"},
+	"Ballerina":        {"bal"},
 	"Batchfile":        {"bat", "cmd", "btm"},
 	"Blazor":           {"razor"},
 	"C":                {"c", "h"},
