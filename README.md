@@ -34,7 +34,7 @@ If using this approach, download the binary from [releases](https://github.com/c
 ```
 wget https://github.com/codersrank-org/repo_info_extractor/releases/download/vx.x.x/repo_info_extractor_osx # replace with the latest version
 chmod +x repo_info_extractor_osx                                                                            # in case of Linux, OSX first make it executable
-./repo_info_extractor_osx --repo_path ./path_to_repo
+./repo_info_extractor_osx local --repo_path ./path_to_repo
 ```
 You can find a short video about the usage
 
