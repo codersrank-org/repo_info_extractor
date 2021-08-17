@@ -1,0 +1,34 @@
+require('lib1')
+require 'lib2'
+
+require('lib1/lib2')
+require 'lib-2/lib_1'
+
+require("lib3")
+require "lib4"
+
+require("lib3/lib4")
+require "lib4/lib3"
+
+require_relative("lib5")
+require_relative "lib6"
+
+require_relative('lib7')
+require_relative 'lib8'
+
+include('lib9')
+include 'lib10'
+
+include("lib11")
+include "lib12"
+
+gem "lib-13"
+gem 'lib14', require: false
+
+gem "lib15", "~> 2.0"
+gem 'lib_16', '>= 4.1.0'
+
+gem "lib17", github: "org/lib17"
+
+gem("lib18")
+gem('lib19')
