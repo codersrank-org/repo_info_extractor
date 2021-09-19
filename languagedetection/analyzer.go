@@ -163,4 +163,5 @@ var fileExtensionMap = map[string][]string{
 	"Xtend":            {"xtend"},
 	"Xtext":            {"xtext"},
 	"Yacc":             {"y"},
+	"Zig":		    {"zig"},
 }
