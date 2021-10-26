@@ -88,8 +88,9 @@ func buildExtensionToLanguageMap(input map[string][]string) map[string]string {
 }
 
 var extensionsWithMultipleLanguages = map[string]bool{
-	"m":  true, // Objective-C, Matlab
-	"pl": true, // Perl, Prolog
+	"m":   true, // Objective-C, Matlab
+	"pl":  true, // Perl, Prolog
+	"sql": true, // Dialects of SQL
 }
 
 var fileExtensionMap = map[string][]string{
