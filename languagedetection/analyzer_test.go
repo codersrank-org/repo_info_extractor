@@ -22,14 +22,16 @@ var _ = Describe("Analyzer", func() {
 	})
 
 	Context("Detect language by file name", func() {
-		It("should detect PHP ", func() {
+		It("should detect build files ", func() {
 			// Act
 			l1 := a.Detect("/home/something/Makefile", []byte{})
 			l2 := a.Detect("/home/something/Dockerfile", []byte{})
+			l3 := a.Detect("/home/something/Jenkinsfile", []byte{})
 
 			// Assert
 			Expect(l1).To(Equal("Makefile"))
 			Expect(l2).To(Equal("Dockerfile"))
+			Expect(l3).To(Equal("Jenkins"))
 		})
 	})
 })
