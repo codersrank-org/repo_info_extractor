@@ -32,4 +32,30 @@ var _ = Describe("Analyzer", func() {
 			Expect(l2).To(Equal("Dockerfile"))
 		})
 	})
+
+	Context("Detect language by file name", func() {
+		It("should detect SQL and PLpgSQL ", func() {
+			// Act
+			l1 := a.Detect("/home/something/get_pg_users.sql", []byte(`SELECT usename FROM pg_catalog.pg_user;`))
+			l2 := a.Detect("/home/something/create_pg_user.sql", []byte(`--
+CREATE OR REPLACE FUNCTION __tmp_create_user()
+  RETURNS VOID
+  LANGUAGE plpgsql
+AS
+$$
+BEGIN
+  IF NOT EXISTS (
+      SELECT
+      FROM   pg_catalog.pg_user
+      WHERE  usename = 'new_user') THEN
+    CREATE USER 'new_user';
+  END IF;
+END;
+$$;`))
+
+			// Assert
+			Expect(l1).To(Equal("SQL"))
+			Expect(l2).To(Equal("PLpgSQL"))
+		})
+	})
 })
