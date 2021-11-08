@@ -36,6 +36,10 @@ func (l *LanguageAnalyzer) Detect(filePath string, fileContent []byte) string {
 			return "Makefile"
 		}
 
+		if fileName == "Jenkinsfile" {
+			return "Jenkins"
+		}
+
 		return ""
 	}
 	// remove the trailing dot
