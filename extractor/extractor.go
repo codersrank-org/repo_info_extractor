@@ -516,6 +516,7 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 	languageAnalyzer := languagedetection.NewLanguageAnalyzer()
 	hasTimeout := false
 	for commit := range commits {
+		log.Println("DEBUG start commit", commit.Hash)
 		libraries := map[string][]string{}
 		for n, fileChange := range commit.ChangedFiles {
 			select {
@@ -580,6 +581,7 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 				libraries[lang] = append(libraries[lang], fileLibraries...)
 			}
 		}
+		log.Println("DEBUG commit is done", commit.Hash)
 		commit.Libraries = libraries
 		results <- true
 	}
