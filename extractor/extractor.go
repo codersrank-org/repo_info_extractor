@@ -46,7 +46,6 @@ type RepoExtractor struct {
 	userCommits                []*commit.Commit // Commits which are belong to user (from selected emails)
 	commitPipeline             chan commit.Commit
 	libraryExtractionCompleted chan bool
-	libraryExtractionErr       chan error
 }
 
 // Extract a single repo in the path
@@ -74,9 +73,7 @@ func (r *RepoExtractor) Extract() error {
 	if err != nil {
 		return err
 	}
-	go func() {
-		r.libraryExtractionErr <- r.analyseLibraries(ctx)
-	}()
+	go r.analyseLibraries(ctx)
 
 	err = r.export()
 	if err != nil {
@@ -93,7 +90,6 @@ func (r *RepoExtractor) initRepo() error {
 
 	r.commitPipeline = make(chan commit.Commit)
 	r.libraryExtractionCompleted = make(chan bool)
-	r.libraryExtractionErr = make(chan error)
 	cmd := exec.Command(r.GitPath,
 		"config",
 		"--get",
@@ -456,7 +452,7 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 	return nil
 }
 
-func (r *RepoExtractor) analyseLibraries(ctx context.Context) error {
+func (r *RepoExtractor) analyseLibraries(ctx context.Context) {
 	fmt.Println("Analysing libraries")
 	defer func() {
 		r.libraryExtractionCompleted <- true
@@ -483,7 +479,6 @@ func (r *RepoExtractor) analyseLibraries(ctx context.Context) error {
 		pb.Inc()
 	}
 	pb.Finish()
-	return nil
 }
 
 func (r *RepoExtractor) getFileContent(commitHash, filePath string) ([]byte, error) {
@@ -648,8 +643,6 @@ loop:
 				continue
 			}
 			fmt.Fprintln(w, string(commitData))
-		case libraryExtractionErr := <-r.libraryExtractionErr:
-			return libraryExtractionErr
 		case <-r.libraryExtractionCompleted:
 			break loop
 		}
