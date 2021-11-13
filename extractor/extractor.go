@@ -510,10 +510,6 @@ func (r *RepoExtractor) getFileContent(commitHash, filePath string) ([]byte, err
 	return fileContents, nil
 }
 
-func bToMb(b uint64) uint64 {
-	return b / 1024 / 1024
-}
-
 func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commit.Commit, results chan<- bool) error {
 	languageAnalyzer := languagedetection.NewLanguageAnalyzer()
 	hasTimeout := false
