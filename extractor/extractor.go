@@ -46,6 +46,7 @@ type RepoExtractor struct {
 	userCommits                []*commit.Commit // Commits which are belong to user (from selected emails)
 	commitPipeline             chan commit.Commit
 	libraryExtractionCompleted chan bool
+	libraryExtractionErr       chan error
 }
 
 // Extract a single repo in the path
@@ -73,22 +74,15 @@ func (r *RepoExtractor) Extract() error {
 	if err != nil {
 		return err
 	}
-
 	go func() {
-		err = r.export()
-		if err != nil {
-			fmt.Println("Couldn't export commits to artifact. Error:", err.Error())
-			return
-		}
+		r.libraryExtractionErr <- r.analyseLibraries(ctx)
 	}()
-	err = r.analyseLibraries(ctx)
+
+	err = r.export()
 	if err != nil {
+		fmt.Println("Couldn't export commits to artifact. Error:", err.Error())
 		return err
 	}
-
-	//if r.Obfuscate {
-	//	r.obfuscate()
-	//}
 
 	return nil
 }
@@ -99,6 +93,7 @@ func (r *RepoExtractor) initRepo() error {
 
 	r.commitPipeline = make(chan commit.Commit)
 	r.libraryExtractionCompleted = make(chan bool)
+	r.libraryExtractionErr = make(chan error)
 	cmd := exec.Command(r.GitPath,
 		"config",
 		"--get",
@@ -524,16 +519,6 @@ func bToMb(b uint64) uint64 {
 	return b / 1024 / 1024
 }
 
-func PrintMemUsage() {
-	var m runtime.MemStats
-	runtime.ReadMemStats(&m)
-	// For info on each, see: https://golang.org/pkg/runtime/#MemStats
-	fmt.Printf("Alloc = %v MiB", bToMb(m.Alloc))
-	fmt.Printf("\tTotalAlloc = %v MiB", bToMb(m.TotalAlloc))
-	fmt.Printf("\tSys = %v MiB", bToMb(m.Sys))
-	fmt.Printf("\tNumGC = %v\n", m.NumGC)
-}
-
 func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commit.Commit, results chan<- bool) error {
 	languageAnalyzer := languagedetection.NewLanguageAnalyzer()
 	hasTimeout := false
@@ -546,7 +531,6 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 		c.AuthorEmail = commitToAnalyse.AuthorEmail
 		c.AuthorName = commitToAnalyse.AuthorName
 		c.Date = commitToAnalyse.Date
-		PrintMemUsage()
 		libraries := map[string][]string{}
 		for n, fileChange := range commitToAnalyse.ChangedFiles {
 			select {
@@ -619,13 +603,6 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 	return nil
 }
 
-// Obfuscate the result
-func (r *RepoExtractor) obfuscate() {
-	for _, commit := range r.userCommits {
-		commit = obfuscation.Obfuscate(commit)
-	}
-}
-
 // Writes result to the file
 func (r *RepoExtractor) export() error {
 	fmt.Println("Creating artifact at: " + r.OutputPath)
@@ -658,17 +635,23 @@ func (r *RepoExtractor) export() error {
 	}
 	fmt.Fprintln(w, string(repoMetaData))
 
+loop:
 	for {
 		select {
 		case commit := <-r.commitPipeline:
+			if r.Obfuscate {
+				obfuscation.Obfuscate(&commit)
+			}
 			commitData, err := json.Marshal(commit)
 			if err != nil {
 				fmt.Printf("Couldn't write commit to file. CommitHash: %s Error: %s", commit.Hash, err.Error())
 				continue
 			}
 			fmt.Fprintln(w, string(commitData))
+		case libraryExtractionErr := <-r.libraryExtractionErr:
+			return libraryExtractionErr
 		case <-r.libraryExtractionCompleted:
-			break
+			break loop
 		}
 	}
 	w.Flush() // important
@@ -676,6 +659,7 @@ func (r *RepoExtractor) export() error {
 
 	err = archiver.Archive([]string{repoDataPath}, zipPath)
 	if err != nil {
+		fmt.Println("Couldn't make zip archive of the artifact. Error:", err.Error())
 		return err
 	}
 
