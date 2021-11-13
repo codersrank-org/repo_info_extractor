@@ -31,19 +31,21 @@ import (
 // RepoExtractor is responsible for all parts of repo extraction process
 // Including cloning the repo, processing the commits and uploading the results
 type RepoExtractor struct {
-	RepoPath            string
-	OutputPath          string
-	GitPath             string
-	Headless            bool
-	Obfuscate           bool
-	ShowProgressBar     bool // If it is false there is no progress bar.
-	SkipLibraries       bool // If it is false there is no library detection.
-	UserEmails          []string
-	OverwrittenRepoName string        // If set this will be used instead of the original repo name
-	TimeLimit           time.Duration // If set the extraction will be stopped after the given time limit and the partial result will be uploaded
-	Seed                []string
-	repo                *repo
-	userCommits         []*commit.Commit // Commits which are belong to user (from selected emails)
+	RepoPath                   string
+	OutputPath                 string
+	GitPath                    string
+	Headless                   bool
+	Obfuscate                  bool
+	ShowProgressBar            bool // If it is false there is no progress bar.
+	SkipLibraries              bool // If it is false there is no library detection.
+	UserEmails                 []string
+	OverwrittenRepoName        string        // If set this will be used instead of the original repo name
+	TimeLimit                  time.Duration // If set the extraction will be stopped after the given time limit and the partial result will be uploaded
+	Seed                       []string
+	repo                       *repo
+	userCommits                []*commit.Commit // Commits which are belong to user (from selected emails)
+	commitPipeline             chan commit.Commit
+	libraryExtractionCompleted chan bool
 }
 
 // Extract a single repo in the path
@@ -71,18 +73,11 @@ func (r *RepoExtractor) Extract() error {
 	if err != nil {
 		return err
 	}
-
-	err = r.analyseLibraries(ctx)
-	if err != nil {
-		return err
-	}
-
-	if r.Obfuscate {
-		r.obfuscate()
-	}
+	go r.analyseLibraries(ctx)
 
 	err = r.export()
 	if err != nil {
+		fmt.Println("Couldn't export commits to artifact. Error:", err.Error())
 		return err
 	}
 
@@ -93,6 +88,8 @@ func (r *RepoExtractor) Extract() error {
 func (r *RepoExtractor) initRepo() error {
 	fmt.Println("Initializing repository")
 
+	r.commitPipeline = make(chan commit.Commit)
+	r.libraryExtractionCompleted = make(chan bool)
 	cmd := exec.Command(r.GitPath,
 		"config",
 		"--get",
@@ -455,9 +452,11 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 	return nil
 }
 
-// TODO This is not ready yet (can't find libraries based on language -> look at libraryWorker)
-func (r *RepoExtractor) analyseLibraries(ctx context.Context) error {
+func (r *RepoExtractor) analyseLibraries(ctx context.Context) {
 	fmt.Println("Analysing libraries")
+	defer func() {
+		r.libraryExtractionCompleted <- true
+	}()
 
 	jobs := make(chan *commit.Commit, len(r.userCommits))
 	results := make(chan bool, len(r.userCommits))
@@ -480,7 +479,6 @@ func (r *RepoExtractor) analyseLibraries(ctx context.Context) error {
 		pb.Inc()
 	}
 	pb.Finish()
-	return nil
 }
 
 func (r *RepoExtractor) getFileContent(commitHash, filePath string) ([]byte, error) {
@@ -515,16 +513,25 @@ func (r *RepoExtractor) getFileContent(commitHash, filePath string) ([]byte, err
 func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commit.Commit, results chan<- bool) error {
 	languageAnalyzer := languagedetection.NewLanguageAnalyzer()
 	hasTimeout := false
-	for commit := range commits {
+	for commitToAnalyse := range commits {
+		c := commit.Commit{
+			ChangedFiles: commitToAnalyse.ChangedFiles,
+			Libraries:    make(map[string][]string),
+		}
+		c.Hash = commitToAnalyse.Hash
+		c.AuthorEmail = commitToAnalyse.AuthorEmail
+		c.AuthorName = commitToAnalyse.AuthorName
+		c.Date = commitToAnalyse.Date
 		libraries := map[string][]string{}
-		for n, fileChange := range commit.ChangedFiles {
+		for n, fileChange := range commitToAnalyse.ChangedFiles {
 			select {
 			case <-ctx.Done():
 				if !hasTimeout {
 					hasTimeout = true
 					fmt.Println("Time limit exceeded. Couldn't analyze all the commits.")
 				}
-				commit.Libraries = libraries
+				c.Libraries = libraries
+				r.commitPipeline <- c
 				results <- true
 				continue
 			default:
@@ -544,7 +551,7 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 			if languageAnalyzer.ShouldUseFile(extension) {
 				var err error
 				if fileContents == nil {
-					fileContents, err = r.getFileContent(commit.Hash, fileChange.Path)
+					fileContents, err = r.getFileContent(commitToAnalyse.Hash, fileChange.Path)
 					if err != nil {
 						return err
 					}
@@ -558,14 +565,14 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 			if lang == "" {
 				continue
 			}
-			commit.ChangedFiles[n].Language = lang
+			c.ChangedFiles[n].Language = lang
 			if !r.SkipLibraries {
 				analyzer, err := librarydetection.GetAnalyzer(lang)
 				if err != nil {
 					continue
 				}
 				if fileContents == nil {
-					fileContents, err = r.getFileContent(commit.Hash, fileChange.Path)
+					fileContents, err = r.getFileContent(commitToAnalyse.Hash, fileChange.Path)
 					if err != nil {
 						return err
 					}
@@ -580,17 +587,11 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 				libraries[lang] = append(libraries[lang], fileLibraries...)
 			}
 		}
-		commit.Libraries = libraries
+		c.Libraries = libraries
+		r.commitPipeline <- c
 		results <- true
 	}
 	return nil
-}
-
-// Obfuscate the result
-func (r *RepoExtractor) obfuscate() {
-	for _, commit := range r.userCommits {
-		commit = obfuscation.Obfuscate(commit)
-	}
 }
 
 // Writes result to the file
@@ -625,19 +626,29 @@ func (r *RepoExtractor) export() error {
 	}
 	fmt.Fprintln(w, string(repoMetaData))
 
-	for _, commit := range r.userCommits {
-		commitData, err := json.Marshal(commit)
-		if err != nil {
-			fmt.Printf("Couldn't write commit to file. CommitHash: %s Error: %s", commit.Hash, err.Error())
-			continue
+loop:
+	for {
+		select {
+		case commit := <-r.commitPipeline:
+			if r.Obfuscate {
+				obfuscation.Obfuscate(&commit)
+			}
+			commitData, err := json.Marshal(commit)
+			if err != nil {
+				fmt.Printf("Couldn't write commit to file. CommitHash: %s Error: %s", commit.Hash, err.Error())
+				continue
+			}
+			fmt.Fprintln(w, string(commitData))
+		case <-r.libraryExtractionCompleted:
+			break loop
 		}
-		fmt.Fprintln(w, string(commitData))
 	}
 	w.Flush() // important
 	file.Close()
 
 	err = archiver.Archive([]string{repoDataPath}, zipPath)
 	if err != nil {
+		fmt.Println("Couldn't make zip archive of the artifact. Error:", err.Error())
 		return err
 	}
 
