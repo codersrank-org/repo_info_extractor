@@ -553,7 +553,7 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 				if fileContents == nil {
 					fileContents, err = r.getFileContent(commitToAnalyse.Hash, fileChange.Path)
 					if err != nil {
-						return err
+						continue
 					}
 				}
 				lang = languageAnalyzer.DetectLanguageFromFile(fileChange.Path, fileContents)
@@ -574,7 +574,7 @@ func (r *RepoExtractor) libraryWorker(ctx context.Context, commits <-chan *commi
 				if fileContents == nil {
 					fileContents, err = r.getFileContent(commitToAnalyse.Hash, fileChange.Path)
 					if err != nil {
-						return err
+						continue
 					}
 				}
 				fileLibraries, err := analyzer.ExtractLibraries(string(fileContents))
