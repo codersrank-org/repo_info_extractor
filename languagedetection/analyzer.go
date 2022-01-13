@@ -115,6 +115,8 @@ var fileExtensionMap = map[string][]string{
 	"Dart":             {"dart"},
 	"Groovy":           {"groovy", "gvy", "gy", "gsh"},
 	"HTML+Razor":       {"cshtml"},
+	"Ebuild":           {"ebuild"},
+	"Eclass":           {"eclass"},
 	"EJS":              {"ejs"},
 	"Elixir":           {"ex", "exs"},
 	"Elm":              {"elm"},
@@ -168,5 +170,5 @@ var fileExtensionMap = map[string][]string{
 	"Xtend":            {"xtend"},
 	"Xtext":            {"xtext"},
 	"Yacc":             {"y"},
-	"Zig":		    {"zig"},
+	"Zig":              {"zig"},
 }
