@@ -27,6 +27,7 @@ var (
 				Seeds:           *RootConfig.Seeds,
 				ShowProgressBar: !*RootConfig.Headless,
 				SkipLibraries:   *RootConfig.SkipLibraries,
+				SkipUpload:      *RootConfig.SkipUpload,
 			}
 			err := repoSource.ExtractFromSource(source, config)
 

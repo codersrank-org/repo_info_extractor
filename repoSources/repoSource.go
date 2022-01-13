@@ -17,6 +17,7 @@ type ExtractConfig struct {
 	Seeds           []string
 	ShowProgressBar bool // Show progress bar only if running in interactive mode
 	SkipLibraries   bool
+	SkipUpload      bool // If this is true the artifacts won't be uploaded
 }
 
 // RepoSource describes the interface that each provider has to implement
@@ -69,8 +70,10 @@ func ExtractFromSource(source RepoSource, config ExtractConfig) error {
 
 	}
 
-	artifactUploader := NewArtifactUploader(config.OutputPath)
-	artifactUploader.UploadRepos(repos)
+	if !config.SkipUpload {
+		artifactUploader := NewArtifactUploader(config.OutputPath)
+		artifactUploader.UploadRepos(repos)
+	}
 
 	source.CleanUp()
 

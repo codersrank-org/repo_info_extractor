@@ -18,6 +18,7 @@ type rootConfig struct {
 	OutPutPath    *string
 	Obfuscate     *bool
 	Headless      *bool
+	SkipUpload    *bool
 }
 
 var (
@@ -53,6 +54,7 @@ func init() {
 	RootConfig.OutPutPath = rootCmd.PersistentFlags().String("output_path", "./artifacts", "Where to put output file. Existing artifacts will be overwritten.")
 	RootConfig.Obfuscate = rootCmd.PersistentFlags().Bool("obfuscate", true, "File names and emails won't be hashed. Set it to true for debug purposes.")
 	RootConfig.Headless = rootCmd.PersistentFlags().Bool("headless", false, "Headless mode is used on CodersRank's backend system.")
+	RootConfig.SkipUpload = rootCmd.PersistentFlags().Bool("skip_upload", false, "Artifacts won't be uploaded. Don't even ask whether to upload the artifacts.")
 }
 
 func initConfig() {
