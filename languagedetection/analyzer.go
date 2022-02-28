@@ -32,6 +32,10 @@ func (l *LanguageAnalyzer) Detect(filePath string, fileContent []byte) string {
 
 	if fileName == "Dockerfile" {
 		return "Dockerfile"
+	}	
+
+	if fileName == "go.mod" {
+		return "Go"
 	}
 
 	if fileName == "Makefile" {
