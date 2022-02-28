@@ -40,6 +40,10 @@ func (l *LanguageAnalyzer) Detect(filePath string, fileContent []byte) string {
 			return "Jenkins"
 		}
 
+		if fileName == "Rakefile" {
+			return "Ruby"
+		}
+
 		return ""
 	}
 	// remove the trailing dot
