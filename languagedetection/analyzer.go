@@ -101,7 +101,7 @@ var fileNameMap = map[string][]string{
 	"Dockerfile":       {"dockerfile"},
 	"Go":               {"go.mod"},
 	"Jenkins":          {"jenkinsfile"},
-	"Makefile":         {"makefile"},
+	"Makefile":         {"gnumakefile", "makefile"},
 	"Ruby":             {"rakefile"},
 }
 
