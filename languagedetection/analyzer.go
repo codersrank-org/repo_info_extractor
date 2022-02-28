@@ -102,7 +102,7 @@ var fileNameMap = map[string][]string{
 	"Go":               {"go.mod"},
 	"Jenkins":          {"jenkinsfile"},
 	"Makefile":         {"gnumakefile", "makefile"},
-	"Ruby":             {"rakefile"},
+	"Ruby":             {"gemfile", "rakefile"},
 }
 
 var extensionsWithMultipleLanguages = map[string]bool{
