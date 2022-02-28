@@ -158,7 +158,7 @@ var fileExtensionMap = map[string][]string{
 	"R":                {"r"},
 	"Raku":             {"p6", "pl6", "pm6", "rk", "raku", "pod6", "rakumod", "rakudoc"},
 	"Robot":            {"robot"},
-	"Ruby":             {"rb"},
+	"Ruby":             {"gemspec", "ra", "rake", "rb"},
 	"Rust":             {"rs"},
 	"Scala":            {"scala"},
 	"SASS":             {"sass"},

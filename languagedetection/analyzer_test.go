@@ -33,7 +33,7 @@ var _ = Describe("Analyzer", func() {
 			Expect(l1).To(Equal("Makefile"))
 			Expect(l2).To(Equal("Dockerfile"))
 			Expect(l3).To(Equal("Jenkins"))
-			Expect(l3).To(Equal("Ruby"))
+			Expect(l4).To(Equal("Ruby"))
 		})
 	})
 
