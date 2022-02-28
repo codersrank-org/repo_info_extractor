@@ -24,28 +24,33 @@ func NewLanguageAnalyzer() *LanguageAnalyzer {
 // The filePath is the path to the file.
 // For some file types it reads the content of the file.
 func (l *LanguageAnalyzer) Detect(filePath string, fileContent []byte) string {
+	fileName := filepath.Base(filePath)
+
+	if fileName == "CMakeLists.txt" {
+		return "CMake"
+	}
+
+	if fileName == "Dockerfile" {
+		return "Dockerfile"
+	}
+
+	if fileName == "Makefile" {
+		return "Makefile"
+	}
+
+	if fileName == "Jenkinsfile" {
+		return "Jenkins"
+	}
+
+	if fileName == "Rakefile" {
+		return "Ruby"
+	}
+
 	extension := filepath.Ext(filePath)
 	if extension == "" {
-		fileName := filepath.Base(filePath)
-
-		if fileName == "Dockerfile" {
-			return "Dockerfile"
-		}
-
-		if fileName == "Makefile" {
-			return "Makefile"
-		}
-
-		if fileName == "Jenkinsfile" {
-			return "Jenkins"
-		}
-
-		if fileName == "Rakefile" {
-			return "Ruby"
-		}
-
 		return ""
 	}
+
 	// remove the trailing dot
 	extension = extension[1:]
 	if l.ShouldUseFile(extension) {
