@@ -9,14 +9,14 @@ import (
 
 // LanguageAnalyzer used for detecting programming language of a file
 type LanguageAnalyzer struct {
-	FileNameMap map[string]string
+	FileNameMap      map[string]string
 	FileExtensionMap map[string]string
 }
 
 // NewLanguageAnalyzer constructor
 func NewLanguageAnalyzer() *LanguageAnalyzer {
 	return &LanguageAnalyzer{
-		FileNameMap: reverseLanguageMap(fileNameMap),
+		FileNameMap:      reverseLanguageMap(fileNameMap),
 		FileExtensionMap: reverseLanguageMap(fileExtensionMap),
 	}
 }
@@ -97,12 +97,12 @@ func reverseLanguageMap(input map[string][]string) map[string]string {
 }
 
 var fileNameMap = map[string][]string{
-	"CMake":            {"cmakelists.txt"},
-	"Dockerfile":       {"dockerfile"},
-	"Go":               {"go.mod"},
-	"Jenkins":          {"jenkinsfile"},
-	"Makefile":         {"gnumakefile", "makefile"},
-	"Ruby":             {"gemfile", "rakefile"},
+	"CMake":      {"cmakelists.txt"},
+	"Dockerfile": {"dockerfile"},
+	"Go":         {"go.mod"},
+	"Jenkins":    {"jenkinsfile"},
+	"Makefile":   {"gnumakefile", "makefile"},
+	"Ruby":       {"gemfile", "rakefile"},
 }
 
 var extensionsWithMultipleLanguages = map[string]bool{
@@ -183,6 +183,5 @@ var fileExtensionMap = map[string][]string{
 	"Xtend":            {"xtend"},
 	"Xtext":            {"xtext"},
 	"Yacc":             {"y"},
-	"YAML":             {"yaml", "yml"},
 	"Zig":              {"zig"},
 }
