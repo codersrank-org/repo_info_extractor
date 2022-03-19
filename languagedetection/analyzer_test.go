@@ -27,11 +27,15 @@ var _ = Describe("Analyzer", func() {
 			l1 := a.Detect("/home/something/Makefile", []byte{})
 			l2 := a.Detect("/home/something/Dockerfile", []byte{})
 			l3 := a.Detect("/home/something/Jenkinsfile", []byte{})
+			l4 := a.Detect("/home/something/Rakefile", []byte{})
+			l5 := a.Detect("/home/something/CMakeLists.txt", []byte{})
 
 			// Assert
 			Expect(l1).To(Equal("Makefile"))
 			Expect(l2).To(Equal("Dockerfile"))
 			Expect(l3).To(Equal("Jenkins"))
+			Expect(l4).To(Equal("Ruby"))
+			Expect(l5).To(Equal("CMake"))
 		})
 	})
 

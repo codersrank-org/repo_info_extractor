@@ -9,13 +9,15 @@ import (
 
 // LanguageAnalyzer used for detecting programming language of a file
 type LanguageAnalyzer struct {
+	FileNameMap map[string]string
 	FileExtensionMap map[string]string
 }
 
 // NewLanguageAnalyzer constructor
 func NewLanguageAnalyzer() *LanguageAnalyzer {
 	return &LanguageAnalyzer{
-		FileExtensionMap: buildExtensionToLanguageMap(fileExtensionMap),
+		FileNameMap: reverseLanguageMap(fileNameMap),
+		FileExtensionMap: reverseLanguageMap(fileExtensionMap),
 	}
 }
 
@@ -24,24 +26,18 @@ func NewLanguageAnalyzer() *LanguageAnalyzer {
 // The filePath is the path to the file.
 // For some file types it reads the content of the file.
 func (l *LanguageAnalyzer) Detect(filePath string, fileContent []byte) string {
+	fileName := filepath.Base(filePath)
+
+	val := l.DetectLanguageFromFileName(fileName)
+	if val != "" {
+		return val
+	}
+
 	extension := filepath.Ext(filePath)
 	if extension == "" {
-		fileName := filepath.Base(filePath)
-
-		if fileName == "Dockerfile" {
-			return "Dockerfile"
-		}
-
-		if fileName == "Makefile" {
-			return "Makefile"
-		}
-
-		if fileName == "Jenkinsfile" {
-			return "Jenkins"
-		}
-
 		return ""
 	}
+
 	// remove the trailing dot
 	extension = extension[1:]
 	if l.ShouldUseFile(extension) {
@@ -49,6 +45,15 @@ func (l *LanguageAnalyzer) Detect(filePath string, fileContent []byte) string {
 	} else {
 		return l.DetectLanguageFromExtension(extension)
 	}
+}
+
+// DetectLanguageFromFileName returns programming language based on files name
+func (l *LanguageAnalyzer) DetectLanguageFromFileName(fileName string) string {
+	fileName = strings.ToLower(fileName)
+	if val, ok := l.FileNameMap[fileName]; ok {
+		return val
+	}
+	return ""
 }
 
 // DetectLanguageFromExtension returns programming language based on files extension
@@ -81,7 +86,7 @@ func (l *LanguageAnalyzer) ShouldUseFile(extension string) bool {
 	return ok
 }
 
-func buildExtensionToLanguageMap(input map[string][]string) map[string]string {
+func reverseLanguageMap(input map[string][]string) map[string]string {
 	extensionMap := map[string]string{}
 	for lang, extensions := range input {
 		for _, extension := range extensions {
@@ -89,6 +94,15 @@ func buildExtensionToLanguageMap(input map[string][]string) map[string]string {
 		}
 	}
 	return extensionMap
+}
+
+var fileNameMap = map[string][]string{
+	"CMake":            {"cmakelists.txt"},
+	"Dockerfile":       {"dockerfile"},
+	"Go":               {"go.mod"},
+	"Jenkins":          {"jenkinsfile"},
+	"Makefile":         {"gnumakefile", "makefile"},
+	"Ruby":             {"gemfile", "rakefile"},
 }
 
 var extensionsWithMultipleLanguages = map[string]bool{
@@ -154,7 +168,7 @@ var fileExtensionMap = map[string][]string{
 	"R":                {"r"},
 	"Raku":             {"p6", "pl6", "pm6", "rk", "raku", "pod6", "rakumod", "rakudoc"},
 	"Robot":            {"robot"},
-	"Ruby":             {"rb"},
+	"Ruby":             {"gemspec", "ra", "rake", "rb"},
 	"Rust":             {"rs"},
 	"Scala":            {"scala"},
 	"SASS":             {"sass"},
@@ -169,5 +183,6 @@ var fileExtensionMap = map[string][]string{
 	"Xtend":            {"xtend"},
 	"Xtext":            {"xtext"},
 	"Yacc":             {"y"},
+	"YAML":             {"yaml", "yml"},
 	"Zig":              {"zig"},
 }
