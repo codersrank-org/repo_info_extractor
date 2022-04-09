@@ -175,6 +175,7 @@ var fileExtensionMap = map[string][]string{
 	"SCSS":             {"scss"},
 	"Shell":            {"sh"},
 	"Smalltalk":        {"st"},
+	"Solidity":         {"sol"},
 	"Stylus":           {"styl"},
 	"Svelte":           {"svelte"},
 	"Swift":            {"swift"},
