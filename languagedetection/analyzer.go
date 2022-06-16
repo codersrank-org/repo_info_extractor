@@ -167,6 +167,7 @@ var fileExtensionMap = map[string][]string{
 	"QML":              {"qml"},
 	"R":                {"r"},
 	"Raku":             {"p6", "pl6", "pm6", "rk", "raku", "pod6", "rakumod", "rakudoc"},
+	"Reason":           {"re", "rei"},
 	"Robot":            {"robot"},
 	"Ruby":             {"gemspec", "ra", "rake", "rb"},
 	"Rust":             {"rs"},
