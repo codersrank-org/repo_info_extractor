@@ -165,6 +165,7 @@ func (r *RepoExtractor) initAnalyzers() {
 	librarydetection.AddAnalyzer("PHP", languages.NewPHPAnalyzer())
 	librarydetection.AddAnalyzer("Python", languages.NewPythonScriptAnalyzer())
 	librarydetection.AddAnalyzer("Ruby", languages.NewRubyScriptAnalyzer())
+	librarydetection.AddAnalyzer("Rust", languages.NewRustAnalyzer())
 	librarydetection.AddAnalyzer("Swift", languages.NewSwiftAnalyzer())
 }
 
