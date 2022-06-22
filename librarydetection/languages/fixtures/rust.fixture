@@ -1,0 +1,11 @@
+extern crate lib1;
+#[macro_use]
+extern crate lib2;
+
+use lib3::io::test;
+use lib4 as something;
+// whitespace action
+use
+	  lib5::test as hi;
+// global path with a raw name
+use ::r#lib6;
