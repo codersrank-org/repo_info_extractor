@@ -412,7 +412,10 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 				fmt.Println("Cannot convert the following into integer: " + deletionsString)
 				return err
 			}
-
+			// If there is no filechange at all
+			if len(bits) <= 2 {
+				continue
+			}
 			fileName := bits[2]
 			// it is a rename, skip
 			if strings.Contains("=>", fileName) {
