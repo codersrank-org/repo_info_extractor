@@ -352,6 +352,9 @@ func (r *RepoExtractor) commitWorker(w int, jobs <-chan *req, results chan<- []*
 			fmt.Println("Error during execution of Git command.")
 			return err
 		}
+		defer func(c *exec.Cmd) {
+			c.Wait()
+		}(cmd)
 
 		// parse the output into stats
 		scanner := bufio.NewScanner(stdout)
