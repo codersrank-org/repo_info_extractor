@@ -1,7 +1,6 @@
 package languages_test
 
 import (
-	"fmt"
 	"io/ioutil"
 
 	. "github.com/onsi/ginkgo"
@@ -33,9 +32,6 @@ var _ = Describe("RLibraryDetection", func() {
 	Describe("Extract R Libraries", func() {
 		It("Should be able to extract libraries", func() {
 			libs, err := analyzer.ExtractLibraries(string(fixture))
-			for _, l := range libs {
-				fmt.Println(l)
-			}
 			if err != nil {
 				panic(err)
 			}
