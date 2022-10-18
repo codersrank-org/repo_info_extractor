@@ -157,6 +157,7 @@ func (r *RepoExtractor) initAnalyzers() {
 	librarydetection.AddAnalyzer("C", languages.NewCAnalyzer())
 	librarydetection.AddAnalyzer("C++", languages.NewCppAnalyzer())
 	librarydetection.AddAnalyzer("C#", languages.NewCSharpAnalyzer())
+	librarydetection.AddAnalyzer("Dart", languages.NewDartScriptAnalyzer())
 	librarydetection.AddAnalyzer("Java", languages.NewJavaAnalyzer())
 	librarydetection.AddAnalyzer("JavaScript", languages.NewJavaScriptAnalyzer())
 	librarydetection.AddAnalyzer("Kotlin", languages.NewKotlinAnalyzer())
