@@ -1,0 +1,13 @@
+require(ggplot)
+library(package=quantmod)
+require("tibble")
+package ( tidyr)
+    library         (  "bslib"       )
+require(package=DT)
+library( WGCNA)
+library (impute)
+library(shiny)
+# library(example) This is comment
+str_replace("library(example)", "example", "something")
+  BiocManager123::repositories()
+str_replace("Something::repositories()", "Something", "something")

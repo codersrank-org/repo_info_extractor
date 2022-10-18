@@ -1,4 +1,4 @@
-# What is it? (Beta Test)
+## What is it?
 This script is used to extract data from your private repo. The data is used to calculate your score on https://codersrank.io
 
 CodersRank by default only considers public repositories, however, most developers have their code in private repositories. We want to give the chance to these developers to improve their scores too by adding their private repositories.
@@ -11,94 +11,66 @@ Other information such as remote URLs, file names, emails, names are hashed. So 
 
 Moreover, the output is saved to your machine and you can check what data is extracted and you can decide whether you want to share it with us or not.
 
-# How to use it
+## How does it work?
+When a repository is analyzed two tools are used: this and [libraries](https://github.com/codersrank-org/libraries) repository. 
+This repository is responsible to recognize the languages and export the imported libraries.
+The [libraries](https://github.com/codersrank-org/libraries) contains a list of supported libraries, imports and technologies they belong to. 
 
-First of all, the script needs to be cloned.
+### In short
+- Language recognition: [repo_info_extractor](https://github.com/codersrank-org/repo_info_extractor/).
+- Library recognition: [libraries](https://github.com/codersrank-org/libraries)
 
+## How to use it
+The repo_info_extractor is written in Go, so you can either clone the repo and compile the program or just download the binary and start using it.
 ```
-git clone https://github.com/codersrankOrg/repo_info_extractor.git
+git clone --depth 1 https://github.com/codersrank-org/repo_info_extractor.git
 cd repo_info_extractor
+go run . local --repo_path ./path/to/repo
 ```
 
-## Docker approach
-If using this approach, the host machine does not need to have any tools installed apart of Docker. Generating the repository information is as easy as:
-
-### OSX / Linux
-```
-./run-docker.sh <path to the repository>
-```
-
-### Windows
-```
-run-docker.bat <path to the repository>
-```
-
-## Using Python on the host machine approach
-First, be sure you have Python and pip installed. You can download Python from https://www.python.org/downloads/ or https://www.anaconda.com/distribution/ (with preinstalled packages and pip)
-### OSX
-```
-$ git clone https://github.com/codersrankOrg/repo_info_extractor.git
-$ cd repo_info_extractor
-$ ./install.sh
-$ ./run.sh path/to/repository
-$ ls -al ./repo_data.json.zip
-```
-### Linux
-```
-$ git clone https://github.com/codersrankOrg/repo_info_extractor.git
-$ cd repo_info_extractor
-$ ./install.sh
-$ ./run.sh path/to/repository
-$ ls -al ./repo_data.json.zip
-```
-### Windows
-```
-git clone https://github.com/codersrankOrg/repo_info_extractor.git
-cd repo_info_extractor
-install.bat
-python src\main.py path\to\repo
-dir
-```
-
-# Dockerfile
-The provided Dockerfile builds an image that contains the Python script as well as its dependencies. To keep the final image size low, it leverages the 
-multi-stage build functionality. The first stage installs the dependencies as well as all the required build tools. The second stage, runtime,
-just copies over the installled dependencies so that they can be used by the script.
-
-In order to build a new image out of it, run `make docker` on Mac/Linux or `build-docker.bat` on Windows. It should result in 
-`codersrank/repo_info_extractor:latest` image.
-
-# Troubleshooting
+### Binary approach (easiest)
+If using this approach, download the binary from [releases](https://github.com/codersrank-org/repo_info_extractor/releases) and run it.
 
 ```
-/usr/bin/env: ‘bash\r’: No such file or directory
+wget https://github.com/codersrank-org/repo_info_extractor/releases/download/vx.x.x/repo_info_extractor_osx # replace with the latest version
+chmod +x repo_info_extractor_osx                                                                            # in case of Linux, OSX first make it executable
+./repo_info_extractor_osx local --repo_path ./path_to_repo
 ```
+You can find a short video about the usage
 
-If you see the following error on a Windows machine, this is due to git converting the line endings automatically. A repository level configuration has
-been added to stop this from happening, but the repo needs to be hard reset:
+[![How to use repo_info_extractor](https://img.youtube.com/vi/9IqgmYl8l2Y/0.jpg)](https://www.youtube.com/watch?v=9IqgmYl8l2Y)
+
+### Available commands
+You can see the available commands and flags with the `--help` flag. For example:
+```
+./repo_info_extractor_osx --help
+...
+./repo_info_extractor_osx bitbucket --help
+```
+Commands:
+-  `bitbucket` Extract repository from BitBucket
+-  `help` Help about any command
+-  `local` Extract local repository by path
+-  `version` Print the version number
+
+The commands might have flags. For example `local` has:
+`--repo_name` You can overwrite the default repo name. This name will be shown on the profile page.
+`--repo_path` Path of the repo
+
+## BitBucket
+Right now only BitBucket Cloud is supported. For authentication your have to use your username
+and create an app password. You can create it here: https://bitbucket.org/account/settings/app-passwords/.
+The app password and username must be set via the `--password` and `--username` flags. Example usage:
+```
+./repo_info_extractor_osx bitbucket --username="peti2001" --password=xxxxxx --visibility=private --emails=karakas.peter@gmail.com
+```
+When you create the a new `app password` make sure you select all the necessary scopes.
+![repo_scope](https://raw.githubusercontent.com/peti2001/multi_repo_extractor/master/docs/bitbucket-scope.png)
+The safest way if you create an `app password` and use it instead of your user's password.
+
+## Run UnitTests 
+In the root directory of the repo, run the following command:
 
 ```
-git reset --hard
-```
-
-If this for some reason does not work, just remove the repository and clone it again.
-
-# Roadmap
-1. v0.3.0: Recognize external libraries. The current script only considers the programming languages. 
-2. v0.4.0: Improve language recognition. The current dummy solution only checks the file extensions. 
-
-
-# How to contribute?
-## Set up working eenvironment
-We recommend to use Python virtual environments. We support Python2 and Python3 too. So you must have an environment for both and test your code with Python2 and Python3. 
-
-### Run UnitTests 
-First you have to install nose2.
-```
-pip install nose2
-```
-
-After that use the make file to run the tests
-```
-make test
+go test ./...
 ```

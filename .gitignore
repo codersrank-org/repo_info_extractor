@@ -6,3 +6,6 @@ repo_data.json.zip
 repo_data.json
 .pyenv/
 *.json.zip
+*.log
+repo_data_v2.json
+repo_data_v2.json.zip
