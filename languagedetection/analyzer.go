@@ -164,6 +164,7 @@ var fileExtensionMap = map[string][]string{
 	"Protocol Buffer":  {"proto"},
 	"Puppet":           {"pp"},
 	"Python":           {"py"},
+	"PureScript":       {"pursx", "purs"},
 	"QML":              {"qml"},
 	"R":                {"r"},
 	"Raku":             {"p6", "pl6", "pm6", "rk", "raku", "pod6", "rakumod", "rakudoc"},
