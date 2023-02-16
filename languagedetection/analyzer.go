@@ -158,7 +158,7 @@ var fileExtensionMap = map[string][]string{
 	"Nix":              {"nix"},
 	"Objective-C":      {"mm"},
 	"OpenEdge ABL":     {"p", "ab", "w", "i", "x"},
-	"Perl":             {"pl", "pm", "t"},
+	"Perl":             {"pl", "pm", "pod", "t"},
 	"PHP":              {"php"},
 	"PLSQL":            {"pks", "pkb"},
 	"Protocol Buffer":  {"proto"},
