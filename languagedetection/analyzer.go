@@ -126,6 +126,7 @@ var fileExtensionMap = map[string][]string{
 	"COBOL":            {"cbl", "cob", "cpy"},
 	"CoffeeScript":     {"coffee"},
 	"Crystal":          {"cr"},
+	"D":		    {"d"},
 	"Dart":             {"dart"},
 	"Groovy":           {"groovy", "gvy", "gy", "gsh"},
 	"HTML+Razor":       {"cshtml"},
